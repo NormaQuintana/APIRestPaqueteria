@@ -1,6 +1,5 @@
 package pojo.EntidadesPrincipales;
 
-import pojo.Catalogo.Rol;
 
 public class Colaborador {
     private Integer idColaborador;
@@ -15,13 +14,15 @@ public class Colaborador {
     private String fotoBase64;
     private String noLicencia;
     private Boolean status;
-    private Rol rol;
-    private Sucursal sucursal;
+    private Integer idRol;
+    private String nombreRol;
+    private Integer idSucursal;
+    private String nombreSucursal;
 
     public Colaborador() {
     }
 
-    public Colaborador(Integer idColaborador, String nombre, String apellidoPaterno, String apellidoMaterno, String curp, String correo, String noPersonal, String password, byte[] foto, String fotoBase64, String noLicencia, Boolean status, Rol rol, Sucursal sucursal) {
+    public Colaborador(Integer idColaborador, String nombre, String apellidoPaterno, String apellidoMaterno, String curp, String correo, String noPersonal, String password, byte[] foto, String fotoBase64, String noLicencia, Boolean status, Integer idRol, String nombreRol, Integer idSucursal, String nombreSucursal) {
         this.idColaborador = idColaborador;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -34,8 +35,10 @@ public class Colaborador {
         this.fotoBase64 = fotoBase64;
         this.noLicencia = noLicencia;
         this.status = status;
-        this.rol = rol;
-        this.sucursal = sucursal;
+        this.idRol = idRol;
+        this.nombreRol = nombreRol;
+        this.idSucursal = idSucursal;
+        this.nombreSucursal = nombreSucursal;
     }
 
     public Integer getIdColaborador() {
@@ -134,20 +137,35 @@ public class Colaborador {
         this.status = status;
     }
 
-    public Rol getRol() {
-        return rol;
+    public Integer getIdRol() {
+        return idRol;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setIdRol(Integer idRol) {
+        this.idRol = idRol;
     }
 
-    public Sucursal getSucursal() {
-        return sucursal;
+    public String getNombreRol() {
+        return nombreRol;
     }
 
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
+    public void setNombreRol(String nombreRol) {
+        this.nombreRol = nombreRol;
     }
-    
+
+    public Integer getIdSucursal() {
+        return idSucursal;
+    }
+
+    public void setIdSucursal(Integer idSucursal) {
+        this.idSucursal = idSucursal;
+    }
+
+    public String getNombreSucursal() {
+        return nombreSucursal;
+    }
+
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
+    }    
 }
