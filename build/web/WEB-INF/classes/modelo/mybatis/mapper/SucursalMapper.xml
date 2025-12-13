@@ -67,5 +67,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             AND idColonia = #{idColonia}
             AND estado = 'Activa'
     </select>
+    
+    <update id="editar" parameterType="pojo.EntidadesPrincipales.Sucursal">
+        UPDATE sucursal
+        SET nombre = #{nombre}, 
+            calle = #{calle},
+            numero = #{numero},
+            idColonia = #{idColonia}
+        WHERE idSucursal = #{idSucursal}
+    </update>
+    
+    <select id="verificar-edicion" parameterType="pojo.EntidadesPrincipales.Sucursal" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM PacketWorld.sucursal
+    WHERE 
+        nombre = #{nombre} 
+        AND calle = #{calle}
+        AND numero = #{numero}
+        AND idColonia = #{idColonia}
+        AND estado = 'Activa'
+        AND idSucursal != #{idSucursal}  
+    </select>
 </mapper>
 

@@ -55,4 +55,38 @@ public class SucursalImp {
         }
         return respuesta;        
     }
+    
+    public static Respuesta editarSucursal(Sucursal sucursal){
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+                Integer existe = conexionBD.selectOne("sucursal.verificar-edicion", sucursal);
+                if (existe != null && existe > 0) {
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Ya existe una sucursal registrada con la misma dirección y nombre.");
+                    return respuesta; 
+                }
+                int filasAfectadas = conexionBD.update("sucursal.editar", sucursal);
+                if(filasAfectadas > 0){
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Sucursal: " + sucursal.getNombre() + " actualizada correctamente");
+                }else{
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, la sucursal no fue editada, favor de verificar la infromacion");
+                    
+                }                
+            }catch(Exception e){
+                respuesta.setError(true);
+                respuesta.setMensaje(e.getMessage());
+            }
+        }else{
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+             
+        return respuesta;
+    }
 }
