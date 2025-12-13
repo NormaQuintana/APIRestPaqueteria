@@ -88,5 +88,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         AND estado = 'Activa'
         AND idSucursal != #{idSucursal}  
     </select>
+    
+    <update id="eliminar" parameterType="java.lang.Integer">
+        UPDATE PacketWorld.sucursal
+        SET 
+            estado = 'Inactiva'
+        WHERE 
+        idSucursal = #{idSucursal};
+        
+    </update>
 </mapper>
 

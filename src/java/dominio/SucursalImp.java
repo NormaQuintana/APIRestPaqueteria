@@ -89,4 +89,31 @@ public class SucursalImp {
              
         return respuesta;
     }
+    
+    public static Respuesta eliminarSucursal(int idSucursal){
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+                int filasAfectadas = conexionBD.update("sucursal.eliminar", idSucursal);
+                if(filasAfectadas > 0 ){
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Sucursal eliminada exitosamente");
+                }else{
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, no se encontró la sucursal con ese ID.");
+                }
+                conexionBD.close();
+            }catch(Exception e){
+                respuesta.setError(true);
+                respuesta.setMensaje(e.getMessage());
+            }
+        }else{
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;
+    }
 }
