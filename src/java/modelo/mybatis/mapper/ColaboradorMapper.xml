@@ -28,5 +28,84 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE
             c.status = 1;
     </select>
+    <select id="obtener-por-rol" parameterType="java.lang.Integer" resultType="pojo.EntidadesPrincipales.Colaborador">
+        SELECT
+            C.idColaborador,
+            C.noPersonal,
+            C.nombre,
+            C.apellidoPaterno,
+            C.apellidoMaterno,
+            C.curp,
+            C.correo,
+            C.noLicencia,
+            C.idRol,
+            R.rol AS nombreRol,      
+            S.nombre AS nombreSucursal, 
+            C.status
+        FROM 
+            PacketWorld.colaborador C
+        JOIN 
+            PacketWorld.rol R ON C.idRol = R.idRol
+        JOIN 
+            PacketWorld.sucursal S ON C.idSucursal = S.idSucursal
+        WHERE 
+            C.idRol = #{idRol}
+            AND C.status = 1
+        ORDER BY
+            C.apellidoPaterno, C.nombre;
+    </select>
+    <select id="obtener-por-noPersonal" parameterType="java.lang.String" resultType="pojo.EntidadesPrincipales.Colaborador">
+        SELECT
+            C.idColaborador,
+            C.noPersonal,
+            C.nombre,
+            C.apellidoPaterno,
+            C.apellidoMaterno,
+            C.curp,
+            C.correo,
+            C.noLicencia,
+            C.idRol,
+            R.rol AS nombreRol,      
+            S.nombre AS nombreSucursal, 
+            C.status
+        FROM 
+            PacketWorld.colaborador C
+        JOIN 
+            PacketWorld.rol R ON C.idRol = R.idRol
+        JOIN 
+            PacketWorld.sucursal S ON C.idSucursal = S.idSucursal
+        WHERE 
+            C.noPersonal = #{noPersonal}
+            AND C.status = 1
+        ORDER BY
+            C.apellidoPaterno, C.nombre;
+    </select>
+    
+    <select id="obtener-por-nombre" parameterType="java.lang.String" resultType="pojo.EntidadesPrincipales.Colaborador">
+        SELECT
+            C.idColaborador,
+            C.noPersonal,
+            C.nombre,
+            C.apellidoPaterno,
+            C.apellidoMaterno,
+            C.curp,
+            C.correo,
+            C.noLicencia,
+            C.idRol,
+            R.rol AS nombreRol,      
+            S.nombre AS nombreSucursal, 
+            C.status
+        FROM 
+            PacketWorld.colaborador C
+        JOIN 
+            PacketWorld.rol R ON C.idRol = R.idRol
+        JOIN 
+            PacketWorld.sucursal S ON C.idSucursal = S.idSucursal
+        WHERE 
+            C.nombre LIKE CONCAT('%', #{nombreBuscado}, '%') 
+            AND C.status = 1
+        ORDER BY
+            C.apellidoPaterno, C.nombre;
+    </select>
 </mapper>
 
