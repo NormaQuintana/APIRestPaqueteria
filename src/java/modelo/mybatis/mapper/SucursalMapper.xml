@@ -39,5 +39,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY 
             S.idSucursal;
     </select>
+    
+    <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Sucursal">
+        INSERT INTO PacketWorld.sucursal (
+            numeroUnicoSucursal, 
+            nombre, 
+            numero, 
+            calle, 
+            idColonia
+        )
+        VALUES (
+            #{numeroUnicoSucursal},
+            #{nombre},
+            #{numero},
+            #{calle},
+            #{idColonia}
+        )
+    </insert>
+    
+    <select id="verificar-existencia" parameterType="pojo.EntidadesPrincipales.Sucursal" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM PacketWorld.sucursal
+        WHERE 
+            nombre = #{nombre} 
+            AND calle = #{calle}
+            AND numero = #{numero}
+            AND idColonia = #{idColonia}
+            AND estado = 'Activa'
+    </select>
 </mapper>
 

@@ -1,9 +1,11 @@
 package dominio;
 
+import dto.Respuesta;
 import java.util.List;
 import modelo.mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.EntidadesPrincipales.Sucursal;
+import utilidades.Constantes;
 
 public class SucursalImp {
     public static List<Sucursal> obtenerSucursales(){
@@ -18,8 +20,39 @@ public class SucursalImp {
             }
             
         }
-        return sucursales;
-        
+        return sucursales;   
+    }
     
-}
+    public static Respuesta registrar(Sucursal sucursal){
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+                Integer existe = conexionBD.selectOne("sucursal.verificar-existencia", sucursal);
+                if (existe != null && existe > 0) {
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Ya existe una sucursal registrada con la misma dirección y nombre.");
+                    return respuesta; 
+                }
+                int filasAfectadas = conexionBD.insert("sucursal.registrar", sucursal);
+                if(filasAfectadas > 0){
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Sucursal: " + sucursal.getNombre() + " registrada correctamente");
+                }else{
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, la sucursal no fue agregada, favor de verificar la infromacion");
+                    
+                }
+            }catch(Exception e){
+                respuesta.setError(true);
+                respuesta.setMensaje(e.getMessage());
+            }
+        }else{
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;        
+    }
 }
