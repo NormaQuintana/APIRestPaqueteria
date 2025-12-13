@@ -1,0 +1,13 @@
+# Directorios de compilación del IDE (NetBeans/Otros)
+build/
+dist/
+target/
+# Archivos de configuración del IDE (si no están ya)
+nbproject/private/
+
+# Archivos de compilación de Java
+*.class
+*.jar
+
+# Archivos de LOG
+*.log
