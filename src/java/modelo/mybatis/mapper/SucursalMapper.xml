@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sucursal">
+    <select id="obtener-todas" resultType="pojo.EntidadesPrincipales.Sucursal">
+        SELECT
+            S.idSucursal,
+            S.numeroUnicoSucursal, 
+            S.nombre AS nombre,                            
+            S.estado AS estado,
+            S.calle AS calle,
+            S.numero AS numero,
+            
+            C.nombre AS nombreColonia,                     
+            C.codigo_postal AS codigoPostal,               
+            M.nombre AS nombreMunicipio,                   
+            E.nombre AS nombreEstado                       
+
+        FROM 
+            PacketWorld.sucursal AS S 
+
+        LEFT JOIN
+            mexico.colonias AS C    
+            ON S.idColonia = C.id
+
+        LEFT JOIN
+            mexico.municipios AS M    
+            ON C.municipio = M.id
+
+        LEFT JOIN
+            mexico.estados AS E     
+            ON M.estado = E.id
+        
+        WHERE 
+        S.estado = 'Activa'
+
+        ORDER BY 
+            S.idSucursal;
+    </select>
+</mapper>
+
