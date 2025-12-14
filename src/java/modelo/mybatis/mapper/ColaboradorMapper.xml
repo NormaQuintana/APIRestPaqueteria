@@ -175,5 +175,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE 
         idColaborador = #{idColaborador};       
     </update>
+    
+    <update id="guardar-foto" parameterType="pojo.EntidadesPrincipales.Colaborador">
+        UPDATE colaborador SET foto = #{foto}
+        WHERE idColaborador = #{idColaborador}
+    </update>
+    
+    <select id="obtener-foto" parameterType="java.lang.Integer" resultType="pojo.EntidadesPrincipales.Colaborador">
+        SELECT idColaborador, TO_BASE64(foto) as fotoBase64
+        FROM PacketWorld.colaborador 
+        WHERE idColaborador = #{idColaborador};
+    </select>
 </mapper>
 

@@ -84,4 +84,24 @@ public class ColaboradorWS {
             throw new BadRequestException(e.getMessage());
         }
     }
+    
+    @Path("subir-foto/{idColaborador}")
+    @PUT
+    @Produces (MediaType.APPLICATION_JSON)
+    public Respuesta subirFoto(@PathParam ("idColaborador") Integer idColaborador, byte[] foto){
+        if(idColaborador != null && idColaborador > 0 && foto.length > 0){
+            return ColaboradorImp.registrarFoto(idColaborador, foto);
+        }
+        throw new BadRequestException();
+    }
+    
+    @Path("obtener-foto/{idColaborador}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Colaborador obtenerFoto(@PathParam("idColaborador") Integer idColaborador){
+        if(idColaborador != null && idColaborador > 0){
+            return ColaboradorImp.obtenerFoto(idColaborador);
+        }
+        throw new BadRequestException(); 
+    }
 }
