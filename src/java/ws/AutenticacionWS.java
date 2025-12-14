@@ -24,4 +24,17 @@ public class AutenticacionWS {
         }
         throw new BadRequestException();
     }
+    
+    @Path("conductor")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public RSAutenticacion autenticarConductor(
+            @FormParam("noPersonal") String noPersonal,
+            @FormParam("password") String password){
+        if(noPersonal != null && !noPersonal.isEmpty() 
+                && (password != null && !password.isEmpty())){
+            return AutenticacionImp.autenticarConductor(noPersonal, password);
+        }
+        throw new BadRequestException();
+    }
 }
