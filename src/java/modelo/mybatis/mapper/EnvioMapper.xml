@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="envio">
+
+    <select id="obtener-todos" resultType="pojo.EntidadesPrincipales.Envio">
+        SELECT
+            e.idEnvio,
+            e.costo,
+            e.noGuia,
+            e.nombreReceptor,
+            e.apellidoPaternoReceptor,
+            e.apellidoMaternoReceptor,
+            e.numeroDestino,
+            e.calleDestino,
+            e.idConductor,
+            e.idSucursal,
+            e.idCliente,
+            e.idColoniaDestino
+        FROM PacketWorld.envio e
+        ORDER BY e.idEnvio DESC;
+    </select>
+
+    <select id="obtener-por-id" parameterType="java.lang.Integer"
+            resultType="pojo.EntidadesPrincipales.Envio">
+        SELECT
+            e.idEnvio,
+            e.costo,
+            e.noGuia,
+            e.nombreReceptor,
+            e.apellidoPaternoReceptor,
+            e.apellidoMaternoReceptor,
+            e.numeroDestino,
+            e.calleDestino,
+            e.idConductor,
+            e.idSucursal,
+            e.idCliente,
+            e.idColoniaDestino
+        FROM PacketWorld.envio e
+        WHERE e.idEnvio = #{idEnvio};
+    </select>
+
+    <select id="obtener-por-noGuia" parameterType="java.lang.String"
+            resultType="pojo.EntidadesPrincipales.Envio">
+        SELECT
+            e.idEnvio,
+            e.costo,
+            e.noGuia,
+            e.nombreReceptor,
+            e.apellidoPaternoReceptor,
+            e.apellidoMaternoReceptor,
+            e.numeroDestino,
+            e.calleDestino,
+            e.idConductor,
+            e.idSucursal,
+            e.idCliente,
+            e.idColoniaDestino
+        FROM PacketWorld.envio e
+        WHERE e.noGuia = #{noGuia};
+    </select>
+
+    <select id="verificar-existencia" parameterType="pojo.EntidadesPrincipales.Envio"
+            resultType="java.lang.Integer">
+        SELECT COUNT(e.idEnvio)
+        FROM PacketWorld.envio e
+        WHERE e.noGuia = #{noGuia}
+
+        <if test="idEnvio != null and idEnvio > 0">
+            AND e.idEnvio != #{idEnvio}
+        </if>
+    </select>
+
+    <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Envio"
+            useGeneratedKeys="true" keyProperty="idEnvio">
+        INSERT INTO PacketWorld.envio (
+            costo,
+            noGuia,
+            nombreReceptor,
+            apellidoPaternoReceptor,
+            apellidoMaternoReceptor,
+            numeroDestino,
+            calleDestino,
+            idConductor,
+            idSucursal,
+            idCliente,
+            idColoniaDestino
+        )
+        VALUES (
+            #{costo},
+            #{noGuia},
+            #{nombreReceptor},
+            #{apellidoPaternoReceptor},
+            #{apellidoMaternoReceptor},
+            #{numeroDestino},
+            #{calleDestino},
+            #{idConductor},
+            #{idSucursal},
+            #{idCliente},
+            #{idColoniaDestino}
+        );
+    </insert>
+
+    <update id="editar" parameterType="pojo.EntidadesPrincipales.Envio">
+        UPDATE PacketWorld.envio
+        SET
+            costo = #{costo},
+            noGuia = #{noGuia},
+            nombreReceptor = #{nombreReceptor},
+            apellidoPaternoReceptor = #{apellidoPaternoReceptor},
+            apellidoMaternoReceptor = #{apellidoMaternoReceptor},
+            numeroDestino = #{numeroDestino},
+            calleDestino = #{calleDestino},
+            idConductor = #{idConductor},
+            idSucursal = #{idSucursal},
+            idCliente = #{idCliente},
+            idColoniaDestino = #{idColoniaDestino}
+        WHERE idEnvio = #{idEnvio};
+    </update>
+
+    <delete id="eliminar" parameterType="java.lang.Integer">
+        DELETE FROM PacketWorld.envio
+        WHERE idEnvio = #{idEnvio};
+    </delete>
+
+</mapper>
