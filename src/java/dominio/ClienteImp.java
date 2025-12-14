@@ -1,12 +1,29 @@
 package dominio;
 
 import dto.Respuesta; 
+import java.util.List;
 import modelo.mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.EntidadesPrincipales.Cliente;
 import utilidades.Constantes; 
 
 public class ClienteImp {
+    
+    public static List<Cliente> obtenerClientes() {
+        List<Cliente> clientes = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        if (conexionBD != null) {
+            try {
+                clientes = conexionBD.selectList("cliente.obtener-todos");
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                conexionBD.close();
+            }
+        }
+        return clientes;
+    }
 
     public static Respuesta registrarCliente(Cliente cliente) {
         Respuesta respuesta = new Respuesta();
