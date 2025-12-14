@@ -28,5 +28,163 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE
             c.status = 1;
     </select>
+    <select id="obtener-por-rol" parameterType="java.lang.Integer" resultType="pojo.EntidadesPrincipales.Colaborador">
+        SELECT
+            C.idColaborador,
+            C.noPersonal,
+            C.nombre,
+            C.apellidoPaterno,
+            C.apellidoMaterno,
+            C.curp,
+            C.correo,
+            C.noLicencia,
+            C.idRol,
+            R.rol AS nombreRol,      
+            S.nombre AS nombreSucursal, 
+            C.status
+        FROM 
+            PacketWorld.colaborador C
+        JOIN 
+            PacketWorld.rol R ON C.idRol = R.idRol
+        JOIN 
+            PacketWorld.sucursal S ON C.idSucursal = S.idSucursal
+        WHERE 
+            C.idRol = #{idRol}
+            AND C.status = 1
+        ORDER BY
+            C.apellidoPaterno, C.nombre;
+    </select>
+    <select id="obtener-por-noPersonal" parameterType="java.lang.String" resultType="pojo.EntidadesPrincipales.Colaborador">
+        SELECT
+            C.idColaborador,
+            C.noPersonal,
+            C.nombre,
+            C.apellidoPaterno,
+            C.apellidoMaterno,
+            C.curp,
+            C.correo,
+            C.noLicencia,
+            C.idRol,
+            R.rol AS nombreRol,      
+            S.nombre AS nombreSucursal, 
+            C.status
+        FROM 
+            PacketWorld.colaborador C
+        JOIN 
+            PacketWorld.rol R ON C.idRol = R.idRol
+        JOIN 
+            PacketWorld.sucursal S ON C.idSucursal = S.idSucursal
+        WHERE 
+            C.noPersonal = #{noPersonal}
+            AND C.status = 1
+        ORDER BY
+            C.apellidoPaterno, C.nombre;
+    </select>
+    
+    <select id="obtener-por-nombre" parameterType="java.lang.String" resultType="pojo.EntidadesPrincipales.Colaborador">
+        SELECT
+            C.idColaborador,
+            C.noPersonal,
+            C.nombre,
+            C.apellidoPaterno,
+            C.apellidoMaterno,
+            C.curp,
+            C.correo,
+            C.noLicencia,
+            C.idRol,
+            R.rol AS nombreRol,      
+            S.nombre AS nombreSucursal, 
+            C.status
+        FROM 
+            PacketWorld.colaborador C
+        JOIN 
+            PacketWorld.rol R ON C.idRol = R.idRol
+        JOIN 
+            PacketWorld.sucursal S ON C.idSucursal = S.idSucursal
+        WHERE 
+            C.nombre LIKE CONCAT('%', #{nombreBuscado}, '%') 
+            AND C.status = 1
+        ORDER BY
+            C.apellidoPaterno, C.nombre;
+    </select>
+    
+    <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Colaborador">
+        INSERT INTO PacketWorld.colaborador (
+            noPersonal,
+            password,
+            nombre,
+            apellidoPaterno,
+            apellidoMaterno,
+            curp,
+            correo,
+            noLicencia,
+            status,
+            idRol,
+            idSucursal
+        )
+        VALUES (
+            #{noPersonal},
+            #{password},
+            #{nombre},
+            #{apellidoPaterno},
+            #{apellidoMaterno},
+            #{curp},
+            #{correo},
+            #{noLicencia},
+            1,           
+            #{idRol},
+            #{idSucursal}
+        )
+    </insert>
+    
+    <select id="verificar-existencia" parameterType="pojo.EntidadesPrincipales.Colaborador" resultType="java.lang.Integer">
+        SELECT COUNT(idColaborador)
+        FROM PacketWorld.colaborador
+        WHERE 
+            (
+                noPersonal = #{noPersonal}
+                OR curp = #{curp}
+                OR correo = #{correo}
+            )
+        
+        <if test="idColaborador != null and idColaborador > 0">
+            AND idColaborador != #{idColaborador}
+        </if>
+    </select>
+    
+    <update id="editar" parameterType="pojo.EntidadesPrincipales.Colaborador">
+        UPDATE PacketWorld.colaborador
+        SET
+            nombre = #{nombre},
+            apellidoPaterno = #{apellidoPaterno},
+            apellidoMaterno = #{apellidoMaterno},
+            curp = #{curp},
+            correo = #{correo},
+            noLicencia = #{noLicencia},
+            idSucursal = #{idSucursal}
+            
+            WHERE 
+            idColaborador = #{idColaborador}
+            AND status = 1;
+    </update>
+    
+    <update id="eliminar" parameterType="java.lang.Integer">
+        UPDATE PacketWorld.colaborador
+        SET 
+            status = 0
+        WHERE 
+        idColaborador = #{idColaborador};       
+    </update>
+    
+    <update id="guardar-foto" parameterType="pojo.EntidadesPrincipales.Colaborador">
+        UPDATE colaborador SET foto = #{foto}
+        WHERE idColaborador = #{idColaborador}
+    </update>
+    
+    <select id="obtener-foto" parameterType="java.lang.Integer" resultType="pojo.EntidadesPrincipales.Colaborador">
+        SELECT idColaborador, TO_BASE64(foto) as fotoBase64
+        FROM PacketWorld.colaborador 
+        WHERE idColaborador = #{idColaborador};
+    </select>
 </mapper>
 

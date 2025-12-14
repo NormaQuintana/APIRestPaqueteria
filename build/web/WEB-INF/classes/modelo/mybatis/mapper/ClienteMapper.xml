@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cliente">
+    
+    <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Cliente"
+            useGeneratedKeys="true" keyProperty="idCliente">
+        
+        INSERT INTO PacketWorld.cliente (
+            nombre, apellidoPaterno, apellidoMaterno, 
+            correo, telefono, numero, calle, 
+            idColonia
+        ) VALUES (
+            #{nombre}, #{apellidoPaterno}, #{apellidoMaterno}, 
+            #{correo}, #{telefono}, #{numero}, #{calle}, 
+            #{idColonia}
+        )
+    </insert>
+    
+</mapper>
