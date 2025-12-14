@@ -107,5 +107,73 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY
             C.apellidoPaterno, C.nombre;
     </select>
+    
+    <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Colaborador">
+        INSERT INTO PacketWorld.colaborador (
+            noPersonal,
+            password,
+            nombre,
+            apellidoPaterno,
+            apellidoMaterno,
+            curp,
+            correo,
+            noLicencia,
+            status,
+            idRol,
+            idSucursal
+        )
+        VALUES (
+            #{noPersonal},
+            #{password},
+            #{nombre},
+            #{apellidoPaterno},
+            #{apellidoMaterno},
+            #{curp},
+            #{correo},
+            #{noLicencia},
+            1,           
+            #{idRol},
+            #{idSucursal}
+        )
+    </insert>
+    
+    <select id="verificar-existencia" parameterType="pojo.EntidadesPrincipales.Colaborador" resultType="java.lang.Integer">
+        SELECT COUNT(idColaborador)
+        FROM PacketWorld.colaborador
+        WHERE 
+            (
+                noPersonal = #{noPersonal}
+                OR curp = #{curp}
+                OR correo = #{correo}
+            )
+        
+        <if test="idColaborador != null and idColaborador > 0">
+            AND idColaborador != #{idColaborador}
+        </if>
+    </select>
+    
+    <update id="editar" parameterType="pojo.EntidadesPrincipales.Colaborador">
+        UPDATE PacketWorld.colaborador
+        SET
+            nombre = #{nombre},
+            apellidoPaterno = #{apellidoPaterno},
+            apellidoMaterno = #{apellidoMaterno},
+            curp = #{curp},
+            correo = #{correo},
+            noLicencia = #{noLicencia},
+            idSucursal = #{idSucursal}
+            
+            WHERE 
+            idColaborador = #{idColaborador}
+            AND status = 1;
+    </update>
+    
+    <update id="eliminar" parameterType="java.lang.Integer">
+        UPDATE PacketWorld.colaborador
+        SET 
+            status = 0
+        WHERE 
+        idColaborador = #{idColaborador};       
+    </update>
 </mapper>
 

@@ -43,11 +43,15 @@ public class SucursalImp {
                     conexionBD.rollback();
                     respuesta.setError(true);
                     respuesta.setMensaje("Lo sentimos, la sucursal no fue agregada, favor de verificar la infromacion");
-                    
+
                 }
             }catch(Exception e){
                 respuesta.setError(true);
                 respuesta.setMensaje(e.getMessage());
+            }finally{
+                if (conexionBD != null) { 
+                    conexionBD.close(); 
+                }
             }
         }else{
             respuesta.setError(true);
@@ -81,6 +85,10 @@ public class SucursalImp {
             }catch(Exception e){
                 respuesta.setError(true);
                 respuesta.setMensaje(e.getMessage());
+            }finally{
+                if (conexionBD != null) { 
+                    conexionBD.close(); 
+                }
             }
         }else{
             respuesta.setError(true);
