@@ -1,4 +1,4 @@
-package dominio;
+ package dominio;
 
 import dto.Respuesta;
 import java.util.List;
