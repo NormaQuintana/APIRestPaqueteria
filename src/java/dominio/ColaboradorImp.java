@@ -178,7 +178,6 @@ public class ColaboradorImp {
                     respuesta.setError(false);
                     respuesta.setMensaje("La fotografia ha sido guardada exitosamente");
                 }else{
-                    respuesta.setError(true);
                     respuesta.setMensaje("Lo sientimos, no se pudo guardar la imagen, intentelo mas tarde");
                 }
             }catch(Exception e){

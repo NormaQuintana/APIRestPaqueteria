@@ -1,0 +1,11 @@
+/build/
+/dist/
+
+# Archivos de Clase Compilados
+*.class
+
+# Archivos del Proyecto NetBeans
+/nbproject/private/
+
+# Dependencias (si estuvieran fuera de la carpeta build)
+/lib/
