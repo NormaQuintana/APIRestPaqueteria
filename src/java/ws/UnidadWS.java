@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -80,4 +81,34 @@ public class UnidadWS {
             throw new BadRequestException(e.getMessage());
         }
     }
+    
+    @Path("asignarConductor")
+    @PUT 
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    // Recibe JSON como String y usa GSON para deserializar
+    public Respuesta asignarConductorWS(String json) {
+        Gson gson = new Gson();
+        try {
+            // Se espera un JSON con idUnidad y idConductor
+            Unidad unidad = gson.fromJson(json, Unidad.class);
+            
+            // Validación mínima: debe tener ID de unidad
+            if (unidad.getIdUnidad() == null || unidad.getIdUnidad() <= 0) {
+                 throw new BadRequestException("El ID de la unidad es obligatorio para la asignación.");
+            }
+            
+            // Llama a la lógica de negocio (que ya tiene la validación de unicidad)
+            return UnidadImp.asignarConductor(unidad);
+            
+        } catch (BadRequestException e) {
+            // Propaga el error 400
+            throw e;
+        } catch (Exception e) {
+            // Error genérico del servidor 500
+            e.printStackTrace(); // Imprimir el error para debug
+            throw new InternalServerErrorException("Error al procesar la solicitud de asignación: " + e.getMessage());
+        }
+    }
 }
+

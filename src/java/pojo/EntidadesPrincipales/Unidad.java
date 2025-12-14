@@ -15,7 +15,8 @@ public class Unidad {
     private String motivoBaja;
     private Date fechaBaja;
     private TipoUnidad tipoUnidad; 
-    private Colaborador conductor; 
+    private Colaborador conductor;
+    private Integer idConductor;
 
     public Unidad() {
     
@@ -35,6 +36,14 @@ public class Unidad {
         this.conductor = conductor;
     }
 
+    public Integer getIdConductor() {
+        return idConductor;
+    }
+
+    public void setIdConductor(Integer idConductor) {
+        this.idConductor = idConductor;
+    }
+    
     public Integer getIdUnidad() {
         return idUnidad;
     }
