@@ -31,9 +31,7 @@ public class ClienteImp {
 
         if (conexionBD != null) {
             try {
-                // [INICIO DE LA CORRECCIÓN DEL BUG]
-
-                // 1. Verificar si ya existe un cliente activo con el mismo correo o teléfono
+              
                 Integer existe = conexionBD.selectOne("cliente.verificar-existencia", cliente);
                 if (existe != null && existe > 0) {
                     respuesta.setError(true);
@@ -41,9 +39,6 @@ public class ClienteImp {
                     return respuesta; 
                 }
 
-                // [FIN DE LA CORRECCIÓN DEL BUG]
-
-                // Lógica de inserción existente (solo se ejecuta si no hay duplicados)
                 int filasAfectadas = conexionBD.insert("cliente.registrar", cliente);
 
                 if (filasAfectadas > 0) {
