@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import pojo.EntidadesPrincipales.Colaborador;
 
 public class AutenticacionImp {
+    
     public static RSAutenticacion autenticarColaborador(String noPersonal, String password){
         RSAutenticacion autenticacion = new RSAutenticacion();
         autenticacion.setError(true);

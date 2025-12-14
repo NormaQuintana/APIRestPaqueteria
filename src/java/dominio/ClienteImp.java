@@ -28,31 +28,34 @@ public class ClienteImp {
     public static Respuesta registrarCliente(Cliente cliente) {
         Respuesta respuesta = new Respuesta();
         SqlSession conexionBD = MyBatisUtil.getSession();
-        
+
         if (conexionBD != null) {
             try {
-                if (cliente.getNombre() == null || cliente.getNombre().isEmpty() ||
-                    cliente.getApellidoPaterno() == null || cliente.getApellidoPaterno().isEmpty() ||
-                    cliente.getCorreo() == null || cliente.getCorreo().isEmpty() ||
-                    cliente.getTelefono() == null || cliente.getTelefono().isEmpty() ||
-                    cliente.getIdColonia() == null) {
-                    
+                // [INICIO DE LA CORRECCIÓN DEL BUG]
+
+                // 1. Verificar si ya existe un cliente activo con el mismo correo o teléfono
+                Integer existe = conexionBD.selectOne("cliente.verificar-existencia", cliente);
+                if (existe != null && existe > 0) {
                     respuesta.setError(true);
-                    respuesta.setMensaje("Faltan campos obligatorios para el registro del cliente.");
+                    respuesta.setMensaje("Error: Ya existe un cliente activo con el mismo correo electrónico o número de teléfono. No se puede registrar.");
                     return respuesta; 
                 }
 
+                // [FIN DE LA CORRECCIÓN DEL BUG]
+
+                // Lógica de inserción existente (solo se ejecuta si no hay duplicados)
                 int filasAfectadas = conexionBD.insert("cliente.registrar", cliente);
-                
+
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
-                    respuesta.setMensaje("Cliente " + cliente.getNombre() + " registrado correctamente.");
+                    respuesta.setMensaje("Cliente: " + cliente.getNombre() + " registrado correctamente.");
                 } else {
-                    conexionBD.rollback(); 
+                    conexionBD.rollback();
                     respuesta.setError(true);
-                    respuesta.setMensaje("Lo sentimos, el cliente no fue agregado. Verifique la información.");
+                    respuesta.setMensaje("Lo sentimos, el cliente no fue registrado.");
                 }
+
             } catch (Exception e) {
                 conexionBD.rollback();
                 e.printStackTrace();

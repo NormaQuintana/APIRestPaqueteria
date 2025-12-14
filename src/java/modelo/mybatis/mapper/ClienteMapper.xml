@@ -70,6 +70,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         idColonia = #{idColonia}
     WHERE idCliente = #{idCliente}
     </update>
+    
+    <select id="verificar-existencia" parameterType="pojo.EntidadesPrincipales.Cliente" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM PacketWorld.cliente
+        WHERE 
+            (correo = #{correo} OR telefono = #{telefono})
+            AND statusRegistro = TRUE
+    </select>
 
     <select id="verificar-edicion" parameterType="pojo.EntidadesPrincipales.Cliente" resultType="java.lang.Integer">
         SELECT COUNT(*)
@@ -79,5 +87,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             AND statusRegistro = TRUE
             AND idCliente != #{idCliente}
     </select>
+    
+    <update id="eliminar" parameterType="java.lang.Integer">
+        UPDATE PacketWorld.cliente
+        SET 
+            statusRegistro = FALSE
+        WHERE 
+        idCliente = #{idCliente};
+    </update>
 
 </mapper>
