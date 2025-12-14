@@ -1,0 +1,53 @@
+package dominio;
+
+import dto.Respuesta; 
+import modelo.mybatis.MyBatisUtil;
+import org.apache.ibatis.session.SqlSession;
+import pojo.EntidadesPrincipales.Cliente;
+import utilidades.Constantes; 
+
+public class ClienteImp {
+
+    public static Respuesta registrarCliente(Cliente cliente) {
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        
+        if (conexionBD != null) {
+            try {
+                if (cliente.getNombre() == null || cliente.getNombre().isEmpty() ||
+                    cliente.getApellidoPaterno() == null || cliente.getApellidoPaterno().isEmpty() ||
+                    cliente.getCorreo() == null || cliente.getCorreo().isEmpty() ||
+                    cliente.getTelefono() == null || cliente.getTelefono().isEmpty() ||
+                    cliente.getIdColonia() == null) {
+                    
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Faltan campos obligatorios para el registro del cliente.");
+                    return respuesta; 
+                }
+
+                int filasAfectadas = conexionBD.insert("cliente.registrar", cliente);
+                
+                if (filasAfectadas > 0) {
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Cliente " + cliente.getNombre() + " registrado correctamente.");
+                } else {
+                    conexionBD.rollback(); 
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, el cliente no fue agregado. Verifique la información.");
+                }
+            } catch (Exception e) {
+                conexionBD.rollback();
+                e.printStackTrace();
+                respuesta.setError(true);
+                respuesta.setMensaje("Error en la base de datos al registrar el cliente: " + e.getMessage());
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;        
+    }
+}
