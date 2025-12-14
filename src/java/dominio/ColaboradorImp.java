@@ -1,9 +1,11 @@
 package dominio;
 
+import dto.Respuesta;
 import java.util.List;
 import modelo.mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.EntidadesPrincipales.Colaborador;
+import utilidades.Constantes;
 
 public class ColaboradorImp {
     public static List<Colaborador> obtenerColaboradores(){
@@ -60,5 +62,104 @@ public class ColaboradorImp {
             }
         }
         return colaboradores;
+    }
+    
+    public static Respuesta registrarColaborador(Colaborador colaborador){
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+                Integer existe = conexionBD.selectOne("colaborador.verificar-existencia", colaborador);
+                if (existe != null && existe > 0) {
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Error: El Curp, correo o no.Personal ya se encuentran registrados");
+                    return respuesta; 
+                }
+                int filasAfectadas = conexionBD.insert("colaborador.registrar", colaborador);
+                if(filasAfectadas > 0){
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Colaborador: " + colaborador.getNombre() + " registrado correctamente");
+                }else{
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, el colaborador no fue agregado, favor de verificar la infromacion");                    
+                }
+            }catch(Exception e){
+                respuesta.setError(true);
+                respuesta.setMensaje(e.getMessage());
+            }finally{
+                if (conexionBD != null) { 
+                    conexionBD.close(); 
+                }
+            }
+        }else{
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;
+    }
+    
+    public static Respuesta editar(Colaborador colaborador){
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+                Integer existe = conexionBD.selectOne("colaborador.verificar-existencia", colaborador);
+                if (existe != null && existe > 0) {
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Error: El Curp, correo o no.Personal ya se encuentran registrados");
+                    return respuesta; 
+                }
+                int filasAfectadas = conexionBD.update("colaborador.editar", colaborador);
+                if(filasAfectadas > 0){
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Colaborador: " + colaborador.getNombre() + " editado correctamente");
+                }else{
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, la sucursal no fue editada, favor de verificar la infromacion");
+                }  
+            }catch(Exception e){
+                respuesta.setError(true);
+                respuesta.setMensaje(e.getMessage());
+            }finally{
+                if (conexionBD != null) { 
+                    conexionBD.close(); 
+                }
+            }
+        }else{
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;
+    }
+    
+    public static Respuesta eliminarColaborador(Integer idColaborador){
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+               int filasAfectadas = conexionBD.update("colaborador.eliminar", idColaborador);
+                if(filasAfectadas > 0 ){
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Colaborador eliminado exitosamente");
+                }else{
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, no se encontró el colaborador con ese ID.");
+                }
+                conexionBD.close(); 
+            }catch(Exception e){
+                respuesta.setError(true);
+                respuesta.setMensaje(e.getMessage());
+            }
+        }else{
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;
     }
 }
