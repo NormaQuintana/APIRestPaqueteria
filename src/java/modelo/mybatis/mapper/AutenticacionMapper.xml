@@ -24,6 +24,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             AND c.status = 1
             AND c.idRol != 3;
     </select>
+    
+    <select id="conductor" parameterType="map" resultType="pojo.EntidadesPrincipales.Colaborador">
+        SELECT 
+            c.idColaborador,
+            c.nombre,
+            c.apellidoPaterno,
+            c.apellidoMaterno,
+            c.noPersonal,
+            c.idRol,
+            r.rol AS nombreRol
+        FROM 
+            colaborador c
+        JOIN 
+            rol r ON c.idRol = r.idRol
+        WHERE 
+            c.noPersonal = #{noPersonal} 
+            AND c.password = #{password}
+            AND c.status = 1
+            AND c.idRol = 3;
+    </select>
 
 </mapper>
 
