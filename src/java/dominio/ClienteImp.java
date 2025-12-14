@@ -1,6 +1,7 @@
 package dominio;
 
 import dto.Respuesta; 
+import java.util.Collections;
 import java.util.List;
 import modelo.mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -134,5 +135,26 @@ public class ClienteImp {
             respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
         }
         return respuesta;
+    }
+    
+    public static List<Cliente> buscarClientes(String palabraClave) {
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        List<Cliente> clientes = null;
+        if (conexionBD != null) {
+            try {
+                // Ejecutamos el mapper de búsqueda
+                clientes = conexionBD.selectList("cliente.buscar-por-palabra-clave", palabraClave);
+            } catch (Exception e) {
+                e.printStackTrace();
+                // En caso de error, devolvemos una lista vacía o nula
+                clientes = null; 
+            } finally {
+                if (conexionBD != null) {
+                    conexionBD.close();
+                }
+            }
+        }
+        // Si la búsqueda no encontró nada (incluyendo errores de BD), devuelve una lista vacía para evitar errores 500 en el WS
+        return clientes != null ? clientes : Collections.emptyList();
     }
 }

@@ -14,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pojo.EntidadesPrincipales.Cliente;
+import javax.ws.rs.QueryParam;
 
 @Path("cliente")
 public class ClienteWS {
@@ -62,6 +63,18 @@ public class ClienteWS {
         }catch(Exception e){
             throw new BadRequestException("Error al procesar la solicitud de eliminación: " + e.getMessage());
         }
+    }
+    
+    @Path("buscar")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    // Ejemplo de URL: /cliente/buscar?palabraClave=Juan
+    public List<Cliente> buscarClientesWS(@QueryParam("palabraClave") String palabraClave) {
+        if (palabraClave == null || palabraClave.trim().isEmpty()) {
+            // Si no se proporciona palabra clave, devolvemos todos los clientes activos
+            return ClienteImp.obtenerClientes(); 
+        }
+        return ClienteImp.buscarClientes(palabraClave);
     }
     
 }
