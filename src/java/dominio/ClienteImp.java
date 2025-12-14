@@ -1,6 +1,7 @@
 package dominio;
 
 import dto.Respuesta; 
+import java.util.Collections;
 import java.util.List;
 import modelo.mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -28,31 +29,29 @@ public class ClienteImp {
     public static Respuesta registrarCliente(Cliente cliente) {
         Respuesta respuesta = new Respuesta();
         SqlSession conexionBD = MyBatisUtil.getSession();
-        
+
         if (conexionBD != null) {
             try {
-                if (cliente.getNombre() == null || cliente.getNombre().isEmpty() ||
-                    cliente.getApellidoPaterno() == null || cliente.getApellidoPaterno().isEmpty() ||
-                    cliente.getCorreo() == null || cliente.getCorreo().isEmpty() ||
-                    cliente.getTelefono() == null || cliente.getTelefono().isEmpty() ||
-                    cliente.getIdColonia() == null) {
-                    
+              
+                Integer existe = conexionBD.selectOne("cliente.verificar-existencia", cliente);
+                if (existe != null && existe > 0) {
                     respuesta.setError(true);
-                    respuesta.setMensaje("Faltan campos obligatorios para el registro del cliente.");
+                    respuesta.setMensaje("Error: Ya existe un cliente activo con el mismo correo electrónico o número de teléfono. No se puede registrar.");
                     return respuesta; 
                 }
 
                 int filasAfectadas = conexionBD.insert("cliente.registrar", cliente);
-                
+
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
-                    respuesta.setMensaje("Cliente " + cliente.getNombre() + " registrado correctamente.");
+                    respuesta.setMensaje("Cliente: " + cliente.getNombre() + " registrado correctamente.");
                 } else {
-                    conexionBD.rollback(); 
+                    conexionBD.rollback();
                     respuesta.setError(true);
-                    respuesta.setMensaje("Lo sentimos, el cliente no fue agregado. Verifique la información.");
+                    respuesta.setMensaje("Lo sentimos, el cliente no fue registrado.");
                 }
+
             } catch (Exception e) {
                 conexionBD.rollback();
                 e.printStackTrace();
@@ -105,5 +104,57 @@ public class ClienteImp {
             respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
         }
         return respuesta;
+    }
+    
+    public static Respuesta eliminarCliente(int idCliente){
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+                int filasAfectadas = conexionBD.update("cliente.eliminar", idCliente);
+                if(filasAfectadas > 0 ){
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Cliente eliminado exitosamente (Baja Lógica).");
+                }else{
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, no se encontró el cliente con ese ID o ya estaba inactivo.");
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+                respuesta.setError(true);
+                respuesta.setMensaje("Error en la base de datos al eliminar el cliente: " + e.getMessage());
+            } finally {
+                if (conexionBD != null) {
+                    conexionBD.close();
+                }
+            }
+        }else{
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;
+    }
+    
+    public static List<Cliente> buscarClientes(String palabraClave) {
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        List<Cliente> clientes = null;
+        if (conexionBD != null) {
+            try {
+                // Ejecutamos el mapper de búsqueda
+                clientes = conexionBD.selectList("cliente.buscar-por-palabra-clave", palabraClave);
+            } catch (Exception e) {
+                e.printStackTrace();
+                // En caso de error, devolvemos una lista vacía o nula
+                clientes = null; 
+            } finally {
+                if (conexionBD != null) {
+                    conexionBD.close();
+                }
+            }
+        }
+        // Si la búsqueda no encontró nada (incluyendo errores de BD), devuelve una lista vacía para evitar errores 500 en el WS
+        return clientes != null ? clientes : Collections.emptyList();
     }
 }
