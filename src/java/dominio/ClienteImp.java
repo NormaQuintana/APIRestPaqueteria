@@ -104,4 +104,35 @@ public class ClienteImp {
         }
         return respuesta;
     }
+    
+    public static Respuesta eliminarCliente(int idCliente){
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+                int filasAfectadas = conexionBD.update("cliente.eliminar", idCliente);
+                if(filasAfectadas > 0 ){
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Cliente eliminado exitosamente (Baja Lógica).");
+                }else{
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, no se encontró el cliente con ese ID o ya estaba inactivo.");
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+                respuesta.setError(true);
+                respuesta.setMensaje("Error en la base de datos al eliminar el cliente: " + e.getMessage());
+            } finally {
+                if (conexionBD != null) {
+                    conexionBD.close();
+                }
+            }
+        }else{
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;
+    }
 }

@@ -10,6 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pojo.EntidadesPrincipales.Cliente;
@@ -49,6 +50,17 @@ public class ClienteWS {
             return ClienteImp.editarCliente(cliente);
         }catch(Exception e){
             throw new BadRequestException("Error al procesar la solicitud de edición: " + e.getMessage());
+        }
+    }
+    
+    @Path("eliminar/{idCliente}")
+    @PUT 
+    @Produces(MediaType.APPLICATION_JSON)
+    public Respuesta eliminarClienteWS(@PathParam ("idCliente") Integer idCliente){
+        try{
+            return ClienteImp.eliminarCliente(idCliente);
+        }catch(Exception e){
+            throw new BadRequestException("Error al procesar la solicitud de eliminación: " + e.getMessage());
         }
     }
     
