@@ -67,4 +67,43 @@ public class ClienteImp {
         }
         return respuesta;        
     }
+    
+    public static Respuesta editarCliente(Cliente cliente) {
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if (conexionBD != null) {
+            try {
+              
+                Integer existe = conexionBD.selectOne("cliente.verificar-edicion", cliente);
+                if (existe != null && existe > 0) {
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Ya existe otro cliente activo con el mismo correo o número de teléfono.");
+                    return respuesta; 
+                }
+                
+                int filasAfectadas = conexionBD.update("cliente.editar", cliente);
+                
+                if (filasAfectadas > 0) {
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Cliente: " + cliente.getNombre() + " actualizado correctamente.");
+                } else {
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, el cliente no fue editado o no se encontró el ID.");
+                }
+            } catch (Exception e) {
+                conexionBD.rollback();
+                e.printStackTrace();
+                respuesta.setError(true);
+                respuesta.setMensaje("Error en la base de datos al editar el cliente: " + e.getMessage());
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;
+    }
 }

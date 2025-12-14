@@ -58,4 +58,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         )
     </insert>
     
+    <update id="editar" parameterType="pojo.EntidadesPrincipales.Cliente">
+    UPDATE PacketWorld.cliente
+    SET nombre = #{nombre}, 
+        apellidoPaterno = #{apellidoPaterno},
+        apellidoMaterno = #{apellidoMaterno},
+        correo = #{correo},
+        telefono = #{telefono},
+        calle = #{calle},
+        numero = #{numero},
+        idColonia = #{idColonia}
+    WHERE idCliente = #{idCliente}
+    </update>
+
+    <select id="verificar-edicion" parameterType="pojo.EntidadesPrincipales.Cliente" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM PacketWorld.cliente
+        WHERE 
+            (correo = #{correo} OR telefono = #{telefono})
+            AND statusRegistro = TRUE
+            AND idCliente != #{idCliente}
+    </select>
+
 </mapper>
