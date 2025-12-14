@@ -73,6 +73,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY U.idUnidad
     </select>
     
+    <update id="asignar-conductor" parameterType="pojo.EntidadesPrincipales.Unidad">
+        UPDATE PacketWorld.unidad
+        SET 
+            idConductor = #{idConductor, jdbcType=INTEGER}
+            -- Usamos jdbcType=INTEGER para asegurar que MyBatis sepa manejar el NULL
+        WHERE 
+            idUnidad = #{idUnidad}
+    </update>
+
+    <select id="verificar-conductor-asignado" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM PacketWorld.unidad 
+        WHERE idConductor = #{idConductor} AND idUnidad != #{idUnidad}
+    </select>
+    
     <select id="verificar-nii-edicion" parameterType="pojo.EntidadesPrincipales.Unidad" resultType="java.lang.Integer">
         SELECT COUNT(*) 
         FROM PacketWorld.unidad 
@@ -86,5 +100,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="verificar-nii" parameterType="pojo.EntidadesPrincipales.Unidad" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM PacketWorld.unidad WHERE noIdentificacion = #{noIdentificacion}
     </select>
-
+    
 </mapper>
