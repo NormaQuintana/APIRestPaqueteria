@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="historialEnvio">
+    
+    <resultMap id="historialEnvioResultMap" type="pojo.EntidadesPrincipales.HistorialEnvio">
+        <id property="fechaHoraCambio" column="fechaHoraCambio"/>
+        <result property="idEnvio" column="idEnvio"/>
+        <result property="comentario" column="comentario"/>
+        
+        <association property="colaborador" 
+                     javaType="pojo.EntidadesPrincipales.Colaborador">
+            <id property="idColaborador" column="idColaborador"/>
+            <result property="nombre" column="nombreColaborador"/>
+            </association>
+
+        <association property="estatusEnvio" 
+                     javaType="pojo.Catalogo.EstatusEnvio">
+            <id property="idEstatusEnvio" column="idEstatusEnvio"/>
+            <result property="estatusEnvio" column="estatus"/>
+        </association>
+    </resultMap>
+    
+    <insert id="registrar-historialEnvio" 
+            parameterType="pojo.EntidadesPrincipales.HistorialEnvio">
+        
+        INSERT INTO historialEnvio (
+            idEnvio, 
+            fechaHoraCambio, 
+            comentario, 
+            idColaborador, 
+            idEstatusEnvio
+        ) VALUES (
+            #{idEnvio}, 
+            NOW(), 
+            #{comentario}, 
+            #{idColaborador}, 
+            #{idEstatusEnvio}
+        )
+    </insert>
+    
+    <select id="consultar-historial-por-guia" 
+            parameterType="java.lang.String" 
+            resultMap="historialEnvioResultMap">
+        
+        SELECT 
+            H.idEnvio,
+            H.fechaHoraCambio,
+            H.comentario,
+            H.idColaborador,
+            C.nombre AS nombreColaborador,
+            H.idEstatusEnvio,
+            E.estatus
+        FROM 
+            historialEnvio H
+        INNER JOIN colaborador C ON H.idColaborador = C.idColaborador
+        INNER JOIN estatusEnvio E ON H.idEstatusEnvio = E.idEstatusEnvio
+        INNER JOIN envio ON H.idEnvio = envio.idEnvio
+        WHERE 
+            envio.noGuia = #{noGuia}
+        ORDER BY 
+            H.fechaHoraCambio DESC
+    </select>
+    
+</mapper>
