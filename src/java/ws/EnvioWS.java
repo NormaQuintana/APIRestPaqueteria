@@ -29,20 +29,22 @@ public class EnvioWS {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Envio obtenerEnvioPorId(@PathParam("idEnvio") Integer idEnvio) {
-        if (idEnvio != null && idEnvio > 0) {
-            return EnvioImp.obtenerEnvioPorId(idEnvio);
+        try {
+            return EnvioImp.obtenerPorId(idEnvio);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
         }
-        throw new BadRequestException();
     }
 
-    @Path("obtener-por-noGuia/{noGuia}")
+    @Path("obtener-por-guia/{noGuia}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Envio obtenerEnvioPorNoGuia(@PathParam("noGuia") String noGuia) {
-        if (noGuia != null && !noGuia.isEmpty()) {
-            return EnvioImp.obtenerEnvioPorNoGuia(noGuia);
+    public Envio obtenerEnvioPorGuia(@PathParam("noGuia") String noGuia) {
+        try {
+            return EnvioImp.obtenerPorGuia(noGuia);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
         }
-        throw new BadRequestException();
     }
 
     @Path("registrar")
@@ -67,23 +69,30 @@ public class EnvioWS {
         Gson gson = new Gson();
         try {
             Envio envio = gson.fromJson(json, Envio.class);
-            return EnvioImp.editarEnvio(envio);
+            return EnvioImp.actualizarEnvio(envio);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
 
-    @Path("eliminar/{idEnvio}")
+    @Path("actualizar-estatus")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Respuesta eliminarEnvio(@PathParam("idEnvio") Integer idEnvio) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Respuesta actualizarEstatus(String json) {
+        Gson gson = new Gson();
         try {
-            if (idEnvio != null && idEnvio > 0) {
-                return EnvioImp.eliminarEnvio(idEnvio);
-            }
-            throw new BadRequestException();
+            java.util.Map<String, Object> datos = gson.fromJson(json, java.util.Map.class);
+
+            int idEnvio = ((Double) datos.get("idEnvio")).intValue();
+            int idEstatusEnvio = ((Double) datos.get("idEstatusEnvio")).intValue();
+            int idColaborador = ((Double) datos.get("idColaborador")).intValue();
+            String comentario = (String) datos.get("comentario");
+
+            return EnvioImp.actualizarEstatus(idEnvio, idEstatusEnvio, idColaborador, comentario);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
+
 }

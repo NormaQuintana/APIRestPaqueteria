@@ -4,138 +4,161 @@ import java.io.Serializable;
 
 public class Envio implements Serializable {
 
-    private int idEnvio;
-    private float costo;
-    private String noGuia;
-
+    private int idCliente;
     private String nombreReceptor;
     private String apellidoPaternoReceptor;
-    private String apellidoMaternoReceptor; // puede ser null
-
-    private String numeroDestino;
-    private String calleDestino;
-
-    private Integer idConductor;
-    private int idColoniaDestino;
+    private String apellidoMaternoReceptor;
     private int idSucursal;
-    private int idCliente;
+    private String calleDestino;
+    private String numeroDestino;
+    private int idColoniaDestino;
+    private int codigoPostal;
+    private String ciudad;
+    private String estado;
+    private String noGuia;
+    private int idEnvio;
+    private float costo;
+    private Integer idConductor;
 
     public Envio() {
     }
 
-    public Envio(int idEnvio, float costo, String noGuia, String nombreReceptor,
-            String apellidoPaternoReceptor, String apellidoMaternoReceptor,
-            String numeroDestino, String calleDestino,
-            int idConductor, int idSucursal, int idCliente, int idColoniaDestino) {
-
-        this.idEnvio = idEnvio;
-        this.costo = costo;
-        this.noGuia = noGuia;
-        this.nombreReceptor = nombreReceptor;
-        this.apellidoPaternoReceptor = apellidoPaternoReceptor;
-        this.apellidoMaternoReceptor = apellidoMaternoReceptor;
-        this.numeroDestino = numeroDestino;
-        this.calleDestino = calleDestino;
-        this.idConductor = idConductor;
-        this.idSucursal = idSucursal;
+    public Envio(int idCliente, String nombreReceptor, String apellidoPaternoReceptor, String apellidoMaternoReceptor, int idSucursal, String calleDestino, String numeroDestino, int idColoniaDestino, int codigoPostal, String ciudad, String estado, String noGuia, int idEnvio, float costo, Integer idConductor) {
         this.idCliente = idCliente;
-        this.idColoniaDestino = idColoniaDestino;
-    }
-
-    public int getIdEnvio() {
-        return idEnvio;
-    }
-
-    public void setIdEnvio(int idEnvio) {
-        this.idEnvio = idEnvio;
-    }
-
-    public float getCosto() {
-        return costo;
-    }
-
-    public void setCosto(float costo) {
-        this.costo = costo;
-    }
-
-    public String getNoGuia() {
-        return noGuia;
-    }
-
-    public void setNoGuia(String noGuia) {
-        this.noGuia = noGuia;
-    }
-
-    public String getNombreReceptor() {
-        return nombreReceptor;
-    }
-
-    public void setNombreReceptor(String nombreReceptor) {
         this.nombreReceptor = nombreReceptor;
-    }
-
-    public String getApellidoPaternoReceptor() {
-        return apellidoPaternoReceptor;
-    }
-
-    public void setApellidoPaternoReceptor(String apellidoPaternoReceptor) {
         this.apellidoPaternoReceptor = apellidoPaternoReceptor;
-    }
-
-    public String getApellidoMaternoReceptor() {
-        return apellidoMaternoReceptor;
-    }
-
-    public void setApellidoMaternoReceptor(String apellidoMaternoReceptor) {
         this.apellidoMaternoReceptor = apellidoMaternoReceptor;
-    }
-
-    public String getNumeroDestino() {
-        return numeroDestino;
-    }
-
-    public void setNumeroDestino(String numeroDestino) {
-        this.numeroDestino = numeroDestino;
-    }
-
-    public String getCalleDestino() {
-        return calleDestino;
-    }
-
-    public void setCalleDestino(String calleDestino) {
-        this.calleDestino = calleDestino;
-    }
-
-    public int getIdSucursal() {
-        return idSucursal;
-    }
-
-    public void setIdSucursal(int idSucursal) {
         this.idSucursal = idSucursal;
+        this.calleDestino = calleDestino;
+        this.numeroDestino = numeroDestino;
+        this.idColoniaDestino = idColoniaDestino;
+        this.codigoPostal = codigoPostal;
+        this.ciudad = ciudad;
+        this.estado = estado;
+        this.noGuia = noGuia;
+        this.idEnvio = idEnvio;
+        this.costo = costo;
+        this.idConductor = idConductor;
     }
 
     public int getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public String getNombreReceptor() {
+        return nombreReceptor;
     }
 
-    public int getIdConductor() {
-        return idConductor;
+    public String getApellidoPaternoReceptor() {
+        return apellidoPaternoReceptor;
     }
 
-    public void setIdConductor(int idConductor) {
-        this.idConductor = idConductor;
+    public String getApellidoMaternoReceptor() {
+        return apellidoMaternoReceptor;
+    }
+
+    public int getIdSucursal() {
+        return idSucursal;
+    }
+
+    public String getCalleDestino() {
+        return calleDestino;
+    }
+
+    public String getNumeroDestino() {
+        return numeroDestino;
     }
 
     public int getIdColoniaDestino() {
         return idColoniaDestino;
     }
 
+    public int getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public String getNoGuia() {
+        return noGuia;
+    }
+
+    public int getIdEnvio() {
+        return idEnvio;
+    }
+
+    public float getCosto() {
+        return costo;
+    }
+
+    public Integer getIdConductor() {
+        return idConductor;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public void setNombreReceptor(String nombreReceptor) {
+        this.nombreReceptor = nombreReceptor;
+    }
+
+    public void setApellidoPaternoReceptor(String apellidoPaternoReceptor) {
+        this.apellidoPaternoReceptor = apellidoPaternoReceptor;
+    }
+
+    public void setApellidoMaternoReceptor(String apellidoMaternoReceptor) {
+        this.apellidoMaternoReceptor = apellidoMaternoReceptor;
+    }
+
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
+    }
+
+    public void setCalleDestino(String calleDestino) {
+        this.calleDestino = calleDestino;
+    }
+
+    public void setNumeroDestino(String numeroDestino) {
+        this.numeroDestino = numeroDestino;
+    }
+
     public void setIdColoniaDestino(int idColoniaDestino) {
         this.idColoniaDestino = idColoniaDestino;
+    }
+
+    public void setCodigoPostal(int codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setNoGuia(String noGuia) {
+        this.noGuia = noGuia;
+    }
+
+    public void setIdEnvio(int idEnvio) {
+        this.idEnvio = idEnvio;
+    }
+
+    public void setCosto(float costo) {
+        this.costo = costo;
+    }
+
+    public void setIdConductor(Integer idConductor) {
+        this.idConductor = idConductor;
     }
 
 }
