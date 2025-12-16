@@ -7,13 +7,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-
 public class MyBatisUtilMexico {
-    private static final String RESOURCE = "modelo/mybatis/mybatis-config-mexico.xml"; 
-    
-    private static final String ENVIROMENT = "geo_lectura"; 
-    private static SqlSessionFactory sqlMapper; 
-    
+
+    private static final String RESOURCE = "modelo/mybatis/mybatis-config-mexico.xml";
+
+    private static final String ENVIROMENT = "geo_lectura";
+    private static SqlSessionFactory sqlMapper;
+
     private static SqlSessionFactory getSqlSessionFactory() throws IOException {
         if (sqlMapper == null) {
             Reader reader = Resources.getResourceAsReader(RESOURCE);
@@ -21,15 +21,15 @@ public class MyBatisUtilMexico {
         }
         return sqlMapper;
     }
-    
-    public static SqlSession getSession(){
+
+    public static SqlSession getSession() {
         SqlSession session = null;
         try {
-            session = getSqlSessionFactory().openSession(true); 
-        }catch (IOException e){
+            session = getSqlSessionFactory().openSession(true);
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return session;
     }
-    
+
 }

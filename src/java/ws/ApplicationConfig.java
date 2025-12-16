@@ -32,7 +32,6 @@ public class ApplicationConfig extends Application {
         resources.add(ws.PaqueteWS.class);
         resources.add(ws.SucursalWS.class);
         resources.add(ws.UnidadWS.class);
-        resources.add(ws.PaqueteWS.class);
 
               
     }

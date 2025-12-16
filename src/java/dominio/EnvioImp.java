@@ -12,6 +12,7 @@ public class EnvioImp {
     public static List<Envio> obtenerEnvios() {
         List<Envio> envios = null;
         SqlSession conexionBD = MyBatisUtil.getSession();
+
         if (conexionBD != null) {
             try {
                 envios = conexionBD.selectList("envio.obtener-todos");
@@ -24,9 +25,10 @@ public class EnvioImp {
         return envios;
     }
 
-    public static Envio obtenerEnvioPorId(Integer idEnvio) {
+    public static Envio obtenerPorId(int idEnvio) {
         Envio envio = null;
         SqlSession conexionBD = MyBatisUtil.getSession();
+
         if (conexionBD != null) {
             try {
                 envio = conexionBD.selectOne("envio.obtener-por-id", idEnvio);
@@ -39,12 +41,13 @@ public class EnvioImp {
         return envio;
     }
 
-    public static Envio obtenerEnvioPorNoGuia(String noGuia) {
+    public static Envio obtenerPorGuia(String noGuia) {
         Envio envio = null;
         SqlSession conexionBD = MyBatisUtil.getSession();
+
         if (conexionBD != null) {
             try {
-                envio = conexionBD.selectOne("envio.obtener-por-noGuia", noGuia);
+                envio = conexionBD.selectOne("envio.obtener-por-guia", noGuia);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -60,114 +63,97 @@ public class EnvioImp {
 
         if (conexionBD != null) {
             try {
-                Integer existe = conexionBD.selectOne("envio.verificar-existencia", envio);
-                if (existe != null && existe > 0) {
-                    respuesta.setError(true);
-                    respuesta.setMensaje("Error: El número de guía ya se encuentra registrado");
-                    return respuesta;
-                }
-
                 int filasAfectadas = conexionBD.insert("envio.registrar", envio);
-
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
-                    respuesta.setMensaje("Envío registrado correctamente con guía: " + envio.getNoGuia());
+                    respuesta.setMensaje("Envío registrado correctamente. Guía: " + envio.getNoGuia());
                 } else {
                     conexionBD.rollback();
                     respuesta.setError(true);
-                    respuesta.setMensaje("Lo sentimos, el envío no fue registrado. Verifica la información.");
+                    respuesta.setMensaje("No se pudo registrar el envío, verifique la información.");
                 }
-
             } catch (Exception e) {
-                try { conexionBD.rollback(); } catch (Exception ex) { /* ignorar */ }
+                conexionBD.rollback();
                 respuesta.setError(true);
                 respuesta.setMensaje(e.getMessage());
             } finally {
                 conexionBD.close();
             }
-
         } else {
             respuesta.setError(true);
             respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
         }
-
         return respuesta;
     }
 
-    public static Respuesta editarEnvio(Envio envio) {
+    public static Respuesta actualizarEnvio(Envio envio) {
         Respuesta respuesta = new Respuesta();
         SqlSession conexionBD = MyBatisUtil.getSession();
 
         if (conexionBD != null) {
             try {
-                Integer existe = conexionBD.selectOne("envio.verificar-existencia", envio);
-                if (existe != null && existe > 0) {
-                    respuesta.setError(true);
-                    respuesta.setMensaje("Error: El número de guía ya se encuentra registrado");
-                    return respuesta;
-                }
-
                 int filasAfectadas = conexionBD.update("envio.editar", envio);
-
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
-                    respuesta.setMensaje("Envío editado correctamente (ID: " + envio.getIdEnvio() + ")");
+                    respuesta.setMensaje("Envío actualizado correctamente.");
                 } else {
                     conexionBD.rollback();
                     respuesta.setError(true);
-                    respuesta.setMensaje("Lo sentimos, el envío no fue editado. Verifica la información.");
+                    respuesta.setMensaje("No se pudo actualizar el envío.");
                 }
-
             } catch (Exception e) {
-                try { conexionBD.rollback(); } catch (Exception ex) {  }
+                conexionBD.rollback();
                 respuesta.setError(true);
                 respuesta.setMensaje(e.getMessage());
             } finally {
                 conexionBD.close();
             }
-
         } else {
             respuesta.setError(true);
             respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
         }
-
         return respuesta;
     }
 
-    public static Respuesta eliminarEnvio(Integer idEnvio) {
+    public static Respuesta actualizarEstatus(int idEnvio, int idEstatusEnvio, int idColaborador, String comentario) {
         Respuesta respuesta = new Respuesta();
         SqlSession conexionBD = MyBatisUtil.getSession();
 
         if (conexionBD != null) {
             try {
-               
-                int filasAfectadas = conexionBD.delete("envio.eliminar", idEnvio);
+                int filasAfectadas = conexionBD.insert("envio.actualizar-estatus",
+                        new java.util.HashMap<String, Object>() {
+                    {
+                        put("idEnvio", idEnvio);
+                        put("idEstatusEnvio", idEstatusEnvio);
+                        put("idColaborador", idColaborador);
+                        put("comentario", comentario);
+                    }
+                }
+                );
 
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
-                    respuesta.setMensaje("Envío eliminado correctamente.");
+                    respuesta.setMensaje("Estatus del envío actualizado correctamente.");
                 } else {
                     conexionBD.rollback();
                     respuesta.setError(true);
-                    respuesta.setMensaje("No se encontró un envío con ese ID.");
+                    respuesta.setMensaje("No se pudo actualizar el estatus del envío.");
                 }
-
             } catch (Exception e) {
-                try { conexionBD.rollback(); } catch (Exception ex) { /* ignorar */ }
+                conexionBD.rollback();
                 respuesta.setError(true);
                 respuesta.setMensaje(e.getMessage());
             } finally {
                 conexionBD.close();
             }
-
         } else {
             respuesta.setError(true);
             respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
         }
-
         return respuesta;
     }
 }

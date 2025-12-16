@@ -5,123 +5,196 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="envio">
 
+    <!-- =============================== -->
+    <!-- OBTENER TODOS LOS ENVIOS -->
+    <!-- =============================== -->
     <select id="obtener-todos" resultType="pojo.EntidadesPrincipales.Envio">
         SELECT
-            e.idEnvio,
-            e.costo,
-            e.noGuia,
-            e.nombreReceptor,
-            e.apellidoPaternoReceptor,
-            e.apellidoMaternoReceptor,
-            e.numeroDestino,
-            e.calleDestino,
-            e.idConductor,
-            e.idSucursal,
-            e.idCliente,
-            e.idColoniaDestino
-        FROM PacketWorld.envio e
-        ORDER BY e.idEnvio DESC;
+        E.idEnvio,
+        E.noGuia,
+        E.costo,
+
+        E.nombreReceptor,
+        E.apellidoPaternoReceptor,
+        E.apellidoMaternoReceptor,
+
+        E.calleDestino,
+        E.numeroDestino,
+
+        E.idCliente,
+        E.idSucursal,
+        E.idConductor,
+        E.idColoniaDestino,
+
+        C.codigo_postal AS codigoPostal,
+        M.nombre AS ciudad,
+        ES.nombre AS estado
+
+        FROM PacketWorld.envio AS E
+
+        LEFT JOIN mexico.colonias AS C
+        ON E.idColoniaDestino = C.id
+
+        LEFT JOIN mexico.municipios AS M
+        ON C.municipio = M.id
+
+        LEFT JOIN mexico.estados AS ES
+        ON M.estado = ES.id
+
+        ORDER BY E.idEnvio;
     </select>
 
-    <select id="obtener-por-id" parameterType="java.lang.Integer"
-            resultType="pojo.EntidadesPrincipales.Envio">
-        SELECT
-            e.idEnvio,
-            e.costo,
-            e.noGuia,
-            e.nombreReceptor,
-            e.apellidoPaternoReceptor,
-            e.apellidoMaternoReceptor,
-            e.numeroDestino,
-            e.calleDestino,
-            e.idConductor,
-            e.idSucursal,
-            e.idCliente,
-            e.idColoniaDestino
-        FROM PacketWorld.envio e
-        WHERE e.idEnvio = #{idEnvio};
-    </select>
+    <insert id="registrar"
+            parameterType="pojo.EntidadesPrincipales.Envio"
+            useGeneratedKeys="true"
+            keyProperty="idEnvio">
 
-    <select id="obtener-por-noGuia" parameterType="java.lang.String"
-            resultType="pojo.EntidadesPrincipales.Envio">
-        SELECT
-            e.idEnvio,
-            e.costo,
-            e.noGuia,
-            e.nombreReceptor,
-            e.apellidoPaternoReceptor,
-            e.apellidoMaternoReceptor,
-            e.numeroDestino,
-            e.calleDestino,
-            e.idConductor,
-            e.idSucursal,
-            e.idCliente,
-            e.idColoniaDestino
-        FROM PacketWorld.envio e
-        WHERE e.noGuia = #{noGuia};
-    </select>
-
-    <select id="verificar-existencia" parameterType="pojo.EntidadesPrincipales.Envio"
-            resultType="java.lang.Integer">
-        SELECT COUNT(e.idEnvio)
-        FROM PacketWorld.envio e
-        WHERE e.noGuia = #{noGuia}
-
-        <if test="idEnvio != null and idEnvio > 0">
-            AND e.idEnvio != #{idEnvio}
-        </if>
-    </select>
-
-    <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Envio"
-            useGeneratedKeys="true" keyProperty="idEnvio">
         INSERT INTO PacketWorld.envio (
-            costo,
-            noGuia,
-            nombreReceptor,
-            apellidoPaternoReceptor,
-            apellidoMaternoReceptor,
-            numeroDestino,
-            calleDestino,
-            idConductor,
-            idSucursal,
-            idCliente,
-            idColoniaDestino
+        costo,
+        noGuia,
+        nombreReceptor,
+        apellidoPaternoReceptor,
+        apellidoMaternoReceptor,
+        calleDestino,
+        numeroDestino,
+        idColoniaDestino,
+        idCliente,
+        idSucursal,
+        idConductor
         )
         VALUES (
-            #{costo},
-            #{noGuia},
-            #{nombreReceptor},
-            #{apellidoPaternoReceptor},
-            #{apellidoMaternoReceptor},
-            #{numeroDestino},
-            #{calleDestino},
-            #{idConductor},
-            #{idSucursal},
-            #{idCliente},
-            #{idColoniaDestino}
+        #{costo},
+        #{noGuia},
+        #{nombreReceptor},
+        #{apellidoPaternoReceptor},
+        #{apellidoMaternoReceptor},
+        #{calleDestino},
+        #{numeroDestino},
+        #{idColoniaDestino},
+        #{idCliente},
+        #{idSucursal},
+        #{idConductor, jdbcType=INTEGER}
         );
     </insert>
 
-    <update id="editar" parameterType="pojo.EntidadesPrincipales.Envio">
+
+    <select id="obtener-por-id"
+            parameterType="java.lang.Integer"
+            resultType="pojo.EntidadesPrincipales.Envio">
+
+        SELECT
+        E.idEnvio,
+        E.noGuia,
+        E.costo,
+
+        E.nombreReceptor,
+        E.apellidoPaternoReceptor,
+        E.apellidoMaternoReceptor,
+
+        E.calleDestino,
+        E.numeroDestino,
+
+        E.idCliente,
+        E.idSucursal,
+        E.idConductor,
+        E.idColoniaDestino,
+
+        C.codigo_postal AS codigoPostal,
+        M.nombre AS ciudad,
+        ES.nombre AS estado
+
+        FROM PacketWorld.envio AS E
+
+        LEFT JOIN mexico.colonias AS C
+        ON E.idColoniaDestino = C.id
+
+        LEFT JOIN mexico.municipios AS M
+        ON C.municipio = M.id
+
+        LEFT JOIN mexico.estados AS ES
+        ON M.estado = ES.id
+
+        WHERE E.idEnvio = #{idEnvio};
+    </select>
+
+ 
+    <select id="obtener-por-guia"
+            parameterType="java.lang.String"
+            resultType="pojo.EntidadesPrincipales.Envio">
+
+        SELECT
+        E.idEnvio,
+        E.noGuia,
+        E.costo,
+
+        E.nombreReceptor,
+        E.apellidoPaternoReceptor,
+        E.apellidoMaternoReceptor,
+
+        E.calleDestino,
+        E.numeroDestino,
+
+        E.idCliente,
+        E.idSucursal,
+        E.idConductor,
+        E.idColoniaDestino,
+
+        C.codigo_postal AS codigoPostal,
+        M.nombre AS ciudad,
+        ES.nombre AS estado
+
+        FROM PacketWorld.envio AS E
+
+        LEFT JOIN mexico.colonias AS C
+        ON E.idColoniaDestino = C.id
+
+        LEFT JOIN mexico.municipios AS M
+        ON C.municipio = M.id
+
+        LEFT JOIN mexico.estados AS ES
+        ON M.estado = ES.id
+
+        WHERE E.noGuia = #{noGuia};
+    </select>
+
+
+    <update id="editar"
+            parameterType="pojo.EntidadesPrincipales.Envio">
+
         UPDATE PacketWorld.envio
         SET
-            costo = #{costo},
-            noGuia = #{noGuia},
-            nombreReceptor = #{nombreReceptor},
-            apellidoPaternoReceptor = #{apellidoPaternoReceptor},
-            apellidoMaternoReceptor = #{apellidoMaternoReceptor},
-            numeroDestino = #{numeroDestino},
-            calleDestino = #{calleDestino},
-            idConductor = #{idConductor},
-            idSucursal = #{idSucursal},
-            idCliente = #{idCliente},
-            idColoniaDestino = #{idColoniaDestino}
+        costo = #{costo},
+        nombreReceptor = #{nombreReceptor},
+        apellidoPaternoReceptor = #{apellidoPaternoReceptor},
+        apellidoMaternoReceptor = #{apellidoMaternoReceptor},
+        calleDestino = #{calleDestino},
+        numeroDestino = #{numeroDestino},
+        idColoniaDestino = #{idColoniaDestino},
+        idCliente = #{idCliente},
+        idSucursal = #{idSucursal},
+        idConductor = #{idConductor, jdbcType=INTEGER}
         WHERE idEnvio = #{idEnvio};
+
     </update>
 
-    <delete id="eliminar" parameterType="java.lang.Integer">
-        DELETE FROM PacketWorld.envio
-        WHERE idEnvio = #{idEnvio};
-    </delete>
+    <insert id="actualizar-estatus"
+            parameterType="map">
+
+        INSERT INTO PacketWorld.historialEnvio (
+        idEnvio,
+        fechaHoraCambio,
+        comentario,
+        idColaborador,
+        idEstatusEnvio
+        )
+        VALUES (
+        #{idEnvio},
+        NOW(),
+        #{comentario},
+        #{idColaborador},
+        #{idEstatusEnvio}
+        );
+
+    </insert>
 
 </mapper>
