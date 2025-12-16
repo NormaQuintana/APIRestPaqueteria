@@ -82,8 +82,6 @@ public class EnvioWS {
     public Respuesta actualizarEstatus(String json) {
         Gson gson = new Gson();
         try {
-            // Se espera un JSON con:
-            // idEnvio, idEstatusEnvio, idColaborador, comentario
             java.util.Map<String, Object> datos = gson.fromJson(json, java.util.Map.class);
 
             int idEnvio = ((Double) datos.get("idEnvio")).intValue();
