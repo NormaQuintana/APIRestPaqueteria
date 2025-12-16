@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
                     <property name="username" value="usuarioAPI"/>    
 
-                    <property name="password" value="usuarioAPI123456"/>
+                    <property name="password" value="#API2004a"/>
 
                     <property name="poolMaximumActiveConnections" value="50"/>
 
