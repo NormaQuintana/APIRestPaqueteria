@@ -32,7 +32,7 @@ public class ColaboradorWS {
         return ColaboradorImp.obtenerColaboradoresPorRol(idRol);
     }
     
-    @Path("obtener-por-noPerosnal/{noPersonal}")
+    @Path("obtener-por-noPersonal/{noPersonal}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Colaborador obtenerColaboradoresPorNoPersonal(@PathParam("noPersonal") String noPersonal){
