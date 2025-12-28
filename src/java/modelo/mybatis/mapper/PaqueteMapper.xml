@@ -7,13 +7,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="obtener-todos" resultType="pojo.EntidadesPrincipales.Paquete">
         SELECT
-            p.idPaquete,
-            p.descripcion,
-            p.peso,
-            p.alto,
-            p.ancho,
-            p.profundidad,
-            p.idEnvio
+        p.idPaquete,
+        p.descripcion,
+        p.peso,
+        p.alto,
+        p.ancho,
+        p.profundidad,
+        p.idEnvio
         FROM PacketWorld.paquete p
         ORDER BY p.idPaquete DESC;
     </select>
@@ -21,13 +21,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="obtener-por-id" parameterType="java.lang.Integer"
             resultType="pojo.EntidadesPrincipales.Paquete">
         SELECT
-            p.idPaquete,
-            p.descripcion,
-            p.peso,
-            p.alto,
-            p.ancho,
-            p.profundidad,
-            p.idEnvio
+        p.idPaquete,
+        p.descripcion,
+        p.peso,
+        p.alto,
+        p.ancho,
+        p.profundidad,
+        p.idEnvio
         FROM PacketWorld.paquete p
         WHERE p.idPaquete = #{idPaquete};
     </select>
@@ -35,13 +35,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="obtener-por-envio" parameterType="java.lang.Integer"
             resultType="pojo.EntidadesPrincipales.Paquete">
         SELECT
-            p.idPaquete,
-            p.descripcion,
-            p.peso,
-            p.alto,
-            p.ancho,
-            p.profundidad,
-            p.idEnvio
+        p.idPaquete,
+        p.descripcion,
+        p.peso,
+        p.alto,
+        p.ancho,
+        p.profundidad,
+        p.idEnvio
         FROM PacketWorld.paquete p
         WHERE p.idEnvio = #{idEnvio}
         ORDER BY p.idPaquete DESC;
@@ -57,32 +57,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Paquete"
             useGeneratedKeys="true" keyProperty="idPaquete">
         INSERT INTO PacketWorld.paquete (
-            descripcion,
-            peso,
-            alto,
-            ancho,
-            profundidad,
-            idEnvio
+        descripcion,
+        peso,
+        alto,
+        ancho,
+        profundidad,
+        idEnvio
         )
         VALUES (
-            #{descripcion},
-            #{peso},
-            #{alto},
-            #{ancho},
-            #{profundidad},
-            #{idEnvio}
+        #{descripcion},
+        #{peso},
+        #{alto},
+        #{ancho},
+        #{profundidad},
+        #{idEnvio}
         );
     </insert>
 
     <update id="editar" parameterType="pojo.EntidadesPrincipales.Paquete">
         UPDATE PacketWorld.paquete
         SET
-            descripcion = #{descripcion},
-            peso = #{peso},
-            alto = #{alto},
-            ancho = #{ancho},
-            profundidad = #{profundidad},
-            idEnvio = #{idEnvio}
+        descripcion = #{descripcion},
+        peso = #{peso},
+        alto = #{alto},
+        ancho = #{ancho},
+        profundidad = #{profundidad},
+        idEnvio = #{idEnvio}
         WHERE idPaquete = #{idPaquete};
     </update>
 
@@ -90,5 +90,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM PacketWorld.paquete
         WHERE idPaquete = #{idPaquete};
     </delete>
+    
 
 </mapper>
