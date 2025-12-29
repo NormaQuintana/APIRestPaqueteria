@@ -24,37 +24,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="obtener-todos" resultMap="ClienteMap">
         SELECT
-             C.idCliente,
-             C.nombre,
-             C.apellidoPaterno, 
-             C.apellidoMaterno,
-             C.correo,
-             C.telefono,
-             C.calle,
-             C.numero,
-             C.statusRegistro,
-             C.idColonia,
+            C.idCliente,
+            C.nombre,
+            C.apellidoPaterno, 
+            C.apellidoMaterno,
+            C.correo,
+            C.telefono,
+            C.calle,
+            C.numero,
+            C.statusRegistro,
+            C.idColonia,
              
-             CL.nombre AS nombreColonia, 
-             CL.codigo_postal AS codigoPostal, 
-             M.nombre AS nombreMunicipio, 
-             E.nombre AS nombreEstado
+            CL.nombre AS nombreColonia, 
+            CL.codigo_postal AS codigoPostal, 
+            M.nombre AS nombreMunicipio, 
+            E.nombre AS nombreEstado
         FROM 
-             PacketWorld.cliente AS C 
+            PacketWorld.cliente AS C 
         LEFT JOIN
-             mexico.colonias AS CL    
-             ON C.idColonia = CL.id
+            mexico.colonias AS CL    
+            ON C.idColonia = CL.id
         LEFT JOIN
-             mexico.municipios AS M    
-             ON CL.municipio = M.id
+            mexico.municipios AS M    
+            ON CL.municipio = M.id
         LEFT JOIN
-             mexico.estados AS E      
-             ON M.estado = E.id
+            mexico.estados AS E      
+            ON M.estado = E.id
         
         WHERE 
         C.statusRegistro = TRUE
         ORDER BY 
-             C.idCliente;
+            C.idCliente;
     </select>
     
     <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Cliente"
@@ -72,16 +72,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     
     <update id="editar" parameterType="pojo.EntidadesPrincipales.Cliente">
-    UPDATE PacketWorld.cliente
-    SET nombre = #{nombre}, 
-        apellidoPaterno = #{apellidoPaterno},
-        apellidoMaterno = #{apellidoMaterno},
-        correo = #{correo},
-        telefono = #{telefono},
-        calle = #{calle},
-        numero = #{numero},
-        idColonia = #{idColonia}
-    WHERE idCliente = #{idCliente}
+        UPDATE PacketWorld.cliente
+        SET nombre = #{nombre}, 
+            apellidoPaterno = #{apellidoPaterno},
+            apellidoMaterno = #{apellidoMaterno},
+            correo = #{correo},
+            telefono = #{telefono},
+            calle = #{calle},
+            numero = #{numero},
+            idColonia = #{idColonia}
+        WHERE idCliente = #{idCliente}
     </update>
     
     <select id="verificar-existencia" parameterType="pojo.EntidadesPrincipales.Cliente" resultType="java.lang.Integer">
