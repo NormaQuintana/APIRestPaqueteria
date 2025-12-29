@@ -24,6 +24,22 @@ public class EnvioImp {
         }
         return envios;
     }
+    
+    public static List<Envio> obtenerEnviosPorConductor(int idColaborador) {
+        List<Envio> envios = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            try {
+                envios = conexionBD.selectList("envio.obtener-todos-conductor", idColaborador);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                conexionBD.close();
+            }
+        }
+        return envios;
+    }
 
     public static Envio obtenerPorId(int idEnvio) {
         Envio envio = null;

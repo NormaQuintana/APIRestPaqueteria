@@ -93,6 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             C.correo,
             C.noLicencia,
             C.idRol,
+            C.idSucursal,
             R.rol AS nombreRol,      
             S.nombre AS nombreSucursal, 
             C.status

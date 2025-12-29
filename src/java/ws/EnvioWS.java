@@ -24,6 +24,13 @@ public class EnvioWS {
     public List<Envio> obtenerEnvios() {
         return EnvioImp.obtenerEnvios();
     }
+    
+    @Path("obtener-todos/{idColaborador}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Envio> obtenerEnviosPorColaborador(@PathParam("idColaborador") Integer idColaborador) {
+        return EnvioImp.obtenerEnviosPorConductor(idColaborador);
+    }
 
     @Path("obtener-por-id/{idEnvio}")
     @GET

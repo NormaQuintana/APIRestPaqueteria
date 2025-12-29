@@ -8,7 +8,10 @@ public class Envio implements Serializable {
     private String nombreReceptor;
     private String apellidoPaternoReceptor;
     private String apellidoMaternoReceptor;
+    private String telefono;
+    private String correo;
     private int idSucursal;
+    private String nombreSucursal;
     private String calleDestino;
     private String numeroDestino;
     private int idColoniaDestino;
@@ -19,6 +22,7 @@ public class Envio implements Serializable {
     private int idEnvio;
     private float costo;
     private Integer idConductor;
+    private String status;
 
     public Envio() {
     }
@@ -57,8 +61,32 @@ public class Envio implements Serializable {
         return apellidoMaternoReceptor;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
     public int getIdSucursal() {
         return idSucursal;
+    }
+
+    public String getNombreSucursal() {
+        return nombreSucursal;
+    }
+
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
     }
 
     public String getCalleDestino() {
@@ -161,4 +189,11 @@ public class Envio implements Serializable {
         this.idConductor = idConductor;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

@@ -62,6 +62,7 @@
             envio.noGuia = #{noGuia}
         ORDER BY 
             H.fechaHoraCambio DESC
+        LIMIT 1;
     </select>
     
 </mapper>
