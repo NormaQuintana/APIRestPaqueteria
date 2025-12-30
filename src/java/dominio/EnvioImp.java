@@ -24,7 +24,7 @@ public class EnvioImp {
         }
         return envios;
     }
-    
+ 
     public static List<Envio> obtenerEnviosPorConductor(int idColaborador) {
         List<Envio> envios = null;
         SqlSession conexionBD = MyBatisUtil.getSession();
