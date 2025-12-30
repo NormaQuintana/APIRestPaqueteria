@@ -16,7 +16,6 @@ public class ApplicationConfig extends Application {
         addRestResourceClasses(resources);
         return resources;
     }
-
     /**
      * Do not modify addRestResourceClasses() method.
      * It is automatically populated with
@@ -32,9 +31,6 @@ public class ApplicationConfig extends Application {
         resources.add(ws.GeografiaWS.class);
         resources.add(ws.PaqueteWS.class);
         resources.add(ws.SucursalWS.class);
-        resources.add(ws.UnidadWS.class);
-
-              
+        resources.add(ws.UnidadWS.class);      
     }
-    
 }
