@@ -12,12 +12,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
                 <property name="url" value="jdbc:mysql://localhost:3306/mexico?serverTimezone=UTC"/>
                 <property name="username" value="usuarioAPI"/>    
                 <property name="password" value="#API2004a"/>
+
                 <property name="poolMaximumActiveConnections" value="10"/> </dataSource>
+
         </environment>
     </environments>
 
     <mappers>
-        <mapper resource="modelo/mybatis/mapper/GeoMexicoMapper.xml" /> 
+        <mapper resource="modelo/mybatis/mapper/GeografiaMapper.xml" /> 
     </mappers>
 </configuration>
 

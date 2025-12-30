@@ -1,35 +1,23 @@
 package modelo.mybatis;
 
-import java.io.IOException;
 import java.io.Reader;
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
+import org.apache.ibatis.session.*;
 
 public class MyBatisUtilMexico {
-    private static final String RESOURCE = "modelo/mybatis/mybatis-config-mexico.xml"; 
-    
-    private static final String ENVIROMENT = "geo_lectura"; 
-    private static SqlSessionFactory sqlMapper; 
-    
-    private static SqlSessionFactory getSqlSessionFactory() throws IOException {
-        if (sqlMapper == null) {
-            Reader reader = Resources.getResourceAsReader(RESOURCE);
-            sqlMapper = new SqlSessionFactoryBuilder().build(reader, ENVIROMENT);
-        }
-        return sqlMapper;
-    }
-    
-    public static SqlSession getSession(){
-        SqlSession session = null;
+
+    private static SqlSessionFactory factory;
+
+    static {
         try {
-            session = getSqlSessionFactory().openSession(true); 
-        }catch (IOException e){
+            Reader reader = Resources.getResourceAsReader("modelo/mybatis/mybatis-config-mexico.xml");
+            factory = new SqlSessionFactoryBuilder().build(reader);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return session;
     }
-    
+
+    public static SqlSession getSession() {
+        return factory.openSession();
+    }
 }

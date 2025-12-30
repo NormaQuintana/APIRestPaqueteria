@@ -162,12 +162,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         E.nombreReceptor,
         E.apellidoPaternoReceptor,
         E.apellidoMaternoReceptor,
+
         E.calleDestino,
         E.numeroDestino,
+
+
         E.idCliente,
         E.idSucursal,
         E.idConductor,
         E.idColoniaDestino,
+
         C.codigo_postal AS codigoPostal,
         M.nombre AS ciudad,
         ES.nombre AS estado,
@@ -195,6 +199,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INNER JOIN PacketWorld.estatusEnvio AS EST ON H.idEstatusEnvio = EST.idEstatusEnvio    
 
     WHERE E.noGuia = #{noGuia};
+
     </select>
 
 
