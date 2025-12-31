@@ -14,7 +14,7 @@ public class Unidad {
     private Boolean status;
     private String motivoBaja;
     private Date fechaBaja;
-    private TipoUnidad tipoUnidad; 
+    private String tipoUnidad; 
     private Colaborador conductor;
     private Integer idConductor;
 
@@ -22,7 +22,7 @@ public class Unidad {
     
     }
 
-    public Unidad(Integer idUnidad, String marca, String modelo, Integer anio, String vin, String noIdentificacion, Boolean status, String motivoBaja, Date fechaBaja, TipoUnidad tipoUnidad, Colaborador conductor) {
+    public Unidad(Integer idUnidad, String marca, String modelo, Integer anio, String vin, String noIdentificacion, Boolean status, String motivoBaja, Date fechaBaja, String tipoUnidad, Colaborador conductor) {
         this.idUnidad = idUnidad;
         this.marca = marca;
         this.modelo = modelo;
@@ -116,11 +116,11 @@ public class Unidad {
         this.fechaBaja = fechaBaja;
     }
 
-    public TipoUnidad getTipoUnidad() {
+    public String getTipoUnidad() {
         return tipoUnidad;
     }
     
-    public void setTipoUnidad(TipoUnidad tipoUnidad) {
+    public void setTipoUnidad(String tipoUnidad) {
         this.tipoUnidad = tipoUnidad;
     }
 
