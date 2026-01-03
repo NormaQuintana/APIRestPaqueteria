@@ -149,11 +149,11 @@ public class UnidadImp {
     Respuesta respuesta = new Respuesta();
     SqlSession conexionBD = MyBatisUtil.getSession();
     
-    Integer idConductorAAsignar = unidad.getIdConductor();
+    Integer idConductorAAsignar = unidad.getIdColaborador();
     
     if (idConductorAAsignar != null && idConductorAAsignar == 0) {
         idConductorAAsignar = null;
-        unidad.setIdConductor(null); 
+        unidad.setIdColaborador(null); 
     }
 
     if (conexionBD != null) {
@@ -166,7 +166,7 @@ public class UnidadImp {
                 
                 if (conteo != null && conteo > 0) {
                     respuesta.setError(true);
-                    respuesta.setMensaje("Error: El conductor (ID: " + idConductorAAsignar + ") ya tiene otra unidad asignada. Debe desasignarla primero.");
+                    respuesta.setMensaje("Error: El conductor ya tiene otra unidad asignada. Debe desasignarla primero.");
                     return respuesta; 
                 }
             }
@@ -178,8 +178,8 @@ public class UnidadImp {
                     conexionBD.commit();
                     respuesta.setError(false);
 
-                    if (unidad.getIdConductor() != null && unidad.getIdConductor() > 0) {
-                        respuesta.setMensaje("Conductor ID " + unidad.getIdConductor() + " asignado a Unidad ID " + unidad.getIdUnidad() + " correctamente.");
+                    if (unidad.getIdColaborador() != null && unidad.getIdColaborador() > 0) {
+                        respuesta.setMensaje("Conductor ID " + unidad.getIdColaborador() + " asignado a Unidad ID " + unidad.getIdUnidad() + " correctamente.");
                     } else {
                         respuesta.setMensaje("Conductor desasignado de Unidad ID " + unidad.getIdUnidad() + " correctamente.");
                     }

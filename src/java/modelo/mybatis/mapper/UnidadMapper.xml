@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             U.idUnidad, U.marca, U.modelo, U.anio, U.vin, U.noIdentificacion, 
             U.status, U.motivoBaja, U.fechaBaja,
             TU.idTipoUnidad, TU.tipoUnidad,
-            C.idColaborador, C.nombre AS nombreConductor, C.apellidoPaterno AS apellidoPaternoConductor
+            C.idColaborador, C.nombre AS nombreColaborador, C.apellidoPaterno AS apellidoPaterno
         FROM PacketWorld.unidad AS U
         LEFT JOIN PacketWorld.tipoUnidad AS TU ON U.idTipoUnidad = TU.idTipoUnidad
         LEFT JOIN PacketWorld.colaborador AS C ON U.idConductor = C.idColaborador
@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="asignar-conductor" parameterType="pojo.EntidadesPrincipales.Unidad">
         UPDATE PacketWorld.unidad
         SET 
-            idConductor = #{idConductor, jdbcType=INTEGER}
+            idConductor = #{idColaborador, jdbcType=INTEGER}
             -- Usamos jdbcType=INTEGER para asegurar que MyBatis sepa manejar el NULL
         WHERE 
             idUnidad = #{idUnidad}
@@ -83,7 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="verificar-conductor-asignado" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM PacketWorld.unidad 
-        WHERE idConductor = #{idConductor} AND idUnidad != #{idUnidad}
+        WHERE idConductor = #{idColaborador} AND idUnidad != #{idUnidad}
     </select>
     
     <select id="verificar-nii-edicion" parameterType="pojo.EntidadesPrincipales.Unidad" resultType="java.lang.Integer">
