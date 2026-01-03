@@ -16,31 +16,26 @@ public class Unidad {
     private Date fechaBaja;
     private String tipoUnidad;
     private Integer idTipoUnidad;
-    private Colaborador conductor;
-    private Integer idConductor;
+    private Integer idColaborador;
+    private String nombreColaborador;
+    private String apellidoPaterno;
 
     public Unidad() {
     
     }
 
-    public Unidad(Integer idUnidad, String marca, String modelo, Integer anio, String vin, String noIdentificacion, Boolean status, String tipoUnidad, Integer idTipoUnidad) {
+    public Unidad(Integer idUnidad, String marca, String modelo, Integer anio, String vin, String noIdentificacion, String tipoUnidad, Integer idTipoUnidad, Integer idColaborador, String nombreColaborador, String apellidoPaterno) {
         this.idUnidad = idUnidad;
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
         this.vin = vin;
         this.noIdentificacion = noIdentificacion;
-        this.status = status;
         this.tipoUnidad = tipoUnidad;
         this.idTipoUnidad = idTipoUnidad;
-    }
-
-    public Integer getIdConductor() {
-        return idConductor;
-    }
-
-    public void setIdConductor(Integer idConductor) {
-        this.idConductor = idConductor;
+        this.idColaborador = idColaborador;
+        this.nombreColaborador = nombreColaborador;
+        this.apellidoPaterno = apellidoPaterno;
     }
     
     public Integer getIdUnidad() {
@@ -131,12 +126,28 @@ public class Unidad {
         this.idTipoUnidad = idTipoUnidad;
     }
 
-    public Colaborador getConductor() {
-        return conductor;
+    public Integer getIdColaborador() {
+        return idColaborador;
     }
 
-    public void setConductor(Colaborador conductor) {
-        this.conductor = conductor;
+    public void setIdColaborador(Integer idColaborador) {
+        this.idColaborador = idColaborador;
+    }
+
+    public String getNombreColaborador() {
+        return nombreColaborador;
+    }
+
+    public void setNombreColaborador(String nombreColaborador) {
+        this.nombreColaborador = nombreColaborador;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
     }
 
 }
