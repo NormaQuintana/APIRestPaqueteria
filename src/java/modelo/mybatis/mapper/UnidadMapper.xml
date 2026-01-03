@@ -21,10 +21,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Unidad">
         INSERT INTO PacketWorld.unidad (
             marca, modelo, anio, vin, noIdentificacion, 
-            idTipoUnidad, idConductor
+            idTipoUnidad
         ) VALUES (
             #{marca}, #{modelo}, #{anio}, #{vin}, #{noIdentificacion}, 
-            #{tipoUnidad.idTipoUnidad}, #{conductor.idColaborador}
+            #{idTipoUnidad}
         )
     </insert>
     
@@ -35,8 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             modelo = #{modelo}, 
             anio = #{anio}, 
             noIdentificacion = #{noIdentificacion},
-            idTipoUnidad = #{tipoUnidad.idTipoUnidad},
-            idConductor = #{conductor.idColaborador}
+            idTipoUnidad = #{idTipoUnidad}
         WHERE idUnidad = #{idUnidad}
     </update>
     

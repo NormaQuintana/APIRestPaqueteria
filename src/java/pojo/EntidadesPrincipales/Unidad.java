@@ -1,7 +1,7 @@
 package pojo.EntidadesPrincipales;
 
-import java.util.Date; 
-import pojo.Catalogo.TipoUnidad;
+
+import java.util.Date;
 
 public class Unidad {
 
@@ -14,7 +14,8 @@ public class Unidad {
     private Boolean status;
     private String motivoBaja;
     private Date fechaBaja;
-    private String tipoUnidad; 
+    private String tipoUnidad;
+    private Integer idTipoUnidad;
     private Colaborador conductor;
     private Integer idConductor;
 
@@ -22,7 +23,7 @@ public class Unidad {
     
     }
 
-    public Unidad(Integer idUnidad, String marca, String modelo, Integer anio, String vin, String noIdentificacion, Boolean status, String motivoBaja, Date fechaBaja, String tipoUnidad, Colaborador conductor) {
+    public Unidad(Integer idUnidad, String marca, String modelo, Integer anio, String vin, String noIdentificacion, Boolean status, String tipoUnidad, Integer idTipoUnidad) {
         this.idUnidad = idUnidad;
         this.marca = marca;
         this.modelo = modelo;
@@ -30,10 +31,8 @@ public class Unidad {
         this.vin = vin;
         this.noIdentificacion = noIdentificacion;
         this.status = status;
-        this.motivoBaja = motivoBaja;
-        this.fechaBaja = fechaBaja;
         this.tipoUnidad = tipoUnidad;
-        this.conductor = conductor;
+        this.idTipoUnidad = idTipoUnidad;
     }
 
     public Integer getIdConductor() {
@@ -122,6 +121,14 @@ public class Unidad {
     
     public void setTipoUnidad(String tipoUnidad) {
         this.tipoUnidad = tipoUnidad;
+    }
+
+    public Integer getIdTipoUnidad() {
+        return idTipoUnidad;
+    }
+
+    public void setIdTipoUnidad(Integer idTipoUnidad) {
+        this.idTipoUnidad = idTipoUnidad;
     }
 
     public Colaborador getConductor() {
