@@ -7,36 +7,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="obtener-todos" resultType="pojo.EntidadesPrincipales.Envio">
         SELECT
-        E.idEnvio,
-        E.noGuia,
-        E.costo,
+            E.idEnvio,
+            E.noGuia,
+            E.costo,
 
-        E.nombreReceptor,
-        E.apellidoPaternoReceptor,
-        E.apellidoMaternoReceptor,
+            E.nombreReceptor,
+            E.apellidoPaternoReceptor,
+            E.apellidoMaternoReceptor,
 
-        E.calleDestino,
-        E.numeroDestino,
+            E.calleDestino,
+            E.numeroDestino,
+            C.codigo_postal AS codigoPostal,
+            M.nombre AS ciudad,
+            ES.nombre AS estado,
 
-        E.idCliente,
-        E.idSucursal,
-        E.idConductor,
-        E.idColoniaDestino,
+            E.idCliente,
 
-        C.codigo_postal AS codigoPostal,
-        M.nombre AS ciudad,
-        ES.nombre AS estado
+            E.idSucursal,
+            S.nombre AS nombreSucursal,
+
+            E.idConductor,
+            COLAB.nombre AS nombreConductor,
+            COLAB.apellidoPaterno AS apellidoPaternoConductor,
+            COLAB.apellidoMaterno AS apellidoMaternoConductor,
+
+            E.idColoniaDestino
 
         FROM PacketWorld.envio AS E
 
-        LEFT JOIN mexico.colonias AS C
-        ON E.idColoniaDestino = C.id
+        LEFT JOIN mexico.colonias AS C ON E.idColoniaDestino = C.id
+        LEFT JOIN mexico.municipios AS M ON C.municipio = M.id
+        LEFT JOIN mexico.estados AS ES ON M.estado = ES.id
 
-        LEFT JOIN mexico.municipios AS M
-        ON C.municipio = M.id
+        LEFT JOIN PacketWorld.sucursal AS S ON E.idSucursal = S.idSucursal
 
-        LEFT JOIN mexico.estados AS ES
-        ON M.estado = ES.id
+        LEFT JOIN PacketWorld.colaborador AS COLAB ON E.idConductor = COLAB.idColaborador
 
         ORDER BY E.idEnvio;
     </select>
@@ -154,7 +159,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="obtener-por-guia"
             parameterType="java.lang.String"
             resultType="pojo.EntidadesPrincipales.Envio">
-
         SELECT
         E.idEnvio,
         E.noGuia,
@@ -162,16 +166,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         E.nombreReceptor,
         E.apellidoPaternoReceptor,
         E.apellidoMaternoReceptor,
-
         E.calleDestino,
         E.numeroDestino,
-
-
         E.idCliente,
         E.idSucursal,
         E.idConductor,
         E.idColoniaDestino,
-
         C.codigo_postal AS codigoPostal,
         M.nombre AS ciudad,
         ES.nombre AS estado,
@@ -179,26 +179,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         CLI.correo AS correo,
         SUC.nombre AS nombreSucursal,
         EST.estatus AS status
-
-    FROM PacketWorld.envio AS E
-
-    LEFT JOIN mexico.colonias AS C ON E.idColoniaDestino = C.id
-    LEFT JOIN mexico.municipios AS M ON C.municipio = M.id
-    LEFT JOIN mexico.estados AS ES ON M.estado = ES.id
-
-    INNER JOIN PacketWorld.cliente AS CLI ON E.idCliente = CLI.idCliente
-    
-    INNER JOIN PacketWorld.sucursal AS SUC ON E.idSucursal = SUC.idSucursal
         
-    INNER JOIN PacketWorld.historialEnvio AS H ON E.idEnvio = H.idEnvio
-            AND H.fechaHoraCambio = (
-                SELECT MAX(H2.fechaHoraCambio) 
-                FROM PacketWorld.historialEnvio H2 
-                WHERE H2.idEnvio = E.idEnvio
-            )
-        INNER JOIN PacketWorld.estatusEnvio AS EST ON H.idEstatusEnvio = EST.idEstatusEnvio    
-
-    WHERE E.noGuia = #{noGuia};
+        FROM PacketWorld.envio AS E
+        
+        LEFT JOIN mexico.colonias AS C ON E.idColoniaDestino = C.id
+        LEFT JOIN mexico.municipios AS M ON C.municipio = M.id
+        LEFT JOIN mexico.estados AS ES ON M.estado = ES.id
+        INNER JOIN PacketWorld.cliente AS CLI ON E.idCliente = CLI.idCliente
+        INNER JOIN PacketWorld.sucursal AS SUC ON E.idSucursal = SUC.idSucursal
+        LEFT JOIN PacketWorld.historialEnvio AS H ON E.idEnvio = H.idEnvio
+                AND H.fechaHoraCambio = (
+                    SELECT MAX(H2.fechaHoraCambio) 
+                    FROM PacketWorld.historialEnvio H2 
+                    WHERE H2.idEnvio = E.idEnvio
+                )
+        LEFT JOIN PacketWorld.estatusEnvio AS EST ON H.idEstatusEnvio = EST.idEstatusEnvio
+            
+        WHERE E.noGuia = #{noGuia};
 
     </select>
 

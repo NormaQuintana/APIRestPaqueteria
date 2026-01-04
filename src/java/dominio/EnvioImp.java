@@ -83,6 +83,7 @@ public class EnvioImp {
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
+                    respuesta.setIdGenerado(envio.getIdEnvio());
                     respuesta.setMensaje("Envío registrado correctamente. Guía: " + envio.getNoGuia());
                 } else {
                     conexionBD.rollback();
