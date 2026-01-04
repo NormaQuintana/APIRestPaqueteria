@@ -13,8 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.alto,
         p.ancho,
         p.profundidad,
-        p.idEnvio
+        p.idEnvio,
+        e.noGuia AS noGuia
         FROM PacketWorld.paquete p
+        INNER JOIN PacketWorld.envio e ON p.idEnvio = e.idEnvio
         ORDER BY p.idPaquete DESC;
     </select>
 
