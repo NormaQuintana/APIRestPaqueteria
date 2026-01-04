@@ -40,38 +40,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY E.idEnvio;
     </select>
 
-    <insert id="registrar"
-            parameterType="pojo.EntidadesPrincipales.Envio"
-            useGeneratedKeys="true"
-            keyProperty="idEnvio">
+        <insert id="registrar"
+                parameterType="pojo.EntidadesPrincipales.Envio"
+                useGeneratedKeys="true"
+                keyProperty="idEnvio">
 
-        INSERT INTO PacketWorld.envio (
-        costo,
-        noGuia,
-        nombreReceptor,
-        apellidoPaternoReceptor,
-        apellidoMaternoReceptor,
-        calleDestino,
-        numeroDestino,
-        idColoniaDestino,
-        idCliente,
-        idSucursal,
-        idConductor
-        )
-        VALUES (
-        #{costo},
-        #{noGuia},
-        #{nombreReceptor},
-        #{apellidoPaternoReceptor},
-        #{apellidoMaternoReceptor},
-        #{calleDestino},
-        #{numeroDestino},
-        #{idColoniaDestino},
-        #{idCliente},
-        #{idSucursal},
-        #{idConductor, jdbcType=INTEGER}
-        );
-    </insert>
+            INSERT INTO PacketWorld.envio (
+            costo,
+            noGuia,
+            nombreReceptor,
+            apellidoPaternoReceptor,
+            apellidoMaternoReceptor,
+            calleDestino,
+            numeroDestino,
+            idColoniaDestino,
+            idCliente,
+            idSucursal,
+            idConductor
+            )
+            VALUES (
+            #{costo},
+            #{noGuia},
+            #{nombreReceptor},
+            #{apellidoPaternoReceptor},
+            #{apellidoMaternoReceptor},
+            #{calleDestino},
+            #{numeroDestino},
+            #{idColoniaDestino},
+            #{idCliente},
+            #{idSucursal},
+            #{idConductor, jdbcType=INTEGER}
+            );
+        </insert>
 
 
     <select id="obtener-por-id"

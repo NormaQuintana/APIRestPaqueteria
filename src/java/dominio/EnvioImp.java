@@ -1,5 +1,5 @@
 package dominio;
-
+import java.util.UUID;
 import dto.Respuesta;
 import java.util.List;
 import modelo.mybatis.MyBatisUtil;
@@ -59,6 +59,14 @@ public class EnvioImp {
 
     public static Respuesta registrarEnvio(Envio envio) {
         Respuesta respuesta = new Respuesta();
+        if (envio.getNoGuia() == null || envio.getNoGuia().trim().isEmpty()) {
+            String guia = "PW-" + UUID.randomUUID().toString()
+                    .replace("-", "")
+                    .substring(0, 12)
+                    .toUpperCase();
+            envio.setNoGuia(guia);
+        }
+
         SqlSession conexionBD = MyBatisUtil.getSession();
 
         if (conexionBD != null) {
