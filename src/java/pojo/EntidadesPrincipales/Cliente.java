@@ -5,19 +5,15 @@ public class Cliente {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-
     private String telefono;
     private String correo;
     private String calle;
     private String numero;
     private Integer idColonia;
-    
     private String nombreColonia;
     private String codigoPostal;
     private String nombreMunicipio;
     private String nombreEstado;
-    
-
     private Boolean statusRegistro; 
 
     public Cliente() {

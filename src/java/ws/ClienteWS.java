@@ -68,10 +68,8 @@ public class ClienteWS {
     @Path("buscar")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    // Ejemplo de URL: /cliente/buscar?palabraClave=Juan
     public List<Cliente> buscarClientesWS(@QueryParam("palabraClave") String palabraClave) {
         if (palabraClave == null || palabraClave.trim().isEmpty()) {
-            // Si no se proporciona palabra clave, devolvemos todos los clientes activos
             return ClienteImp.obtenerClientes(); 
         }
         return ClienteImp.buscarClientes(palabraClave);

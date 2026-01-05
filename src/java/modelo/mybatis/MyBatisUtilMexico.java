@@ -7,7 +7,6 @@ import org.apache.ibatis.session.*;
 public class MyBatisUtilMexico {
 
     private static SqlSessionFactory factory;
-
     static {
         try {
             Reader reader = Resources.getResourceAsReader("modelo/mybatis/mybatis-config-mexico.xml");

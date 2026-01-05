@@ -1,5 +1,4 @@
 package pojo.EntidadesPrincipales;
-import java.io.Serializable;
 
 import java.io.Serializable;
 
@@ -25,7 +24,6 @@ public class Envio implements Serializable {
     private String apellidoPaternoConductor;
     private String apellidoMaternoConductor;
     private String estatus;
-   
 
     public Envio() {
     }
@@ -52,8 +50,6 @@ public class Envio implements Serializable {
         this.apellidoMaternoConductor = apellidoMaternoConductor;
         this.estatus = estatus;
     }
-
-    
 
     public int getIdCliente() {
         return idCliente;
@@ -198,8 +194,6 @@ public class Envio implements Serializable {
     public void setApellidoMaternoConductor(String apellidoMaternoConductor) {
         this.apellidoMaternoConductor = apellidoMaternoConductor;
     }
-    
-    
 
     public String getNombreSucursal() {
         return nombreSucursal;
@@ -217,6 +211,4 @@ public class Envio implements Serializable {
         this.estatus = estatus;
     }
 
-    
-    
 }

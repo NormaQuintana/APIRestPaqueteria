@@ -56,7 +56,7 @@ public class PaqueteWS {
         try {
             Paquete paquete = gson.fromJson(json, Paquete.class);
 
-            // Validaciones de entrada (antes de pegarle a BD)
+           
             if (paquete == null) {
                 r.setError(true);
                 r.setMensaje("JSON inválido.");
@@ -91,7 +91,7 @@ public class PaqueteWS {
                 return r;
             }
 
-            // Normalización simple
+            
             paquete.setDescripcion(paquete.getDescripcion().trim());
 
             return PaqueteImp.registrarPaquete(paquete);

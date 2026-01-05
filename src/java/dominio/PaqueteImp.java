@@ -60,7 +60,6 @@ public class PaqueteImp {
 
         if (conexionBD != null) {
             try {
-                // Validación de BD: el envío debe existir (evita error de FK y da mensaje claro)
                 Integer existeEnvio = conexionBD.selectOne("paquete.existe-envio", paquete.getIdEnvio());
                 if (existeEnvio == null || existeEnvio <= 0) {
                     respuesta.setError(true);
@@ -79,7 +78,10 @@ public class PaqueteImp {
                     respuesta.setMensaje("No se pudo registrar el paquete. Verifica la información.");
                 }
             } catch (Exception e) {
-                try { conexionBD.rollback(); } catch (Exception ex) { }
+                try {
+                    conexionBD.rollback();
+                } catch (Exception ex) {
+                }
                 respuesta.setError(true);
                 respuesta.setMensaje(e.getMessage());
             } finally {
@@ -118,7 +120,10 @@ public class PaqueteImp {
                     respuesta.setMensaje("No se encontró el paquete o no se pudo editar.");
                 }
             } catch (Exception e) {
-                try { conexionBD.rollback(); } catch (Exception ex) { }
+                try {
+                    conexionBD.rollback();
+                } catch (Exception ex) {
+                }
                 respuesta.setError(true);
                 respuesta.setMensaje(e.getMessage());
             } finally {
@@ -150,7 +155,10 @@ public class PaqueteImp {
                     respuesta.setMensaje("No se encontró un paquete con ese ID.");
                 }
             } catch (Exception e) {
-                try { conexionBD.rollback(); } catch (Exception ex) { }
+                try {
+                    conexionBD.rollback();
+                } catch (Exception ex) {
+                }
                 respuesta.setError(true);
                 respuesta.setMensaje(e.getMessage());
             } finally {

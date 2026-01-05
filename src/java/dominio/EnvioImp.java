@@ -1,4 +1,5 @@
 package dominio;
+
 import java.util.UUID;
 import dto.Respuesta;
 import java.util.HashMap;
@@ -127,35 +128,39 @@ public class EnvioImp {
         return respuesta;
     }
 
-public static Respuesta actualizarEstatus(int idEnvio, int idEstatusEnvio, int idColaborador, String comentario) {
-    Respuesta r = new Respuesta();
-    SqlSession session = null;
+    public static Respuesta actualizarEstatus(int idEnvio, int idEstatusEnvio, int idColaborador, String comentario) {
+        Respuesta r = new Respuesta();
+        SqlSession session = null;
 
-    try {
-        session = MyBatisUtil.getSession(); // o como lo abras tú
-        Map<String, Object> params = new HashMap<>();
-        params.put("idEnvio", idEnvio);
-        params.put("idEstatusEnvio", idEstatusEnvio);
-        params.put("idColaborador", idColaborador);
-        params.put("comentario", comentario);
+        try {
+            session = MyBatisUtil.getSession();
+            Map<String, Object> params = new HashMap<>();
+            params.put("idEnvio", idEnvio);
+            params.put("idEstatusEnvio", idEstatusEnvio);
+            params.put("idColaborador", idColaborador);
+            params.put("comentario", comentario);
 
-        session.insert("envio.insertar-historial-estatus", params);
-        session.update("envio.actualizar-estatus-envio", params);
+            session.insert("envio.insertar-historial-estatus", params);
+            session.update("envio.actualizar-estatus-envio", params);
 
-        session.commit();
+            session.commit();
 
-        r.setError(false);
-        r.setMensaje("Estatus actualizado correctamente.");
-        return r;
+            r.setError(false);
+            r.setMensaje("Estatus actualizado correctamente.");
+            return r;
 
-    } catch (Exception ex) {
-        if (session != null) session.rollback();
-        r.setError(true);
-        r.setMensaje(ex.getMessage());
-        return r;
+        } catch (Exception ex) {
+            if (session != null) {
+                session.rollback();
+            }
+            r.setError(true);
+            r.setMensaje(ex.getMessage());
+            return r;
 
-    } finally {
-        if (session != null) session.close();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
-}
 }

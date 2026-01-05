@@ -47,7 +47,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY p.idPaquete DESC;
     </select>
 
-    <!-- Validación de negocio: el envío debe existir para poder registrar paquete -->
     <select id="existe-envio" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         SELECT COUNT(1)
         FROM PacketWorld.envio
