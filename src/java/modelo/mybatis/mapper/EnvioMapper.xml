@@ -7,42 +7,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="obtener-todos" resultType="pojo.EntidadesPrincipales.Envio">
         SELECT
-            E.idEnvio,
-            E.noGuia,
-            E.costo,
-
-            E.nombreReceptor,
-            E.apellidoPaternoReceptor,
-            E.apellidoMaternoReceptor,
-
-            E.calleDestino,
-            E.numeroDestino,
-            C.codigo_postal AS codigoPostal,
-            M.nombre AS ciudad,
-            ES.nombre AS estado,
-
-            E.idCliente,
-
-            E.idSucursal,
-            S.nombre AS nombreSucursal,
-
-            E.idConductor,
-            COLAB.nombre AS nombreConductor,
-            COLAB.apellidoPaterno AS apellidoPaternoConductor,
-            COLAB.apellidoMaterno AS apellidoMaternoConductor,
-
-            E.idColoniaDestino
-
+        E.idEnvio,
+        E.noGuia,
+        E.costo,
+        E.nombreReceptor,
+        E.apellidoPaternoReceptor,
+        E.apellidoMaternoReceptor,
+        E.calleDestino,
+        E.numeroDestino,
+        E.idCliente,
+        E.idSucursal,
+        E.idConductor,
+        E.idColoniaDestino,
+        E.idEstatusEnvio,
+        C.codigo_postal AS codigoPostal,
+        M.nombre AS ciudad,
+        ES.nombre AS estado,
+        EE.estatus AS estatus
         FROM PacketWorld.envio AS E
-
         LEFT JOIN mexico.colonias AS C ON E.idColoniaDestino = C.id
         LEFT JOIN mexico.municipios AS M ON C.municipio = M.id
         LEFT JOIN mexico.estados AS ES ON M.estado = ES.id
-
-        LEFT JOIN PacketWorld.sucursal AS S ON E.idSucursal = S.idSucursal
-
-        LEFT JOIN PacketWorld.colaborador AS COLAB ON E.idConductor = COLAB.idColaborador
-
+        LEFT JOIN PacketWorld.estatusEnvio AS EE ON EE.idEstatusEnvio = E.idEstatusEnvio
         ORDER BY E.idEnvio;
     </select>
     
@@ -219,24 +205,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </update>
 
-    <insert id="actualizar-estatus"
-            parameterType="map">
+  <insert id="insertar-historial-estatus" parameterType="map">
+    INSERT INTO PacketWorld.historialEnvio (
+        idEnvio, fechaHoraCambio, comentario, idColaborador, idEstatusEnvio
+    )
+    VALUES (
+        #{idEnvio}, NOW(), #{comentario}, #{idColaborador}, #{idEstatusEnvio}
+    );
+</insert>
 
-        INSERT INTO PacketWorld.historialEnvio (
-        idEnvio,
-        fechaHoraCambio,
-        comentario,
-        idColaborador,
-        idEstatusEnvio
-        )
-        VALUES (
-        #{idEnvio},
-        NOW(),
-        #{comentario},
-        #{idColaborador},
-        #{idEstatusEnvio}
-        );
-
-    </insert>
-
+<update id="actualizar-estatus-envio" parameterType="map">
+    UPDATE PacketWorld.envio
+    SET idEstatusEnvio = #{idEstatusEnvio}
+    WHERE idEnvio = #{idEnvio};
+</update>
 </mapper>
