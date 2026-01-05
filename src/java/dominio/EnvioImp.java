@@ -1,7 +1,9 @@
 package dominio;
 import java.util.UUID;
 import dto.Respuesta;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import modelo.mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.EntidadesPrincipales.Envio;
@@ -125,43 +127,35 @@ public class EnvioImp {
         return respuesta;
     }
 
-    public static Respuesta actualizarEstatus(int idEnvio, int idEstatusEnvio, int idColaborador, String comentario) {
-        Respuesta respuesta = new Respuesta();
-        SqlSession conexionBD = MyBatisUtil.getSession();
+public static Respuesta actualizarEstatus(int idEnvio, int idEstatusEnvio, int idColaborador, String comentario) {
+    Respuesta r = new Respuesta();
+    SqlSession session = null;
 
-        if (conexionBD != null) {
-            try {
-                int filasAfectadas = conexionBD.insert("envio.actualizar-estatus",
-                        new java.util.HashMap<String, Object>() {
-                    {
-                        put("idEnvio", idEnvio);
-                        put("idEstatusEnvio", idEstatusEnvio);
-                        put("idColaborador", idColaborador);
-                        put("comentario", comentario);
-                    }
-                }
-                );
+    try {
+        session = MyBatisUtil.getSession(); // o como lo abras tú
+        Map<String, Object> params = new HashMap<>();
+        params.put("idEnvio", idEnvio);
+        params.put("idEstatusEnvio", idEstatusEnvio);
+        params.put("idColaborador", idColaborador);
+        params.put("comentario", comentario);
 
-                if (filasAfectadas > 0) {
-                    conexionBD.commit();
-                    respuesta.setError(false);
-                    respuesta.setMensaje("Estatus del envío actualizado correctamente.");
-                } else {
-                    conexionBD.rollback();
-                    respuesta.setError(true);
-                    respuesta.setMensaje("No se pudo actualizar el estatus del envío.");
-                }
-            } catch (Exception e) {
-                conexionBD.rollback();
-                respuesta.setError(true);
-                respuesta.setMensaje(e.getMessage());
-            } finally {
-                conexionBD.close();
-            }
-        } else {
-            respuesta.setError(true);
-            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
-        }
-        return respuesta;
+        session.insert("envio.insertar-historial-estatus", params);
+        session.update("envio.actualizar-estatus-envio", params);
+
+        session.commit();
+
+        r.setError(false);
+        r.setMensaje("Estatus actualizado correctamente.");
+        return r;
+
+    } catch (Exception ex) {
+        if (session != null) session.rollback();
+        r.setError(true);
+        r.setMensaje(ex.getMessage());
+        return r;
+
+    } finally {
+        if (session != null) session.close();
     }
+}
 }

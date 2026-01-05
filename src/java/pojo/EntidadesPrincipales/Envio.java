@@ -1,4 +1,5 @@
 package pojo.EntidadesPrincipales;
+import java.io.Serializable;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ public class Envio implements Serializable {
     private String apellidoPaternoReceptor;
     private String apellidoMaternoReceptor;
     private int idSucursal;
+    private String nombreSucursal;
     private String calleDestino;
     private String numeroDestino;
     private int idColoniaDestino;
@@ -19,16 +21,22 @@ public class Envio implements Serializable {
     private int idEnvio;
     private float costo;
     private Integer idConductor;
+    private String nombreConductor;
+    private String apellidoPaternoConductor;
+    private String apellidoMaternoConductor;
+    private String estatus;
+   
 
     public Envio() {
     }
 
-    public Envio(int idCliente, String nombreReceptor, String apellidoPaternoReceptor, String apellidoMaternoReceptor, int idSucursal, String calleDestino, String numeroDestino, int idColoniaDestino, int codigoPostal, String ciudad, String estado, String noGuia, int idEnvio, float costo, Integer idConductor) {
+    public Envio(int idCliente, String nombreReceptor, String apellidoPaternoReceptor, String apellidoMaternoReceptor, int idSucursal, String nombreSucursal, String calleDestino, String numeroDestino, int idColoniaDestino, int codigoPostal, String ciudad, String estado, String noGuia, int idEnvio, float costo, Integer idConductor, String nombreConductor, String apellidoPaternoConductor, String apellidoMaternoConductor, String estatus) {
         this.idCliente = idCliente;
         this.nombreReceptor = nombreReceptor;
         this.apellidoPaternoReceptor = apellidoPaternoReceptor;
         this.apellidoMaternoReceptor = apellidoMaternoReceptor;
         this.idSucursal = idSucursal;
+        this.nombreSucursal = nombreSucursal;
         this.calleDestino = calleDestino;
         this.numeroDestino = numeroDestino;
         this.idColoniaDestino = idColoniaDestino;
@@ -39,7 +47,13 @@ public class Envio implements Serializable {
         this.idEnvio = idEnvio;
         this.costo = costo;
         this.idConductor = idConductor;
+        this.nombreConductor = nombreConductor;
+        this.apellidoPaternoConductor = apellidoPaternoConductor;
+        this.apellidoMaternoConductor = apellidoMaternoConductor;
+        this.estatus = estatus;
     }
+
+    
 
     public int getIdCliente() {
         return idCliente;
@@ -161,4 +175,48 @@ public class Envio implements Serializable {
         this.idConductor = idConductor;
     }
 
+    public String getNombreConductor() {
+        return nombreConductor;
+    }
+
+    public void setNombreConductor(String nombreConductor) {
+        this.nombreConductor = nombreConductor;
+    }
+
+    public String getApellidoPaternoConductor() {
+        return apellidoPaternoConductor;
+    }
+
+    public void setApellidoPaternoConductor(String apellidoPaternoConductor) {
+        this.apellidoPaternoConductor = apellidoPaternoConductor;
+    }
+
+    public String getApellidoMaternoConductor() {
+        return apellidoMaternoConductor;
+    }
+
+    public void setApellidoMaternoConductor(String apellidoMaternoConductor) {
+        this.apellidoMaternoConductor = apellidoMaternoConductor;
+    }
+    
+    
+
+    public String getNombreSucursal() {
+        return nombreSucursal;
+    }
+
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
+    }
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
+
+    
+    
 }
