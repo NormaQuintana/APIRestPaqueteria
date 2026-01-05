@@ -1,6 +1,7 @@
 package pojo.EntidadesPrincipales;
-
 import java.io.Serializable;
+
+
 
 public class Envio implements Serializable {
 
@@ -23,16 +24,18 @@ public class Envio implements Serializable {
     private String nombreConductor;
     private String apellidoPaternoConductor;
     private String apellidoMaternoConductor;
-
+    private String estatus;
+   
     public Envio() {
     }
 
-    public Envio(int idCliente, String nombreReceptor, String apellidoPaternoReceptor, String apellidoMaternoReceptor, int idSucursal, String calleDestino, String numeroDestino, int idColoniaDestino, int codigoPostal, String ciudad, String estado, String noGuia, int idEnvio, float costo, Integer idConductor) {
+    public Envio(int idCliente, String nombreReceptor, String apellidoPaternoReceptor, String apellidoMaternoReceptor, int idSucursal, String nombreSucursal, String calleDestino, String numeroDestino, int idColoniaDestino, int codigoPostal, String ciudad, String estado, String noGuia, int idEnvio, float costo, Integer idConductor, String nombreConductor, String apellidoPaternoConductor, String apellidoMaternoConductor, String estatus) {
         this.idCliente = idCliente;
         this.nombreReceptor = nombreReceptor;
         this.apellidoPaternoReceptor = apellidoPaternoReceptor;
         this.apellidoMaternoReceptor = apellidoMaternoReceptor;
         this.idSucursal = idSucursal;
+        this.nombreSucursal = nombreSucursal;
         this.calleDestino = calleDestino;
         this.numeroDestino = numeroDestino;
         this.idColoniaDestino = idColoniaDestino;
@@ -43,9 +46,13 @@ public class Envio implements Serializable {
         this.idEnvio = idEnvio;
         this.costo = costo;
         this.idConductor = idConductor;
+        this.nombreConductor = nombreConductor;
+        this.apellidoPaternoConductor = apellidoPaternoConductor;
+        this.apellidoMaternoConductor = apellidoMaternoConductor;
+        this.estatus = estatus;
     }
 
-    public int getIdCliente() {
+        public int getIdCliente() {
         return idCliente;
     }
 
@@ -199,4 +206,13 @@ public class Envio implements Serializable {
         this.nombreSucursal = nombreSucursal;
     }
 
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }  
+    
 }
+
