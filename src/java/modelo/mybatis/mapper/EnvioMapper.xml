@@ -23,12 +23,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         C.codigo_postal AS codigoPostal,
         M.nombre AS ciudad,
         ES.nombre AS estado,
-        EE.estatus AS estatus
+        EE.estatus AS estatus,
+        S.nombre AS nombreSucursal,
+        COL.nombre AS nombreConductor,
+        COL.apellidoPaterno AS apellidoPaternoConductor,
+        COL.apellidoMaterno AS apellidoMaternoConductor
         FROM PacketWorld.envio AS E
         LEFT JOIN mexico.colonias AS C ON E.idColoniaDestino = C.id
         LEFT JOIN mexico.municipios AS M ON C.municipio = M.id
         LEFT JOIN mexico.estados AS ES ON M.estado = ES.id
         LEFT JOIN PacketWorld.estatusEnvio AS EE ON EE.idEstatusEnvio = E.idEstatusEnvio
+        LEFT JOIN PacketWorld.sucursal AS S ON E.idSucursal = S.idSucursal
+        LEFT JOIN PacketWorld.colaborador AS COL ON E.idConductor = COL.idColaborador
         ORDER BY E.idEnvio;
     </select>
     
@@ -47,9 +53,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             C.codigo_postal AS codigoPostal,
             M.nombre AS ciudad,
             ES.nombre AS estado,
-            EST.estatus AS status,
+            EST.estatus AS estatus,
             E.idCliente,
-            E.idSucursal
+            E.idSucursal,
+            E.idEstatusEnvio
         
         FROM PacketWorld.envio AS E
 
@@ -164,7 +171,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         CLI.telefono AS telefono,
         CLI.correo AS correo,
         SUC.nombre AS nombreSucursal,
-        EST.estatus AS status
+        EST.estatus AS estatus
         
         FROM PacketWorld.envio AS E
         

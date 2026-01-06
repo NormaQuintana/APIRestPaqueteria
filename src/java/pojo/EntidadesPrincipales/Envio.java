@@ -25,6 +25,9 @@ public class Envio implements Serializable {
     private String apellidoPaternoConductor;
     private String apellidoMaternoConductor;
     private String estatus;
+    private String telefono;
+    private String correo;
+            
    
     public Envio() {
     }
@@ -212,7 +215,23 @@ public class Envio implements Serializable {
 
     public void setEstatus(String estatus) {
         this.estatus = estatus;
-    }  
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
     
 }
 
