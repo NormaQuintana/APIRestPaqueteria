@@ -1,12 +1,9 @@
 package dto;
-
-/**
- *
- * @author isabe
- */
 public class Respuesta {
+
     private boolean error;
     private String mensaje;
+    private int idGenerado;
 
     public Respuesta() {
     }
@@ -31,6 +28,13 @@ public class Respuesta {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
-    
-    
+
+    public int getIdGenerado() {
+        return idGenerado;
+    }
+
+    public void setIdGenerado(int idGenerado) {
+        this.idGenerado = idGenerado;
+    }
+
 }

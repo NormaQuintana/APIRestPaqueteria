@@ -37,7 +37,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parameterType="pojo.EntidadesPrincipales.Envio"
             useGeneratedKeys="true"
             keyProperty="idEnvio">
-
         INSERT INTO PacketWorld.envio (
         costo,
         noGuia,
@@ -62,9 +61,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         #{idColoniaDestino},
         #{idCliente},
         #{idSucursal},
-        #{idConductor, jdbcType=INTEGER}
-        );
+        #{idConductor}
+        )
     </insert>
+
 
 
     <select id="obtener-por-id"
@@ -145,7 +145,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
         WHERE E.noGuia = #{noGuia};
     </select>
-
+    <update id="actualizar-costo" parameterType="pojo.EntidadesPrincipales.Envio">
+        UPDATE PacketWorld.envio
+        SET costo = #{costo}
+        WHERE idEnvio = #{idEnvio}
+    </update>
 
     <update id="editar"
             parameterType="pojo.EntidadesPrincipales.Envio">
@@ -166,20 +170,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </update>
 
-  <insert id="insertar-historial-estatus" parameterType="map">
-    INSERT INTO PacketWorld.historialEnvio (
+    <insert id="insertar-historial-estatus" parameterType="map">
+        INSERT INTO PacketWorld.historialEnvio (
         idEnvio, fechaHoraCambio, comentario, idColaborador, idEstatusEnvio
-    )
-    VALUES (
+        )
+        VALUES (
         #{idEnvio}, NOW(), #{comentario}, #{idColaborador}, #{idEstatusEnvio}
-    );
-</insert>
+        );
+    </insert>
 
-<update id="actualizar-estatus-envio" parameterType="map">
-    UPDATE PacketWorld.envio
-    SET idEstatusEnvio = #{idEstatusEnvio}
-    WHERE idEnvio = #{idEnvio};
-</update>
+    <update id="actualizar-estatus-envio" parameterType="map">
+        UPDATE PacketWorld.envio
+        SET idEstatusEnvio = #{idEstatusEnvio}
+        WHERE idEnvio = #{idEnvio};
+    </update>
+
+    <select id="obtener-cp-destino-por-envio"
+            parameterType="int"
+            resultType="int">
+        SELECT C.codigo_postal
+        FROM PacketWorld.envio E
+        JOIN mexico.colonias C ON C.id = E.idColoniaDestino
+        WHERE E.idEnvio = #{value}
+    </select>
 
 
 

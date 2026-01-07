@@ -9,11 +9,11 @@ public class GeografiaImp {
 
     public static List<HashMap<String, Object>> obtenerColoniasPorCP(int codigoPostal) {
         SqlSession conn = MyBatisUtilMexico.getSession();
+        if (conn == null) {
+            throw new RuntimeException("No se pudo abrir conexión MyBatis (SqlSession null).");
+        }
         try {
             return conn.selectList("geografia.coloniasPorCP", codigoPostal);
-        } catch (Exception e) {
-            e.printStackTrace(); 
-            throw e;
         } finally {
             conn.close();
         }

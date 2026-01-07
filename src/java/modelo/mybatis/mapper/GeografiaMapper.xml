@@ -16,5 +16,11 @@
         JOIN estados e    ON e.id = m.estado
         WHERE c.codigo_postal = #{value}
     </select>
+    <select id="obtener-cp-por-id-colonia" parameterType="int" resultType="int">
+        SELECT codigo_postal
+        FROM mexico.colonias
+        WHERE id = #{value}
+    </select>
+
 </mapper>
 
