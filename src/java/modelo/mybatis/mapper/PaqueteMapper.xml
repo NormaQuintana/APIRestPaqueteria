@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         e.noGuia AS noGuia
         FROM PacketWorld.paquete p
         INNER JOIN PacketWorld.envio e ON p.idEnvio = e.idEnvio
+        WHERE e.activo = 1
         ORDER BY p.idPaquete DESC;
     </select>
 
@@ -45,7 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.profundidad,
         p.idEnvio
         FROM PacketWorld.paquete p
-        WHERE p.idEnvio = #{idEnvio}
+        INNER JOIN PacketWorld.envio e ON p.idEnvio = e.idEnvio
+        WHERE p.idEnvio = #{idEnvio} AND e.activo = 1
         ORDER BY p.idPaquete DESC;
     </select>
 

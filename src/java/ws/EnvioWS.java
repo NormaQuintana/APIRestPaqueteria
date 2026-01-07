@@ -101,5 +101,16 @@ public class EnvioWS {
             throw new BadRequestException(e.getMessage());
         }
     }
+    
+    @Path("eliminar/{idEnvio}")
+    @PUT 
+    @Produces(MediaType.APPLICATION_JSON)
+    public Respuesta eliminarEnvio(@PathParam ("idEnvio") Integer idEnvio){
+        try{
+            return EnvioImp.eliminarEnvio(idEnvio);
+        }catch(Exception e){
+            throw new BadRequestException("Error al procesar la solicitud de eliminación: " + e.getMessage());
+        }
+    }
 
 }

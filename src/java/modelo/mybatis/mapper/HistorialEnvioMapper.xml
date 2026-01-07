@@ -28,7 +28,7 @@
         
         INSERT INTO historialEnvio (
             idEnvio, 
-            fechaHoraCambio, 
+            fechaHora, 
             comentario, 
             idColaborador, 
             idEstatusEnvio
@@ -47,7 +47,7 @@
         
         SELECT 
             H.idEnvio,
-            H.fechaHoraCambio,
+            H.fechaHora,
             H.comentario,
             H.idColaborador,
             C.nombre AS nombreColaborador,
@@ -61,8 +61,8 @@
         WHERE 
             envio.noGuia = #{noGuia}
         ORDER BY 
-            H.fechaHoraCambio DESC
-        LIMIT 1;
+            H.idHistorialEnvio DESC
+        LIMIT 1
     </select>
     
 </mapper>
