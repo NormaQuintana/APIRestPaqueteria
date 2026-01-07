@@ -175,4 +175,31 @@ public static Respuesta actualizarEstatus(int idEnvio, int idEstatusEnvio, int i
         if (session != null) session.close();
     }
 }
+
+public static Respuesta eliminarEnvio(Integer idEnvio){
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+        if(conexionBD != null){
+            try{
+               int filasAfectadas = conexionBD.update("envio.eliminar", idEnvio);
+                if(filasAfectadas > 0 ){
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Envio eliminado exitosamente");
+                }else{
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, no se encontró el envio con ese ID.");
+                }
+                conexionBD.close(); 
+            }catch(Exception e){
+                respuesta.setError(true);
+                respuesta.setMensaje(e.getMessage());
+            }
+        }else{
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;
+    }
 }
