@@ -144,4 +144,64 @@ public class UnidadImp {
     }
         return unidades;
     }
+    
+    public static Respuesta asignarConductor(Unidad unidad) {
+    Respuesta respuesta = new Respuesta();
+    SqlSession conexionBD = MyBatisUtil.getSession();
+    
+    Integer idConductorAAsignar = unidad.getIdColaborador();
+    
+    if (idConductorAAsignar != null && idConductorAAsignar == 0) {
+        idConductorAAsignar = null;
+        unidad.setIdColaborador(null); 
+    }
+
+    if (conexionBD != null) {
+        try {
+  
+            if (idConductorAAsignar != null && idConductorAAsignar > 0) {
+                
+               
+                Integer conteo = conexionBD.selectOne("unidad.verificar-conductor-asignado", unidad);
+                
+                if (conteo != null && conteo > 0) {
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Error: El conductor ya tiene otra unidad asignada. Debe desasignarla primero.");
+                    return respuesta; 
+                }
+            }
+
+               
+                int filasAfectadas = conexionBD.update("unidad.asignar-conductor", unidad);
+
+                if (filasAfectadas > 0) {
+                    conexionBD.commit();
+                    respuesta.setError(false);
+
+                    if (unidad.getIdColaborador() != null && unidad.getIdColaborador() > 0) {
+                        respuesta.setMensaje("Conductor ID " + unidad.getIdColaborador() + " asignado a Unidad ID " + unidad.getIdUnidad() + " correctamente.");
+                    } else {
+                        respuesta.setMensaje("Conductor desasignado de Unidad ID " + unidad.getIdUnidad() + " correctamente.");
+                    }
+
+                } else {
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, no se encontró la Unidad ID " + unidad.getIdUnidad() + " para actualizar.");
+                }
+
+            } catch (Exception e) {
+                conexionBD.rollback();
+                e.printStackTrace();
+                respuesta.setError(true);
+                respuesta.setMensaje("Error en la base de datos al asignar/desasignar conductor: " + e.getMessage());
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+        return respuesta;
+    }
 }

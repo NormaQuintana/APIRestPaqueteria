@@ -24,6 +24,13 @@ public class EnvioWS {
     public List<Envio> obtenerEnvios() {
         return EnvioImp.obtenerEnvios();
     }
+    
+    @Path("obtener-todos/{idColaborador}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Envio> obtenerEnviosPorColaborador(@PathParam("idColaborador") Integer idColaborador) {
+        return EnvioImp.obtenerEnviosPorConductor(idColaborador);
+    }
 
     @Path("obtener-por-id/{idEnvio}")
     @GET
@@ -96,6 +103,17 @@ public class EnvioWS {
             return EnvioImp.actualizarEstatus(idEnvio, idEstatusEnvio, idColaborador, comentario);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
+        }
+    }
+    
+    @Path("eliminar/{idEnvio}")
+    @PUT 
+    @Produces(MediaType.APPLICATION_JSON)
+    public Respuesta eliminarEnvio(@PathParam ("idEnvio") Integer idEnvio){
+        try{
+            return EnvioImp.eliminarEnvio(idEnvio);
+        }catch(Exception e){
+            throw new BadRequestException("Error al procesar la solicitud de eliminación: " + e.getMessage());
         }
     }
 

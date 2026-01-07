@@ -37,4 +37,8 @@ public class Respuesta {
         this.idGenerado = idGenerado;
     }
 
+    public void setIdGenerado(Integer idGenerado) {
+        this.idGenerado = idGenerado;
+    }
+
 }

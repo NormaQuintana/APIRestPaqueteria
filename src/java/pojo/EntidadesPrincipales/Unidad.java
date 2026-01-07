@@ -1,6 +1,8 @@
 package pojo.EntidadesPrincipales;
+
 import java.util.Date;
 import pojo.Catalogo.TipoUnidad;
+import java.util.Date;
 
 public class Unidad {
 
@@ -13,24 +15,28 @@ public class Unidad {
     private Boolean status;
     private String motivoBaja;
     private Date fechaBaja;
-    private TipoUnidad tipoUnidad;
     private Colaborador conductor;
+    private String tipoUnidad;
+    private Integer idTipoUnidad;
+    private Integer idColaborador;
+    private String nombreColaborador;
+    private String apellidoPaterno;
 
     public Unidad() {
     }
 
-    public Unidad(Integer idUnidad, String marca, String modelo, Integer anio, String vin, String noIdentificacion, Boolean status, String motivoBaja, Date fechaBaja, TipoUnidad tipoUnidad, Colaborador conductor) {
+    public Unidad(Integer idUnidad, String marca, String modelo, Integer anio, String vin, String noIdentificacion, String tipoUnidad, Integer idTipoUnidad, Integer idColaborador, String nombreColaborador, String apellidoPaterno) {
         this.idUnidad = idUnidad;
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
         this.vin = vin;
         this.noIdentificacion = noIdentificacion;
-        this.status = status;
-        this.motivoBaja = motivoBaja;
-        this.fechaBaja = fechaBaja;
         this.tipoUnidad = tipoUnidad;
-        this.conductor = conductor;
+        this.idTipoUnidad = idTipoUnidad;
+        this.idColaborador = idColaborador;
+        this.nombreColaborador = nombreColaborador;
+        this.apellidoPaterno = apellidoPaterno;
     }
 
     public Integer getIdUnidad() {
@@ -105,20 +111,44 @@ public class Unidad {
         this.fechaBaja = fechaBaja;
     }
 
-    public TipoUnidad getTipoUnidad() {
+    public String getTipoUnidad() {
         return tipoUnidad;
     }
 
-    public void setTipoUnidad(TipoUnidad tipoUnidad) {
+    public void setTipoUnidad(String tipoUnidad) {
         this.tipoUnidad = tipoUnidad;
     }
 
-    public Colaborador getConductor() {
-        return conductor;
+    public Integer getIdTipoUnidad() {
+        return idTipoUnidad;
     }
 
-    public void setConductor(Colaborador conductor) {
-        this.conductor = conductor;
+    public void setIdTipoUnidad(Integer idTipoUnidad) {
+        this.idTipoUnidad = idTipoUnidad;
+    }
+
+    public Integer getIdColaborador() {
+        return idColaborador;
+    }
+
+    public void setIdColaborador(Integer idColaborador) {
+        this.idColaborador = idColaborador;
+    }
+
+    public String getNombreColaborador() {
+        return nombreColaborador;
+    }
+
+    public void setNombreColaborador(String nombreColaborador) {
+        this.nombreColaborador = nombreColaborador;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
     }
 
 }

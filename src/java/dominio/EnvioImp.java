@@ -2,7 +2,6 @@ package dominio;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import java.util.UUID;
 import dto.Respuesta;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,6 +10,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import modelo.mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.EntidadesPrincipales.Envio;
@@ -19,14 +19,27 @@ import utilidades.Constantes;
 public class EnvioImp {
 
     public static List<Envio> obtenerEnvios() {
-        List<Envio> envios = null; //Declaramos la variable y empieza en null
-        //Abrimos la sesion
+        List<Envio> envios = null;
         SqlSession conexionBD = MyBatisUtil.getSession();
-        //Si se pudo abrir la conexion 
         if (conexionBD != null) {
             try {
-                //selectList(...) significa: “devuélveme una lista de resultados”.
                 envios = conexionBD.selectList("envio.obtener-todos");
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                conexionBD.close();
+            }
+        }
+        return envios;
+    }
+
+    public static List<Envio> obtenerEnviosPorConductor(int idColaborador) {
+        List<Envio> envios = null;
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            try {
+                envios = conexionBD.selectList("envio.obtener-todos-conductor", idColaborador);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -79,6 +92,7 @@ public class EnvioImp {
             envio.setNoGuia(guia);
         }
 
+        // por si tu tabla no permite null o quieres que arranque en 0
         envio.setCosto((float) 0.0);
 
         SqlSession conexionBD = MyBatisUtil.getSession();
@@ -88,8 +102,8 @@ public class EnvioImp {
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
-                    respuesta.setMensaje("Envío registrado correctamente. Guía: " + envio.getNoGuia());
                     respuesta.setIdGenerado(envio.getIdEnvio());
+                    respuesta.setMensaje("Envío registrado correctamente. Guía: " + envio.getNoGuia());
                 } else {
                     conexionBD.rollback();
                     respuesta.setError(true);
@@ -157,6 +171,7 @@ public class EnvioImp {
             r.setMensaje(Constantes.MSJ_ERROR_BD);
             return r;
         }
+
         try {
             Envio envio = session.selectOne("envio.obtener-por-id", idEnvio);
             if (envio == null) {
@@ -164,8 +179,10 @@ public class EnvioImp {
                 r.setMensaje("No existe el envío con id " + idEnvio);
                 return r;
             }
+
             Integer cpOrigen = session.selectOne("sucursal.obtener-cp-por-id", envio.getIdSucursal());
             Integer cpDestino = session.selectOne("envio.obtener-cp-destino-por-envio", idEnvio);
+
             if (cpOrigen == null || cpOrigen < 10000 || cpOrigen > 99999) {
                 r.setError(true);
                 r.setMensaje("CP origen inválido: " + cpOrigen);
@@ -177,11 +194,14 @@ public class EnvioImp {
                 r.setMensaje("CP destino inválido: " + cpDestino);
                 return r;
             }
+
             Integer numPaquetes = session.selectOne("paquete.contar-por-envio", idEnvio);
             if (numPaquetes == null) {
                 numPaquetes = 0;
             }
+
             double distanciaKm = obtenerDistanciaKm(cpOrigen, cpDestino);
+
             double costoPorKm;
             if (distanciaKm >= 1 && distanciaKm <= 200) {
                 costoPorKm = 4.0;
@@ -194,6 +214,7 @@ public class EnvioImp {
             } else {
                 costoPorKm = 0.5;
             }
+
             double adicional;
             if (numPaquetes <= 1) {
                 adicional = 0.0;
@@ -206,7 +227,9 @@ public class EnvioImp {
             } else {
                 adicional = 150.0;
             }
+
             double costoTotal = (distanciaKm * costoPorKm) + adicional;
+
             envio.setCosto((float) costoTotal);
             int filas = session.update("envio.actualizar-costo", envio);
 
@@ -245,7 +268,6 @@ public class EnvioImp {
                     conexionBD.commit();
                     respuesta.setError(false);
                     respuesta.setMensaje("Envío actualizado correctamente.");
-
                 } else {
                     conexionBD.rollback();
                     respuesta.setError(true);
@@ -265,13 +287,6 @@ public class EnvioImp {
         return respuesta;
     }
 
-    /*idEnvio: qué envío vas a cambiar
-
-    idEstatusEnvio: a qué estatus lo vas a poner (en tránsito, entregado, etc.)
-
-    idColaborador: quién hizo el cambio
-
-    comentario: pues una notita */
     public static Respuesta actualizarEstatus(int idEnvio, int idEstatusEnvio, int idColaborador, String comentario) {
         Respuesta r = new Respuesta();
         SqlSession session = null;
@@ -306,5 +321,36 @@ public class EnvioImp {
                 session.close();
             }
         }
+    }
+
+    public static Respuesta eliminarEnvio(Integer idEnvio) {
+        Respuesta respuesta = new Respuesta();
+        SqlSession conexionBD = MyBatisUtil.getSession();
+
+        if (conexionBD != null) {
+            try {
+                int filasAfectadas = conexionBD.update("envio.eliminar", idEnvio);
+                if (filasAfectadas > 0) {
+                    conexionBD.commit();
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Envio eliminado exitosamente");
+                } else {
+                    conexionBD.rollback();
+                    respuesta.setError(true);
+                    respuesta.setMensaje("Lo sentimos, no se encontró el envio con ese ID.");
+                }
+            } catch (Exception e) {
+                conexionBD.rollback();
+                respuesta.setError(true);
+                respuesta.setMensaje(e.getMessage());
+            } finally {
+                conexionBD.close();
+            }
+        } else {
+            respuesta.setError(true);
+            respuesta.setMensaje(Constantes.MSJ_ERROR_BD);
+        }
+
+        return respuesta;
     }
 }

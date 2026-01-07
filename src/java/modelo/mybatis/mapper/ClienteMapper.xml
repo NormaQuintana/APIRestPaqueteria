@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE 
         C.statusRegistro = TRUE
         ORDER BY 
-        C.idCliente;
+            C.idCliente;
     </select>
     
     <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Cliente"

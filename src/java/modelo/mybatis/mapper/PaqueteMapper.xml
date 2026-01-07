@@ -13,8 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.alto,
         p.ancho,
         p.profundidad,
-        p.idEnvio
+        p.idEnvio,
+        e.noGuia AS noGuia
         FROM PacketWorld.paquete p
+        INNER JOIN PacketWorld.envio e ON p.idEnvio = e.idEnvio
+        WHERE e.activo = 1
         ORDER BY p.idPaquete DESC;
     </select>
 
@@ -43,7 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         p.profundidad,
         p.idEnvio
         FROM PacketWorld.paquete p
-        WHERE p.idEnvio = #{idEnvio}
+        INNER JOIN PacketWorld.envio e ON p.idEnvio = e.idEnvio
+        WHERE p.idEnvio = #{idEnvio} AND e.activo = 1
         ORDER BY p.idPaquete DESC;
     </select>
 
@@ -89,6 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM PacketWorld.paquete
         WHERE idPaquete = #{value}
     </delete>
+<<<<<<< HEAD
 
     <select id="contar-por-envio" parameterType="int" resultType="int">
         SELECT COUNT(*) 
@@ -97,5 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
   
 
+=======
+>>>>>>> 0c32b70da7991de0b9971beb94bff38ee87ede8a
 
 </mapper>

@@ -71,7 +71,7 @@ public class PaqueteImp {
                 if (filas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
-                    respuesta.setMensaje("Paquete registrado correctamente (ID: " + paquete.getIdPaquete() + ")");
+                    respuesta.setMensaje("Paquete registrado correctamente");
                 } else {
                     conexionBD.rollback();
                     respuesta.setError(true);

@@ -11,6 +11,7 @@ public class Paquete implements Serializable {
     private float ancho;
     private float profundidad;
     private int idEnvio;
+    private String noGuia;
 
     public Paquete() {
     }
@@ -80,4 +81,13 @@ public class Paquete implements Serializable {
     public void setIdEnvio(int idEnvio) {
         this.idEnvio = idEnvio;
     }
+
+    public String getNoGuia() {
+        return noGuia;
+    }
+
+    public void setNoGuia(String noGuia) {
+        this.noGuia = noGuia;
+    }
+
 }
