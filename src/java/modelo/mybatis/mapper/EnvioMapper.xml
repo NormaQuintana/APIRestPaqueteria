@@ -41,30 +41,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="obtener-todos-conductor" parameterType="java.lang.Integer" resultType="pojo.EntidadesPrincipales.Envio">
         SELECT 
-            E.idEnvio, 
-            E.noGuia, 
-            E.costo, 
-            E.nombreReceptor, 
-            E.apellidoPaternoReceptor, 
-            E.apellidoMaternoReceptor, 
-            E.calleDestino, 
-            E.numeroDestino, 
-            E.idConductor, 
-            E.idColoniaDestino, 
-            C.codigo_postal AS codigoPostal, 
-            M.nombre AS ciudad, 
-            ES.nombre AS estado, 
-            EST.estatus AS estatus, 
-            E.idCliente, 
-            E.idSucursal, 
-            E.idEstatusEnvio 
+        E.idEnvio, 
+        E.noGuia, 
+        E.costo, 
+        E.nombreReceptor, 
+        E.apellidoPaternoReceptor, 
+        E.apellidoMaternoReceptor, 
+        E.calleDestino, 
+        E.numeroDestino, 
+        E.idConductor, 
+        E.idColoniaDestino, 
+        C.codigo_postal AS codigoPostal, 
+        M.nombre AS ciudad, 
+        ES.nombre AS estado, 
+        EST.estatus AS estatus, 
+        E.idCliente, 
+        E.idSucursal, 
+        E.idEstatusEnvio 
         FROM PacketWorld.envio AS E 
         INNER JOIN PacketWorld.historialEnvio AS H ON E.idEnvio = H.idEnvio 
-            AND H.fechaHora = (
-                SELECT MAX(H2.fechaHora) 
-                FROM PacketWorld.historialEnvio H2 
-                WHERE H2.idEnvio = E.idEnvio
-            ) 
+        AND H.fechaHora = (
+        SELECT MAX(H2.fechaHora) 
+        FROM PacketWorld.historialEnvio H2 
+        WHERE H2.idEnvio = E.idEnvio
+        ) 
         INNER JOIN PacketWorld.estatusEnvio AS EST ON H.idEstatusEnvio = EST.idEstatusEnvio 
         LEFT JOIN mexico.colonias AS C ON E.idColoniaDestino = C.id 
         LEFT JOIN mexico.municipios AS M ON C.municipio = M.id 
@@ -151,25 +151,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parameterType="java.lang.String"
             resultType="pojo.EntidadesPrincipales.Envio">
         SELECT
-            E.idEnvio,
-            E.noGuia,
-            E.costo,
-            E.nombreReceptor,
-            E.apellidoPaternoReceptor,
-            E.apellidoMaternoReceptor,
-            E.calleDestino,
-            E.numeroDestino,
-            E.idCliente,
-            E.idSucursal,
-            E.idConductor,
-            E.idColoniaDestino,
-            C.codigo_postal AS codigoPostal,
-            M.nombre AS ciudad,
-            ES.nombre AS estado,
-            CLI.telefono AS telefono,
-            CLI.correo AS correo,
-            SUC.nombre AS nombreSucursal,
-            EST.estatus AS estatus
+        E.idEnvio,
+        E.noGuia,
+        E.costo,
+        E.nombreReceptor,
+        E.apellidoPaternoReceptor,
+        E.apellidoMaternoReceptor,
+        E.calleDestino,
+        E.numeroDestino,
+        E.idCliente,
+        E.idSucursal,
+        E.idConductor,
+        E.idColoniaDestino,
+        C.codigo_postal AS codigoPostal,
+        M.nombre AS ciudad,
+        ES.nombre AS estado,
+        CLI.telefono AS telefono,
+        CLI.correo AS correo,
+        SUC.nombre AS nombreSucursal,
+        EST.estatus AS estatus
         FROM PacketWorld.envio AS E
         LEFT JOIN mexico.colonias AS C ON E.idColoniaDestino = C.id
         LEFT JOIN mexico.municipios AS M ON C.municipio = M.id
@@ -177,11 +177,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INNER JOIN PacketWorld.cliente AS CLI ON E.idCliente = CLI.idCliente
         INNER JOIN PacketWorld.sucursal AS SUC ON E.idSucursal = SUC.idSucursal
         LEFT JOIN PacketWorld.historialEnvio AS H ON E.idEnvio = H.idEnvio
-            AND H.idHistorialEnvio = (
-                SELECT MAX(H2.idHistorialEnvio) 
-                FROM PacketWorld.historialEnvio H2 
-                WHERE H2.idEnvio = E.idEnvio
-            )
+        AND H.idHistorialEnvio = (
+        SELECT MAX(H2.idHistorialEnvio) 
+        FROM PacketWorld.historialEnvio H2 
+        WHERE H2.idEnvio = E.idEnvio
+        )
         LEFT JOIN PacketWorld.estatusEnvio AS EST ON H.idEstatusEnvio = EST.idEstatusEnvio
         WHERE E.noGuia = #{noGuia} AND E.activo = 1
 
@@ -216,14 +216,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         idEnvio, fechaHoraCambio, comentario, idColaborador, idEstatusEnvio
         )
         VALUES (
-
-  <insert id="insertar-historial-estatus" parameterType="map">
-    INSERT INTO PacketWorld.historialEnvio (
-        idEnvio, fechaHora, comentario, idColaborador, idEstatusEnvio
-    )
-    VALUES (
-        #{idEnvio}, NOW(), #{comentario}, #{idColaborador}, #{idEstatusEnvio}
-        );
+        #{idEnvio}, #{fechaHoraCambio}, #{comentario}, #{idColaborador}, #{idEstatusEnvio}
+        )
     </insert>
 
     <update id="actualizar-estatus-envio" parameterType="map">
@@ -241,9 +235,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE E.idEnvio = #{value}
     </select>
 
-<update id="eliminar" parameterType="java.lang.Integer">
-    UPDATE PacketWorld.envio 
-    SET activo = 0 
-    WHERE idEnvio = #{idEnvio}
-</update>
+    <update id="eliminar" parameterType="java.lang.Integer">
+        UPDATE PacketWorld.envio 
+        SET activo = 0 
+        WHERE idEnvio = #{idEnvio}
+    </update>
 </mapper>

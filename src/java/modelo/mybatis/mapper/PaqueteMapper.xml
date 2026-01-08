@@ -93,16 +93,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM PacketWorld.paquete
         WHERE idPaquete = #{value}
     </delete>
-<<<<<<< HEAD
+
 
     <select id="contar-por-envio" parameterType="int" resultType="int">
         SELECT COUNT(*) 
         FROM PacketWorld.paquete
         WHERE idEnvio = #{value}
     </select>
-  
-
-=======
->>>>>>> 0c32b70da7991de0b9971beb94bff38ee87ede8a
+ 
 
 </mapper>
