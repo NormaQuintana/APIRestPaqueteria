@@ -59,8 +59,12 @@ public class EnvioWS {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Respuesta registrarEnvio(String json) {
+        /*Crea un objeto Gson, que sirve para convertir:
+        JSON → objeto Java
+        objeto Java → JSON*/
         Gson gson = new Gson();
         try {
+            //envio es la versión en objeto Java de lo que venía en json.
             Envio envio = gson.fromJson(json, Envio.class);
             return EnvioImp.registrarEnvio(envio);
         } catch (Exception e) {
@@ -110,6 +114,20 @@ public class EnvioWS {
             return EnvioImp.eliminarEnvio(idEnvio);
         }catch(Exception e){
             throw new BadRequestException("Error al procesar la solicitud de eliminación: " + e.getMessage());
+        }
+    }
+
+    @Path("recalcular-costo/{idEnvio}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Respuesta recalcularCostoPost(@PathParam("idEnvio") Integer idEnvio) {
+        try {
+            if (idEnvio == null || idEnvio <= 0) {
+                throw new BadRequestException("idEnvio inválido");
+            }
+            return EnvioImp.recalcularCostoEnvio(idEnvio);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package pojo.EntidadesPrincipales;
 
-
+import java.util.Date;
+import pojo.Catalogo.TipoUnidad;
 import java.util.Date;
 
 public class Unidad {
@@ -10,10 +11,11 @@ public class Unidad {
     private String modelo;
     private Integer anio;
     private String vin;
-    private String noIdentificacion; 
+    private String noIdentificacion;
     private Boolean status;
     private String motivoBaja;
     private Date fechaBaja;
+    private Colaborador conductor;
     private String tipoUnidad;
     private Integer idTipoUnidad;
     private Integer idColaborador;
@@ -21,7 +23,6 @@ public class Unidad {
     private String apellidoPaterno;
 
     public Unidad() {
-    
     }
 
     public Unidad(Integer idUnidad, String marca, String modelo, Integer anio, String vin, String noIdentificacion, String tipoUnidad, Integer idTipoUnidad, Integer idColaborador, String nombreColaborador, String apellidoPaterno) {
@@ -37,7 +38,7 @@ public class Unidad {
         this.nombreColaborador = nombreColaborador;
         this.apellidoPaterno = apellidoPaterno;
     }
-    
+
     public Integer getIdUnidad() {
         return idUnidad;
     }
@@ -113,7 +114,7 @@ public class Unidad {
     public String getTipoUnidad() {
         return tipoUnidad;
     }
-    
+
     public void setTipoUnidad(String tipoUnidad) {
         this.tipoUnidad = tipoUnidad;
     }
