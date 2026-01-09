@@ -11,10 +11,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="obtener-tipos-unidad" resultType="pojo.Catalogo.TipoUnidad">
         SELECT 
-            idTipoUnidad, 
-            tipoUnidad 
+        idTipoUnidad, 
+        tipoUnidad 
         FROM PacketWorld.tipoUnidad 
         ORDER BY idTipoUnidad;
+    </select>
+    
+    <select id="obtener-estatusEnvio" resultType="pojo.Catalogo.EstatusEnvio">
+        SELECT 
+        idEstatusEnvio, 
+        estatus AS estatusEnvio
+        FROM 
+        estatusEnvio;
     </select>
 
 </mapper>

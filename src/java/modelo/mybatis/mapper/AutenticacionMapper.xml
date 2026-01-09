@@ -7,43 +7,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="colaborador" parameterType="map" resultType="pojo.EntidadesPrincipales.Colaborador">
         SELECT 
-            c.idColaborador,
-            c.nombre,
-            c.apellidoPaterno,
-            c.apellidoMaterno,
-            c.noPersonal,
-            c.idRol,
-            r.rol AS nombreRol
-        FROM 
-            colaborador c
-        JOIN 
-            rol r ON c.idRol = r.idRol
-        WHERE 
-            c.noPersonal = #{noPersonal} 
-            AND c.password = #{password}
-            AND c.status = 1
-            AND c.idRol != 3;
+        c.idColaborador,
+        c.nombre,
+        c.apellidoPaterno,
+        c.apellidoMaterno,
+        c.noPersonal,
+        c.idRol,
+        r.rol AS nombreRol,
+        c.idSucursal
+        FROM colaborador c
+        JOIN rol r ON c.idRol = r.idRol
+        WHERE c.noPersonal = #{noPersonal}
+        AND c.password = #{password}
+        AND c.status = 1
+        AND c.idRol != 3;
     </select>
+
     
     <select id="conductor" parameterType="map" resultType="pojo.EntidadesPrincipales.Colaborador">
         SELECT 
-            c.idColaborador,
-            c.nombre,
-            c.apellidoPaterno,
-            c.apellidoMaterno,
-            c.noPersonal,
-            c.idRol,
-            c.noLicencia,
-            r.rol AS nombreRol
+        c.idColaborador,
+        c.nombre,
+        c.apellidoPaterno,
+        c.apellidoMaterno,
+        c.noPersonal,
+        c.idRol,
+        c.noLicencia,
+        r.rol AS nombreRol
         FROM 
-            colaborador c
+        colaborador c
         JOIN 
-            rol r ON c.idRol = r.idRol
+        rol r ON c.idRol = r.idRol
         WHERE 
-            c.noPersonal = #{noPersonal} 
-            AND c.password = #{password}
-            AND c.status = 1
-            AND c.idRol = 3;
+        c.noPersonal = #{noPersonal} 
+        AND c.password = #{password}
+        AND c.status = 1
+        AND c.idRol = 3;
     </select>
 
 </mapper>

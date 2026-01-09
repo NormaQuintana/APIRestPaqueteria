@@ -69,14 +69,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN mexico.colonias AS C ON E.idColoniaDestino = C.id 
         LEFT JOIN mexico.municipios AS M ON C.municipio = M.id 
         LEFT JOIN mexico.estados AS ES ON M.estado = ES.id 
-        WHERE E.idConductor = #{idConductor} AND E.activo = 1
+        WHERE E.idConductor = #{value}
+        AND E.activo = 1
         
     </select>
 
-    <insert id="registrar"
-            parameterType="pojo.EntidadesPrincipales.Envio"
-            useGeneratedKeys="true"
-            keyProperty="idEnvio">
+    <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Envio" useGeneratedKeys="true" keyProperty="idEnvio">
         INSERT INTO PacketWorld.envio (
         costo,
         noGuia,
@@ -105,24 +103,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         )
     </insert>
 
-
-
-    <select id="obtener-por-id"
-            parameterType="java.lang.Integer"
-            resultType="pojo.EntidadesPrincipales.Envio">
-
+    <select id="obtener-por-id" parameterType="java.lang.Integer" resultType="pojo.EntidadesPrincipales.Envio">
         SELECT
         E.idEnvio,
         E.noGuia,
         E.costo,
-
         E.nombreReceptor,
         E.apellidoPaternoReceptor,
         E.apellidoMaternoReceptor,
-
         E.calleDestino,
         E.numeroDestino,
-
         E.idCliente,
         E.idSucursal,
         E.idConductor,
@@ -147,9 +137,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
  
-    <select id="obtener-por-guia"
-            parameterType="java.lang.String"
-            resultType="pojo.EntidadesPrincipales.Envio">
+    <select id="obtener-por-guia" parameterType="java.lang.String" resultType="pojo.EntidadesPrincipales.Envio">
         SELECT
         E.idEnvio,
         E.noGuia,
@@ -184,17 +172,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         )
         LEFT JOIN PacketWorld.estatusEnvio AS EST ON H.idEstatusEnvio = EST.idEstatusEnvio
         WHERE E.noGuia = #{noGuia} AND E.activo = 1
-
     </select>
+    
     <update id="actualizar-costo" parameterType="pojo.EntidadesPrincipales.Envio">
         UPDATE PacketWorld.envio
         SET costo = #{costo}
         WHERE idEnvio = #{idEnvio}
     </update>
 
-    <update id="editar"
-            parameterType="pojo.EntidadesPrincipales.Envio">
-
+    <update id="editar" parameterType="pojo.EntidadesPrincipales.Envio">
         UPDATE PacketWorld.envio
         SET
         costo = #{costo},
@@ -208,27 +194,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         idSucursal = #{idSucursal},
         idConductor = #{idConductor, jdbcType=INTEGER}
         WHERE idEnvio = #{idEnvio};
-
     </update>
 
-    <insert id="insertar-historial-estatus" parameterType="map">
+
+    <insert id="registrar-historial-estatus" parameterType="map">
         INSERT INTO PacketWorld.historialEnvio (
-        idEnvio, fechaHoraCambio, comentario, idColaborador, idEstatusEnvio
-        )
-        VALUES (
-        #{idEnvio}, #{fechaHoraCambio}, #{comentario}, #{idColaborador}, #{idEstatusEnvio}
+        idEnvio,
+        fechaHora,
+        idColaborador,
+        idEstatusEnvio
+        ) VALUES (
+        #{idEnvio},
+        NOW(),
+        #{idColaborador},
+        #{idEstatusEnvio}
         )
     </insert>
-
+    
     <update id="actualizar-estatus-envio" parameterType="map">
         UPDATE PacketWorld.envio
         SET idEstatusEnvio = #{idEstatusEnvio}
         WHERE idEnvio = #{idEnvio};
     </update>
 
-    <select id="obtener-cp-destino-por-envio"
-            parameterType="int"
-            resultType="int">
+    <select id="obtener-cp-destino-por-envio" parameterType="int" resultType="int">
         SELECT C.codigo_postal
         FROM PacketWorld.envio E
         JOIN mexico.colonias C ON C.id = E.idColoniaDestino
@@ -240,4 +229,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SET activo = 0 
         WHERE idEnvio = #{idEnvio}
     </update>
+    
 </mapper>

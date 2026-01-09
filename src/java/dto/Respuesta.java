@@ -1,16 +1,18 @@
 package dto;
+
 public class Respuesta {
 
     private boolean error;
     private String mensaje;
-    private int idGenerado;
+    private Integer idGenerado;
 
     public Respuesta() {
     }
 
-    public Respuesta(boolean error, String mensaje) {
+    public Respuesta(boolean error, String mensaje, Integer idGenerado) {
         this.error = error;
         this.mensaje = mensaje;
+        this.idGenerado = idGenerado;
     }
 
     public boolean isError() {
@@ -29,12 +31,8 @@ public class Respuesta {
         this.mensaje = mensaje;
     }
 
-    public int getIdGenerado() {
+    public Integer getIdGenerado() {
         return idGenerado;
-    }
-
-    public void setIdGenerado(int idGenerado) {
-        this.idGenerado = idGenerado;
     }
 
     public void setIdGenerado(Integer idGenerado) {

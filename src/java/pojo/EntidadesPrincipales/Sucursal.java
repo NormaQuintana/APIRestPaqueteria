@@ -1,6 +1,7 @@
 package pojo.EntidadesPrincipales;
 
 public class Sucursal {
+
     private Integer idSucursal;
     private String numeroUnicoSucursal;
     private String nombre;
@@ -8,9 +9,9 @@ public class Sucursal {
     private String numero;
     private String calle;
     private Integer idColonia;
-    private String nombreColonia;   
-    private Integer codigoPostal;       
-    private String nombreMunicipio; 
+    private String nombreColonia;
+    private Integer codigoPostal;
+    private String nombreMunicipio;
     private String nombreEstado;
 
     public Sucursal() {
@@ -117,5 +118,5 @@ public class Sucursal {
     public void setNombreEstado(String nombreEstado) {
         this.nombreEstado = nombreEstado;
     }
-    
+
 }

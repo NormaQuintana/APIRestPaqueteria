@@ -7,10 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="obtener-todas" resultType="pojo.EntidadesPrincipales.Unidad">
         SELECT 
-            U.idUnidad, U.marca, U.modelo, U.anio, U.vin, U.noIdentificacion, 
-            U.status, U.motivoBaja, U.fechaBaja,
-            TU.idTipoUnidad, TU.tipoUnidad,
-            C.idColaborador, C.nombre AS nombreColaborador, C.apellidoPaterno AS apellidoPaterno
+        U.idUnidad, U.marca, U.modelo, U.anio, U.vin, U.noIdentificacion, 
+        U.status, U.motivoBaja, U.fechaBaja,
+        TU.idTipoUnidad, TU.tipoUnidad,
+        C.idColaborador, C.nombre AS nombreColaborador, C.apellidoPaterno AS apellidoPaterno
         FROM PacketWorld.unidad AS U
         LEFT JOIN PacketWorld.tipoUnidad AS TU ON U.idTipoUnidad = TU.idTipoUnidad
         LEFT JOIN PacketWorld.colaborador AS C ON U.idConductor = C.idColaborador
@@ -20,41 +20,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Unidad">
         INSERT INTO PacketWorld.unidad (
-            marca, modelo, anio, vin, noIdentificacion, 
-            idTipoUnidad
+        marca, modelo, anio, vin, noIdentificacion, 
+        idTipoUnidad
         ) VALUES (
-            #{marca}, #{modelo}, #{anio}, #{vin}, #{noIdentificacion}, 
-            #{idTipoUnidad}
+        #{marca}, #{modelo}, #{anio}, #{vin}, #{noIdentificacion}, 
+        #{idTipoUnidad}
         )
     </insert>
     
     <update id="editar" parameterType="pojo.EntidadesPrincipales.Unidad">
         UPDATE PacketWorld.unidad 
         SET 
-            marca = #{marca}, 
-            modelo = #{modelo}, 
-            anio = #{anio}, 
-            noIdentificacion = #{noIdentificacion},
-            idTipoUnidad = #{idTipoUnidad}
+        marca = #{marca}, 
+        modelo = #{modelo}, 
+        anio = #{anio}, 
+        noIdentificacion = #{noIdentificacion},
+        idTipoUnidad = #{idTipoUnidad}
         WHERE idUnidad = #{idUnidad}
     </update>
     
     <update id="dar-baja" parameterType="pojo.EntidadesPrincipales.Unidad">
         UPDATE PacketWorld.unidad 
         SET 
-            status = FALSE, 
-            motivoBaja = #{motivoBaja},
-            fechaBaja = CURRENT_DATE()
+        status = FALSE, 
+        motivoBaja = #{motivoBaja},
+        fechaBaja = CURRENT_DATE()
         WHERE idUnidad = #{idUnidad}
     </update>
 
     
     <select id="buscar-unidades" parameterType="pojo.EntidadesPrincipales.Unidad" resultType="pojo.EntidadesPrincipales.Unidad">
         SELECT 
-            U.idUnidad, U.marca, U.modelo, U.anio, U.vin, U.noIdentificacion, 
-            U.status, U.motivoBaja, U.fechaBaja,
-            TU.idTipoUnidad, TU.tipoUnidad,
-            C.idColaborador, C.nombre AS nombreConductor, C.apellidoPaterno AS apellidoPaternoConductor
+        U.idUnidad, U.marca, U.modelo, U.anio, U.vin, U.noIdentificacion, 
+        U.status, U.motivoBaja, U.fechaBaja,
+        TU.idTipoUnidad, TU.tipoUnidad,
+        C.idColaborador, C.nombre AS nombreConductor, C.apellidoPaterno AS apellidoPaternoConductor
         FROM PacketWorld.unidad AS U
         LEFT JOIN PacketWorld.tipoUnidad AS TU ON U.idTipoUnidad = TU.idTipoUnidad
         LEFT JOIN PacketWorld.colaborador AS C ON U.idConductor = C.idColaborador
@@ -75,10 +75,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="asignar-conductor" parameterType="pojo.EntidadesPrincipales.Unidad">
         UPDATE PacketWorld.unidad
         SET 
-            idConductor = #{idColaborador, jdbcType=INTEGER}
-            -- Usamos jdbcType=INTEGER para asegurar que MyBatis sepa manejar el NULL
+        idConductor = #{idColaborador, jdbcType=INTEGER}
+        -- Usamos jdbcType=INTEGER para asegurar que MyBatis sepa manejar el NULL
         WHERE 
-            idUnidad = #{idUnidad}
+        idUnidad = #{idUnidad}
     </update>
 
     <select id="verificar-conductor-asignado" resultType="java.lang.Integer">

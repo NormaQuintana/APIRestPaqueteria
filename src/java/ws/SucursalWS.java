@@ -17,52 +17,52 @@ import pojo.EntidadesPrincipales.Sucursal;
 
 @Path("sucursal")
 public class SucursalWS {
-    
+
     @Path("obtener-todas")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Sucursal> obtenerSucursales(){
+    public List<Sucursal> obtenerSucursales() {
         return SucursalImp.obtenerSucursales();
     }
-    
+
     @Path("registrar")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Respuesta registrarSucrusal(String json){
+    public Respuesta registrarSucrusal(String json) {
         Gson gson = new Gson();
-        try{
+        try {
             Sucursal sucursal = gson.fromJson(json, Sucursal.class);
             return SucursalImp.registrar(sucursal);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
-    
+
     @Path("editar")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Respuesta editarSucursal(String json){
+    public Respuesta editarSucursal(String json) {
         Gson gson = new Gson();
-        try{
+        try {
             Sucursal sucursal = gson.fromJson(json, Sucursal.class);
             return SucursalImp.editarSucursal(sucursal);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
-    
+
     @Path("eliminar/{idSucursal}")
-    @PUT 
+    @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Respuesta eliminarSucursal(@PathParam ("idSucursal") Integer idSucursal){
-        try{
+    public Respuesta eliminarSucursal(@PathParam("idSucursal") Integer idSucursal) {
+        try {
             return SucursalImp.eliminarSucursal(idSucursal);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
-        
+
     }
-    
+
 }

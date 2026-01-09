@@ -14,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pojo.EntidadesPrincipales.Paquete;
+import java.math.BigDecimal;
 
 @Path("paquete")
 public class PaqueteWS {
@@ -52,17 +53,14 @@ public class PaqueteWS {
     public Respuesta registrarPaquete(String json) {
         Gson gson = new Gson();
         Respuesta r = new Respuesta();
-
         try {
             Paquete paquete = gson.fromJson(json, Paquete.class);
 
-           
             if (paquete == null) {
                 r.setError(true);
                 r.setMensaje("JSON inválido.");
                 return r;
             }
-
             if (paquete.getDescripcion() == null || paquete.getDescripcion().trim().isEmpty()) {
                 r.setError(true);
                 r.setMensaje("La descripción es obligatoria.");
@@ -73,15 +71,14 @@ public class PaqueteWS {
                 r.setMensaje("La descripción no debe exceder 200 caracteres.");
                 return r;
             }
-
-            if (paquete.getPeso() <= 0) {
+            if (paquete.getPeso() == null || paquete.getPeso().compareTo(BigDecimal.ZERO) <= 0) {
                 r.setError(true);
                 r.setMensaje("El peso debe ser mayor a 0.");
                 return r;
             }
-            if (paquete.getAlto() <= 0 || paquete.getAncho() <= 0 || paquete.getProfundidad() <= 0) {
+            if (paquete.getPeso() == null || paquete.getPeso().compareTo(BigDecimal.ZERO) <= 0) {
                 r.setError(true);
-                r.setMensaje("Las dimensiones (alto, ancho, profundidad) deben ser mayores a 0.");
+                r.setMensaje("El peso debe ser mayor a 0.");
                 return r;
             }
 
@@ -91,7 +88,6 @@ public class PaqueteWS {
                 return r;
             }
 
-            
             paquete.setDescripcion(paquete.getDescripcion().trim());
 
             return PaqueteImp.registrarPaquete(paquete);
@@ -122,7 +118,10 @@ public class PaqueteWS {
                 r.setMensaje("Descripción obligatoria (máx. 200).");
                 return r;
             }
-            if (paquete.getPeso() <= 0 || paquete.getAlto() <= 0 || paquete.getAncho() <= 0 || paquete.getProfundidad() <= 0) {
+            if (paquete.getPeso() == null || paquete.getPeso().compareTo(BigDecimal.ZERO) <= 0
+                    || paquete.getAlto() == null || paquete.getAlto().compareTo(BigDecimal.ZERO) <= 0
+                    || paquete.getAncho() == null || paquete.getAncho().compareTo(BigDecimal.ZERO) <= 0
+                    || paquete.getProfundidad() == null || paquete.getProfundidad().compareTo(BigDecimal.ZERO) <= 0) {
                 r.setError(true);
                 r.setMensaje("Peso y dimensiones deben ser mayores a 0.");
                 return r;

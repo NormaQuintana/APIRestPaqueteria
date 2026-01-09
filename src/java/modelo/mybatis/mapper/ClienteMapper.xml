@@ -4,25 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cliente">
-    
-    <resultMap id="ClienteMap" type="pojo.EntidadesPrincipales.Cliente">
-        <id property="idCliente" column="idCliente"/>
-        <result property="nombre" column="nombre"/>
-        <result property="apellidoPaterno" column="apellidoPaterno"/>
-        <result property="apellidoMaterno" column="apellidoMaterno"/>
-        <result property="correo" column="correo"/>
-        <result property="telefono" column="telefono"/>
-        <result property="calle" column="calle"/>
-        <result property="numero" column="numero"/>
-        <result property="statusRegistro" column="statusRegistro"/>
-        <result property="idColonia" column="idColonia"/>
-        <result property="nombreColonia" column="nombreColonia"/>
-        <result property="codigoPostal" column="codigoPostal"/>
-        <result property="nombreMunicipio" column="nombreMunicipio"/>
-        <result property="nombreEstado" column="nombreEstado"/>
-    </resultMap>
 
-    <select id="obtener-todos" resultMap="ClienteMap">
+    <select id="obtener-todos" resultType="pojo.EntidadesPrincipales.Cliente">
         SELECT
         C.idCliente,
         C.nombre,
@@ -54,12 +37,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE 
         C.statusRegistro = TRUE
         ORDER BY 
-            C.idCliente;
+        C.idCliente;
     </select>
     
-    <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Cliente"
-            useGeneratedKeys="true" keyProperty="idCliente">
-        
+    <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Cliente" useGeneratedKeys="true" keyProperty="idCliente">
         INSERT INTO PacketWorld.cliente (
         nombre, apellidoPaterno, apellidoMaterno, 
         correo, telefono, numero, calle, 
@@ -109,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         idCliente = #{idCliente};
     </update>
 
-    <select id="buscar-por-palabra-clave" parameterType="java.lang.String" resultMap="ClienteMap">
+    <select id="buscar-por-palabra-clave" parameterType="java.lang.String" resultType="pojo.EntidadesPrincipales.Cliente">
         SELECT 
         C.idCliente, C.nombre, C.apellidoPaterno, C.apellidoMaterno, C.correo, C.telefono, C.calle, C.numero, C.statusRegistro, C.idColonia,
         CL.nombre AS nombreColonia, CL.codigo_postal AS codigoPostal,

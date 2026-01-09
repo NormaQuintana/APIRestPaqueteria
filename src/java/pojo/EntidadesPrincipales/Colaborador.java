@@ -1,7 +1,7 @@
 package pojo.EntidadesPrincipales;
 
-
 public class Colaborador {
+
     private Integer idColaborador;
     private String nombre;
     private String apellidoPaterno;
@@ -167,5 +167,5 @@ public class Colaborador {
 
     public void setNombreSucursal(String nombreSucursal) {
         this.nombreSucursal = nombreSucursal;
-    }    
+    }
 }

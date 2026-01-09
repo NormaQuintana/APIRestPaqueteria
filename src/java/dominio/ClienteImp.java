@@ -13,7 +13,6 @@ public class ClienteImp {
     public static List<Cliente> obtenerClientes() {
         List<Cliente> clientes = null;
         SqlSession conexionBD = MyBatisUtil.getSession();
-
         if (conexionBD != null) {
             try {
                 clientes = conexionBD.selectList("cliente.obtener-todos");
@@ -29,19 +28,15 @@ public class ClienteImp {
     public static Respuesta registrarCliente(Cliente cliente) {
         Respuesta respuesta = new Respuesta();
         SqlSession conexionBD = MyBatisUtil.getSession();
-
         if (conexionBD != null) {
             try {
-
                 Integer existe = conexionBD.selectOne("cliente.verificar-existencia", cliente);
                 if (existe != null && existe > 0) {
                     respuesta.setError(true);
                     respuesta.setMensaje("Error: Ya existe un cliente activo con el mismo correo electrónico o número de teléfono. No se puede registrar.");
                     return respuesta;
                 }
-
                 int filasAfectadas = conexionBD.insert("cliente.registrar", cliente);
-
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
@@ -51,7 +46,6 @@ public class ClienteImp {
                     respuesta.setError(true);
                     respuesta.setMensaje("Lo sentimos, el cliente no fue registrado.");
                 }
-
             } catch (Exception e) {
                 conexionBD.rollback();
                 e.printStackTrace();
@@ -72,16 +66,13 @@ public class ClienteImp {
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
             try {
-
                 Integer existe = conexionBD.selectOne("cliente.verificar-edicion", cliente);
                 if (existe != null && existe > 0) {
                     respuesta.setError(true);
                     respuesta.setMensaje("Ya existe otro cliente activo con el mismo correo o número de teléfono.");
                     return respuesta;
                 }
-
                 int filasAfectadas = conexionBD.update("cliente.editar", cliente);
-
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
@@ -115,7 +106,7 @@ public class ClienteImp {
                 if (filasAfectadas > 0) {
                     conexionBD.commit();
                     respuesta.setError(false);
-                    respuesta.setMensaje("Cliente eliminado exitosamente (Baja Lógica).");
+                    respuesta.setMensaje("Cliente eliminado exitosamente.");
                 } else {
                     conexionBD.rollback();
                     respuesta.setError(true);

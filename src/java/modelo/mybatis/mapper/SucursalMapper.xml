@@ -94,8 +94,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SET 
         estado = 'Inactiva'
         WHERE idSucursal = #{value}
-
-        
     </update>
     
     <select id="obtener-cp-por-id" parameterType="int" resultType="int">
@@ -104,10 +102,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN mexico.colonias C ON C.id = S.idColonia
         WHERE S.idSucursal = #{value}
     </select>
-
-
-
-
 
 </mapper>
 

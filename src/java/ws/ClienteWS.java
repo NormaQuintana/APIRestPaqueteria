@@ -18,14 +18,14 @@ import javax.ws.rs.QueryParam;
 
 @Path("cliente")
 public class ClienteWS {
-    
+
     @Path("obtener-todos")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Cliente> obtenerClientesWS() {
         return ClienteImp.obtenerClientes();
     }
-    
+
     @Path("registrar")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,40 +39,40 @@ public class ClienteWS {
             throw new BadRequestException("Error al procesar la solicitud: " + e.getMessage());
         }
     }
-    
+
     @Path("editar")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Respuesta editarClienteWS(String json){
+    public Respuesta editarClienteWS(String json) {
         Gson gson = new Gson();
-        try{
+        try {
             Cliente cliente = gson.fromJson(json, Cliente.class);
             return ClienteImp.editarCliente(cliente);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new BadRequestException("Error al procesar la solicitud de edición: " + e.getMessage());
         }
     }
-    
+
     @Path("eliminar/{idCliente}")
-    @PUT 
+    @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Respuesta eliminarClienteWS(@PathParam ("idCliente") Integer idCliente){
-        try{
+    public Respuesta eliminarClienteWS(@PathParam("idCliente") Integer idCliente) {
+        try {
             return ClienteImp.eliminarCliente(idCliente);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new BadRequestException("Error al procesar la solicitud de eliminación: " + e.getMessage());
         }
     }
-    
+
     @Path("buscar")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Cliente> buscarClientesWS(@QueryParam("palabraClave") String palabraClave) {
         if (palabraClave == null || palabraClave.trim().isEmpty()) {
-            return ClienteImp.obtenerClientes(); 
+            return ClienteImp.obtenerClientes();
         }
         return ClienteImp.buscarClientes(palabraClave);
     }
-    
+
 }

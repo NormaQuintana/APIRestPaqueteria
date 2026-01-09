@@ -1,16 +1,15 @@
 package dto;
 
-import pojo.EntidadesPrincipales.Colaborador;
-
 public class RSAutenticacion {
+
     private boolean error;
     private String mensaje;
-    private Colaborador colaborador;
+    private ColaboradorDTO colaborador;
 
     public RSAutenticacion() {
     }
 
-    public RSAutenticacion(boolean error, String mensaje, Colaborador colaborador) {
+    public RSAutenticacion(boolean error, String mensaje, ColaboradorDTO colaborador) {
         this.error = error;
         this.mensaje = mensaje;
         this.colaborador = colaborador;
@@ -32,13 +31,11 @@ public class RSAutenticacion {
         this.mensaje = mensaje;
     }
 
-    public Colaborador getColaborador() {
+    public ColaboradorDTO getColaborador() {
         return colaborador;
     }
 
-    public void setColaborador(Colaborador colaborador) {
+    public void setColaborador(ColaboradorDTO colaborador) {
         this.colaborador = colaborador;
     }
-    
-    
 }

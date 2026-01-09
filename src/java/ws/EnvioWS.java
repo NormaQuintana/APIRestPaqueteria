@@ -24,7 +24,7 @@ public class EnvioWS {
     public List<Envio> obtenerEnvios() {
         return EnvioImp.obtenerEnvios();
     }
-    
+
     @Path("obtener-todos/{idColaborador}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -59,12 +59,8 @@ public class EnvioWS {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Respuesta registrarEnvio(String json) {
-        /*Crea un objeto Gson, que sirve para convertir:
-        JSON → objeto Java
-        objeto Java → JSON*/
         Gson gson = new Gson();
         try {
-            //envio es la versión en objeto Java de lo que venía en json.
             Envio envio = gson.fromJson(json, Envio.class);
             return EnvioImp.registrarEnvio(envio);
         } catch (Exception e) {
@@ -99,20 +95,19 @@ public class EnvioWS {
             int idEstatusEnvio = ((Double) datos.get("idEstatusEnvio")).intValue();
             int idColaborador = ((Double) datos.get("idColaborador")).intValue();
             String comentario = (String) datos.get("comentario");
-
-            return EnvioImp.actualizarEstatus(idEnvio, idEstatusEnvio, idColaborador, comentario);
+            return EnvioImp.actualizarEstatus(idEnvio, idEstatusEnvio, idColaborador);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
-    
+
     @Path("eliminar/{idEnvio}")
-    @PUT 
+    @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Respuesta eliminarEnvio(@PathParam ("idEnvio") Integer idEnvio){
-        try{
+    public Respuesta eliminarEnvio(@PathParam("idEnvio") Integer idEnvio) {
+        try {
             return EnvioImp.eliminarEnvio(idEnvio);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new BadRequestException("Error al procesar la solicitud de eliminación: " + e.getMessage());
         }
     }
@@ -125,7 +120,7 @@ public class EnvioWS {
             if (idEnvio == null || idEnvio <= 0) {
                 throw new BadRequestException("idEnvio inválido");
             }
-            return EnvioImp.recalcularCostoEnvio(idEnvio);
+            return EnvioImp.calcularCostoEnvio(idEnvio);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }

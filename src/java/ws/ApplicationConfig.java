@@ -3,10 +3,6 @@ package ws;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
-/**
- *
- * @author isabe
- */
 @javax.ws.rs.ApplicationPath("api")
 public class ApplicationConfig extends Application {
 
@@ -16,12 +12,8 @@ public class ApplicationConfig extends Application {
         addRestResourceClasses(resources);
         return resources;
     }
-    /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
-     */
+
+
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ws.AutenticacionWS.class);
         resources.add(ws.CatalogoWS.class);
@@ -30,7 +22,6 @@ public class ApplicationConfig extends Application {
         resources.add(ws.EnvioWS.class);
         resources.add(ws.EstatusEnvioWS.class);
         resources.add(ws.GeografiaWS.class);
-        resources.add(ws.HistorialEnvioWS.class);
         resources.add(ws.PaqueteWS.class);
         resources.add(ws.SucursalWS.class);
         resources.add(ws.UnidadWS.class);

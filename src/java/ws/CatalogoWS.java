@@ -11,17 +11,18 @@ import pojo.Catalogo.TipoUnidad;
 
 @Path("catalogo")
 public class CatalogoWS {
+
     @Path("obtener-roles")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Rol> obtenerRolesSistema(){
+    public List<Rol> obtenerRolesSistema() {
         return CatalogoImp.obtenerRoles();
     }
-    
+
     @Path("obtener-tipos-unidad")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<TipoUnidad> obtenerTiposUnidad(){
+    public List<TipoUnidad> obtenerTiposUnidad() {
         return CatalogoImp.obtenerTiposUnidad();
     }
 }

@@ -4,20 +4,20 @@ import java.io.Serializable;
 
 public class Envio implements Serializable {
 
-    private int idCliente;
+    private Integer idCliente;
     private String nombreReceptor;
     private String apellidoPaternoReceptor;
     private String apellidoMaternoReceptor;
-    private int idSucursal;
+    private Integer idSucursal;
     private String nombreSucursal;
     private String calleDestino;
     private String numeroDestino;
-    private int idColoniaDestino;
-    private int codigoPostal;
+    private Integer idColoniaDestino;
+    private Integer codigoPostal;
     private String ciudad;
     private String estado;
     private String noGuia;
-    private int idEnvio;
+    private Integer idEnvio;
     private float costo;
     private Integer idConductor;
     private String nombreConductor;
@@ -25,17 +25,18 @@ public class Envio implements Serializable {
     private String apellidoMaternoConductor;
     private Integer idEstatusEnvio;
     private String estatus;
-    private String telefono;
-    private String correo;
+    private Integer idUltimoEstatusEnvio;
 
     public Envio() {
     }
 
-    public Envio(int idCliente, String nombreReceptor, String apellidoPaternoReceptor, String apellidoMaternoReceptor,
-                 int idSucursal, String nombreSucursal, String calleDestino, String numeroDestino, int idColoniaDestino,
-                 int codigoPostal, String ciudad, String estado, String noGuia, int idEnvio, float costo,
-                 Integer idConductor, String nombreConductor, String apellidoPaternoConductor,
-                 String apellidoMaternoConductor, Integer idEstatusEnvio, String estatus) {
+    public Envio(Integer idCliente, String nombreReceptor, String apellidoPaternoReceptor, String apellidoMaternoReceptor,
+            Integer idSucursal, String nombreSucursal, String calleDestino, String numeroDestino, Integer idColoniaDestino,
+            Integer codigoPostal, String ciudad, String estado, String noGuia, Integer idEnvio, float costo,
+            Integer idConductor, String nombreConductor, String apellidoPaternoConductor,
+            String apellidoMaternoConductor, Integer idEstatusEnvio, String estatus,
+            Integer idUltimoEstatusEnvio) {
+
         this.idCliente = idCliente;
         this.nombreReceptor = nombreReceptor;
         this.apellidoPaternoReceptor = apellidoPaternoReceptor;
@@ -57,9 +58,10 @@ public class Envio implements Serializable {
         this.apellidoMaternoConductor = apellidoMaternoConductor;
         this.idEstatusEnvio = idEstatusEnvio;
         this.estatus = estatus;
+
     }
 
-    public int getIdCliente() {
+    public Integer getIdCliente() {
         return idCliente;
     }
 
@@ -75,8 +77,12 @@ public class Envio implements Serializable {
         return apellidoMaternoReceptor;
     }
 
-    public int getIdSucursal() {
+    public Integer getIdSucursal() {
         return idSucursal;
+    }
+
+    public String getNombreSucursal() {
+        return nombreSucursal;
     }
 
     public String getCalleDestino() {
@@ -87,11 +93,11 @@ public class Envio implements Serializable {
         return numeroDestino;
     }
 
-    public int getIdColoniaDestino() {
+    public Integer getIdColoniaDestino() {
         return idColoniaDestino;
     }
 
-    public int getCodigoPostal() {
+    public Integer getCodigoPostal() {
         return codigoPostal;
     }
 
@@ -107,7 +113,7 @@ public class Envio implements Serializable {
         return noGuia;
     }
 
-    public int getIdEnvio() {
+    public Integer getIdEnvio() {
         return idEnvio;
     }
 
@@ -131,27 +137,19 @@ public class Envio implements Serializable {
         return apellidoMaternoConductor;
     }
 
-    public String getNombreSucursal() {
-        return nombreSucursal;
+    public Integer getIdEstatusEnvio() {
+        return idEstatusEnvio;
     }
 
     public String getEstatus() {
         return estatus;
     }
 
-    public Integer getIdEstatusEnvio() {
-        return idEstatusEnvio;
+    public Integer getIdUltimoEstatusEnvio() {
+        return idUltimoEstatusEnvio;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -167,8 +165,12 @@ public class Envio implements Serializable {
         this.apellidoMaternoReceptor = apellidoMaternoReceptor;
     }
 
-    public void setIdSucursal(int idSucursal) {
+    public void setIdSucursal(Integer idSucursal) {
         this.idSucursal = idSucursal;
+    }
+
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
     }
 
     public void setCalleDestino(String calleDestino) {
@@ -179,11 +181,11 @@ public class Envio implements Serializable {
         this.numeroDestino = numeroDestino;
     }
 
-    public void setIdColoniaDestino(int idColoniaDestino) {
+    public void setIdColoniaDestino(Integer idColoniaDestino) {
         this.idColoniaDestino = idColoniaDestino;
     }
 
-    public void setCodigoPostal(int codigoPostal) {
+    public void setCodigoPostal(Integer codigoPostal) {
         this.codigoPostal = codigoPostal;
     }
 
@@ -199,7 +201,7 @@ public class Envio implements Serializable {
         this.noGuia = noGuia;
     }
 
-    public void setIdEnvio(int idEnvio) {
+    public void setIdEnvio(Integer idEnvio) {
         this.idEnvio = idEnvio;
     }
 
@@ -223,23 +225,16 @@ public class Envio implements Serializable {
         this.apellidoMaternoConductor = apellidoMaternoConductor;
     }
 
-    public void setNombreSucursal(String nombreSucursal) {
-        this.nombreSucursal = nombreSucursal;
+    public void setIdEstatusEnvio(Integer idEstatusEnvio) {
+        this.idEstatusEnvio = idEstatusEnvio;
     }
 
     public void setEstatus(String estatus) {
         this.estatus = estatus;
     }
 
-    public void setIdEstatusEnvio(Integer idEstatusEnvio) {
-        this.idEstatusEnvio = idEstatusEnvio;
+    public void setIdUltimoEstatusEnvio(Integer idUltimoEstatusEnvio) {
+        this.idUltimoEstatusEnvio = idUltimoEstatusEnvio;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
 }

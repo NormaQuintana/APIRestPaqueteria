@@ -7,28 +7,31 @@ import pojo.Catalogo.Rol;
 import pojo.Catalogo.TipoUnidad;
 
 public class CatalogoImp {
-    public static List<Rol> obtenerRoles(){
+
+    public static List<Rol> obtenerRoles() {
         List<Rol> roles = null;
         SqlSession conexionBD = MyBatisUtil.getSession();
-        if(conexionBD != null){
-            try{
+        if (conexionBD != null) {
+            try {
                 roles = conexionBD.selectList("catalogo.obtener-roles");
                 conexionBD.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                conexionBD.close();
             }
         }
         return roles;
     }
-    
-    public static List<TipoUnidad> obtenerTiposUnidad(){
+
+    public static List<TipoUnidad> obtenerTiposUnidad() {
         List<TipoUnidad> tiposUnidad = null;
         SqlSession conexionBD = MyBatisUtil.getSession();
-        if(conexionBD != null){
-            try{
+        if (conexionBD != null) {
+            try {
                 tiposUnidad = conexionBD.selectList("catalogo.obtener-tipos-unidad");
                 conexionBD.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

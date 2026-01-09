@@ -1,6 +1,7 @@
 package pojo.EntidadesPrincipales;
 
 public class Cliente {
+
     private Integer idCliente;
     private String nombre;
     private String apellidoPaterno;
@@ -11,15 +12,15 @@ public class Cliente {
     private String numero;
     private Integer idColonia;
     private String nombreColonia;
-    private String codigoPostal;
+    private Integer codigoPostal;
     private String nombreMunicipio;
     private String nombreEstado;
-    private Boolean statusRegistro; 
+    private Boolean statusRegistro;
 
     public Cliente() {
     }
 
-    public Cliente(Integer idCliente, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, String calle, String numero, Integer idColonia, String nombreColonia, String codigoPostal, String nombreMunicipio, String nombreEstado, Boolean statusRegistro) {
+    public Cliente(Integer idCliente, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, String calle, String numero, Integer idColonia, String nombreColonia, Integer codigoPostal, String nombreMunicipio, String nombreEstado, Boolean statusRegistro) {
         this.idCliente = idCliente;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -76,7 +77,7 @@ public class Cliente {
         return nombreColonia;
     }
 
-    public String getCodigoPostal() {
+    public Integer getCodigoPostal() {
         return codigoPostal;
     }
 
@@ -132,7 +133,7 @@ public class Cliente {
         this.nombreColonia = nombreColonia;
     }
 
-    public void setCodigoPostal(String codigoPostal) {
+    public void setCodigoPostal(Integer codigoPostal) {
         this.codigoPostal = codigoPostal;
     }
 

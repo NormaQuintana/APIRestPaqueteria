@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="geografia">
+    
     <select id="coloniasPorCP" parameterType="int" resultType="hashmap">
         SELECT
         c.id            AS idColonia,
@@ -16,6 +17,7 @@
         JOIN estados e    ON e.id = m.estado
         WHERE c.codigo_postal = #{value}
     </select>
+    
     <select id="obtener-cp-por-id-colonia" parameterType="int" resultType="int">
         SELECT codigo_postal
         FROM mexico.colonias

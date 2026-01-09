@@ -11,28 +11,28 @@ import javax.ws.rs.core.MediaType;
 
 @Path("autenticacion")
 public class AutenticacionWS {
-    
+
     @Path("colaborador")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public RSAutenticacion autenticarColaborador(
             @FormParam("noPersonal") String noPersonal,
-            @FormParam("password") String password){
-        if(noPersonal != null && !noPersonal.isEmpty() 
-                && (password != null && !password.isEmpty())){
+            @FormParam("password") String password) {
+        if (noPersonal != null && !noPersonal.isEmpty()
+                && (password != null && !password.isEmpty())) {
             return AutenticacionImp.autenticarColaborador(noPersonal, password);
         }
         throw new BadRequestException();
     }
-    
+
     @Path("conductor")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public RSAutenticacion autenticarConductor(
             @FormParam("noPersonal") String noPersonal,
-            @FormParam("password") String password){
-        if(noPersonal != null && !noPersonal.isEmpty() 
-                && (password != null && !password.isEmpty())){
+            @FormParam("password") String password) {
+        if (noPersonal != null && !noPersonal.isEmpty()
+                && (password != null && !password.isEmpty())) {
             return AutenticacionImp.autenticarConductor(noPersonal, password);
         }
         throw new BadRequestException();

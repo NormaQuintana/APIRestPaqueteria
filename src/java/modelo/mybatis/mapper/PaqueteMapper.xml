@@ -21,8 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY p.idPaquete DESC;
     </select>
 
-    <select id="obtener-por-id" parameterType="java.lang.Integer"
-            resultType="pojo.EntidadesPrincipales.Paquete">
+    <select id="obtener-por-id" parameterType="java.lang.Integer" resultType="pojo.EntidadesPrincipales.Paquete">
         SELECT
         p.idPaquete,
         p.descripcion,
@@ -35,8 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE p.idPaquete = #{idPaquete};
     </select>
 
-    <select id="obtener-por-envio" parameterType="java.lang.Integer"
-            resultType="pojo.EntidadesPrincipales.Paquete">
+    <select id="obtener-por-envio" parameterType="java.lang.Integer" resultType="pojo.EntidadesPrincipales.Paquete">
         SELECT
         p.idPaquete,
         p.descripcion,

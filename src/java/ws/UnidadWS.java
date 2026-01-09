@@ -15,100 +15,90 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pojo.EntidadesPrincipales.Unidad;
 
-
 @Path("unidad")
 public class UnidadWS {
 
     @Path("obtener-todas")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Unidad> obtenerUnidades(){
+    public List<Unidad> obtenerUnidades() {
         return UnidadImp.obtenerUnidades();
     }
-    
+
     @Path("registrar")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Respuesta registrarUnidad(String json){
+    public Respuesta registrarUnidad(String json) {
         Gson gson = new Gson();
-        try{
+        try {
             Unidad unidad = gson.fromJson(json, Unidad.class);
             return UnidadImp.registrar(unidad);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
-    
+
     @Path("editar")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Respuesta editarUnidad(String json){
+    public Respuesta editarUnidad(String json) {
         Gson gson = new Gson();
-        try{
+        try {
             Unidad unidad = gson.fromJson(json, Unidad.class);
             return UnidadImp.editarUnidad(unidad);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
-    
+
     @Path("dar-baja")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Respuesta darBajaUnidad(String json){
+    public Respuesta darBajaUnidad(String json) {
         Gson gson = new Gson();
-        try{
+        try {
             Unidad unidad = gson.fromJson(json, Unidad.class);
             return UnidadImp.darBajaUnidad(unidad);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
-    
+
     @Path("buscar")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<Unidad> buscarUnidades(String json){
+    public List<Unidad> buscarUnidades(String json) {
         Gson gson = new Gson();
-        try{
-            Unidad filtros = gson.fromJson(json, Unidad.class); 
+        try {
+            Unidad filtros = gson.fromJson(json, Unidad.class);
             return UnidadImp.buscarUnidades(filtros);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
     }
-    
+
     @Path("asignarConductor")
-    @PUT 
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    // Recibe JSON como String y usa GSON para deserializar
     public Respuesta asignarConductorWS(String json) {
         Gson gson = new Gson();
         try {
-            // Se espera un JSON con idUnidad y idConductor
             Unidad unidad = gson.fromJson(json, Unidad.class);
-            
-            // Validación mínima: debe tener ID de unidad
             if (unidad.getIdUnidad() == null || unidad.getIdUnidad() <= 0) {
-                 throw new BadRequestException("El ID de la unidad es obligatorio para la asignación.");
+                throw new BadRequestException("El ID de la unidad es obligatorio para la asignación.");
             }
-            
-            // Llama a la lógica de negocio (que ya tiene la validación de unicidad)
             return UnidadImp.asignarConductor(unidad);
-            
+
         } catch (BadRequestException e) {
-            // Propaga el error 400
             throw e;
         } catch (Exception e) {
-            // Error genérico del servidor 500
-            e.printStackTrace(); // Imprimir el error para debug
+            e.printStackTrace();
             throw new InternalServerErrorException("Error al procesar la solicitud de asignación: " + e.getMessage());
         }
     }
 }
-

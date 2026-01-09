@@ -1,8 +1,6 @@
 package pojo.EntidadesPrincipales;
 
 import java.util.Date;
-import pojo.Catalogo.TipoUnidad;
-import java.util.Date;
 
 public class Unidad {
 
@@ -15,7 +13,6 @@ public class Unidad {
     private Boolean status;
     private String motivoBaja;
     private Date fechaBaja;
-    private Colaborador conductor;
     private String tipoUnidad;
     private Integer idTipoUnidad;
     private Integer idColaborador;
