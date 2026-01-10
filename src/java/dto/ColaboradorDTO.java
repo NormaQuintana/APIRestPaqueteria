@@ -10,6 +10,7 @@ public class ColaboradorDTO {
     private String apellidoMaterno;
     private String rol;
     private Integer idSucursal;
+    private String noLicencia;
 
     public static ColaboradorDTO from(Colaborador c) {
         if (c == null) {
@@ -22,6 +23,7 @@ public class ColaboradorDTO {
         dto.apellidoMaterno = c.getApellidoMaterno();
         dto.rol = c.getNombreRol();
         dto.idSucursal = c.getIdSucursal();
+        dto.noLicencia = c.getNoLicencia();
 
         return dto;
     }
@@ -85,6 +87,14 @@ public class ColaboradorDTO {
 
     public void setIdSucursal(Integer idSucursal) {
         this.idSucursal = idSucursal;
+    }
+
+    public String getNoLicencia() {
+        return noLicencia;
+    }
+
+    public void setNoLicencia(String noLicencia) {
+        this.noLicencia = noLicencia;
     }
 
 }

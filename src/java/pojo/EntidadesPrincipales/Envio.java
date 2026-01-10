@@ -8,6 +8,8 @@ public class Envio implements Serializable {
     private String nombreReceptor;
     private String apellidoPaternoReceptor;
     private String apellidoMaternoReceptor;
+    private String telefono;
+    private String correo;
     private Integer idSucursal;
     private String nombreSucursal;
     private String calleDestino;
@@ -75,6 +77,22 @@ public class Envio implements Serializable {
 
     public String getApellidoMaternoReceptor() {
         return apellidoMaternoReceptor;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public Integer getIdSucursal() {

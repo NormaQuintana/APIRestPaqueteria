@@ -92,12 +92,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idPaquete = #{value}
     </delete>
 
-
     <select id="contar-por-envio" parameterType="int" resultType="int">
         SELECT COUNT(*) 
         FROM PacketWorld.paquete
         WHERE idEnvio = #{value}
     </select>
- 
 
 </mapper>

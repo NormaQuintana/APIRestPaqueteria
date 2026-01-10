@@ -95,7 +95,7 @@ public class EnvioWS {
             int idEstatusEnvio = ((Double) datos.get("idEstatusEnvio")).intValue();
             int idColaborador = ((Double) datos.get("idColaborador")).intValue();
             String comentario = (String) datos.get("comentario");
-            return EnvioImp.actualizarEstatus(idEnvio, idEstatusEnvio, idColaborador);
+            return EnvioImp.actualizarEstatus(idEnvio, idEstatusEnvio, idColaborador, comentario);
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }

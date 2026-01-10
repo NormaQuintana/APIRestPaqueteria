@@ -7,6 +7,7 @@ import modelo.mybatis.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import pojo.EntidadesPrincipales.Colaborador;
 import dto.ColaboradorDTO;
+import dto.RSAutenticacionConductor;
 
 public class AutenticacionImp {
 
@@ -37,8 +38,8 @@ public class AutenticacionImp {
         return autenticacion;
     }
 
-    public static RSAutenticacion autenticarConductor(String noPersonal, String password) {
-        RSAutenticacion autenticacion = new RSAutenticacion();
+    public static RSAutenticacionConductor autenticarConductor(String noPersonal, String password) {
+        RSAutenticacionConductor autenticacion = new RSAutenticacionConductor();
         autenticacion.setError(true);
         SqlSession conexionBD = MyBatisUtil.getSession();
         if (conexionBD != null) {
@@ -50,7 +51,7 @@ public class AutenticacionImp {
                 if (colaborador != null) {
                     autenticacion.setError(false);
                     autenticacion.setMensaje("Credenciales correctas del usuario: " + colaborador.getNombre());
-                    autenticacion.setColaborador(ColaboradorDTO.from(colaborador));
+                    autenticacion.setColaborador(colaborador);
                 } else {
                     autenticacion.setMensaje("Credenciales incorrectas, por favor verifique la informacion");
                 }
