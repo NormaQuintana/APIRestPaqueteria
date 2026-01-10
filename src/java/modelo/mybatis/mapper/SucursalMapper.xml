@@ -61,7 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT COUNT(*)
         FROM PacketWorld.sucursal
         WHERE 
-        nombre = #{nombre} 
+        numeroUnicoSucursal = #{numeroUnicoSucursal}
+        AND nombre = #{nombre} 
         AND calle = #{calle}
         AND numero = #{numero}
         AND idColonia = #{idColonia}

@@ -2,6 +2,7 @@ package ws;
 
 import dominio.AutenticacionImp;
 import dto.RSAutenticacion;
+import dto.RSAutenticacionConductor;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -28,7 +29,7 @@ public class AutenticacionWS {
     @Path("conductor")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public RSAutenticacion autenticarConductor(
+    public RSAutenticacionConductor autenticarConductor(
             @FormParam("noPersonal") String noPersonal,
             @FormParam("password") String password) {
         if (noPersonal != null && !noPersonal.isEmpty()

@@ -261,7 +261,7 @@ public class EnvioImp {
         return respuesta;
     }
 
-    public static Respuesta actualizarEstatus(int idEnvio, int idEstatusEnvio, int idColaborador) {
+    public static Respuesta actualizarEstatus(int idEnvio, int idEstatusEnvio, int idColaborador, String comentario) {
         Respuesta r = new Respuesta();
         SqlSession session = null;
         try {
@@ -270,11 +270,12 @@ public class EnvioImp {
             params.put("idEnvio", idEnvio);
             params.put("idEstatusEnvio", idEstatusEnvio);
             params.put("idColaborador", idColaborador);
+            params.put("comentario", (comentario == null) ? "" : comentario);
             session.update("envio.actualizar-estatus-envio", params);
+            session.insert("envio.registrar-historial-estatus", params);
             session.commit();
             r.setError(false);
-            r.setMensaje("Estatus actualizado correctamente.");
-            return r;
+            r.setMensaje("Estatus y historial actualizado correctamente.");
         } catch (Exception ex) {
             if (session != null) {
                 session.rollback();
@@ -287,6 +288,7 @@ public class EnvioImp {
                 session.close();
             }
         }
+        return r;
     }
 
     public static Respuesta eliminarEnvio(Integer idEnvio) {

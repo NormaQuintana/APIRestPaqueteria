@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN PacketWorld.sucursal AS S ON E.idSucursal = S.idSucursal
         LEFT JOIN PacketWorld.colaborador AS COL ON E.idConductor = COL.idColaborador
         WHERE E.activo = 1
-        ORDER BY E.idEnvio;
+        ORDER BY E.idEnvio
     </select>
     
     <select id="obtener-todos-conductor" parameterType="java.lang.Integer" resultType="pojo.EntidadesPrincipales.Envio">
@@ -69,9 +69,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN mexico.colonias AS C ON E.idColoniaDestino = C.id 
         LEFT JOIN mexico.municipios AS M ON C.municipio = M.id 
         LEFT JOIN mexico.estados AS ES ON M.estado = ES.id 
-        WHERE E.idConductor = #{value}
-        AND E.activo = 1
-        
+        WHERE E.idConductor = #{idConductor} AND E.activo = 1
+
     </select>
 
     <insert id="registrar" parameterType="pojo.EntidadesPrincipales.Envio" useGeneratedKeys="true" keyProperty="idEnvio">
@@ -103,7 +102,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         )
     </insert>
 
-    <select id="obtener-por-id" parameterType="java.lang.Integer" resultType="pojo.EntidadesPrincipales.Envio">
+
+    <select id="obtener-por-id"
+            parameterType="java.lang.Integer"
+            resultType="pojo.EntidadesPrincipales.Envio">
         SELECT
         E.idEnvio,
         E.noGuia,
@@ -117,27 +119,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         E.idSucursal,
         E.idConductor,
         E.idColoniaDestino,
-
         C.codigo_postal AS codigoPostal,
         M.nombre AS ciudad,
         ES.nombre AS estado
-
         FROM PacketWorld.envio AS E
-
         LEFT JOIN mexico.colonias AS C
         ON E.idColoniaDestino = C.id
-
         LEFT JOIN mexico.municipios AS M
         ON C.municipio = M.id
-
         LEFT JOIN mexico.estados AS ES
         ON M.estado = ES.id
-
-        WHERE E.idEnvio = #{idEnvio} AND E.activo = 1;
+        WHERE E.idEnvio = #{idEnvio} AND E.activo = 1
     </select>
 
- 
-    <select id="obtener-por-guia" parameterType="java.lang.String" resultType="pojo.EntidadesPrincipales.Envio">
+
+    <select id="obtener-por-guia"
+            parameterType="java.lang.String"
+            resultType="pojo.EntidadesPrincipales.Envio">
         SELECT
         E.idEnvio,
         E.noGuia,
@@ -173,14 +171,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         LEFT JOIN PacketWorld.estatusEnvio AS EST ON H.idEstatusEnvio = EST.idEstatusEnvio
         WHERE E.noGuia = #{noGuia} AND E.activo = 1
     </select>
-    
+
     <update id="actualizar-costo" parameterType="pojo.EntidadesPrincipales.Envio">
         UPDATE PacketWorld.envio
         SET costo = #{costo}
         WHERE idEnvio = #{idEnvio}
     </update>
 
-    <update id="editar" parameterType="pojo.EntidadesPrincipales.Envio">
+    <update id="editar"
+            parameterType="pojo.EntidadesPrincipales.Envio">
         UPDATE PacketWorld.envio
         SET
         costo = #{costo},
@@ -193,28 +192,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         idCliente = #{idCliente},
         idSucursal = #{idSucursal},
         idConductor = #{idConductor, jdbcType=INTEGER}
-        WHERE idEnvio = #{idEnvio};
+        WHERE idEnvio = #{idEnvio}
     </update>
 
 
     <insert id="registrar-historial-estatus" parameterType="map">
         INSERT INTO PacketWorld.historialEnvio (
-        idEnvio,
-        fechaHora,
-        idColaborador,
-        idEstatusEnvio
-        ) VALUES (
-        #{idEnvio},
-        NOW(),
-        #{idColaborador},
-        #{idEstatusEnvio}
+            idEnvio, fechaHora, comentario, idColaborador, idEstatusEnvio
+        )
+        VALUES (
+            #{idEnvio}, NOW(), #{comentario}, #{idColaborador}, #{idEstatusEnvio}
         )
     </insert>
     
     <update id="actualizar-estatus-envio" parameterType="map">
         UPDATE PacketWorld.envio
         SET idEstatusEnvio = #{idEstatusEnvio}
-        WHERE idEnvio = #{idEnvio};
+        WHERE idEnvio = #{idEnvio}
     </update>
 
     <select id="obtener-cp-destino-por-envio" parameterType="int" resultType="int">
@@ -229,5 +223,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SET activo = 0 
         WHERE idEnvio = #{idEnvio}
     </update>
-    
 </mapper>
+

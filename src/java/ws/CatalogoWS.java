@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import pojo.Catalogo.EstatusEnvio;
 import pojo.Catalogo.Rol;
 import pojo.Catalogo.TipoUnidad;
 
@@ -24,5 +25,12 @@ public class CatalogoWS {
     @Produces(MediaType.APPLICATION_JSON)
     public List<TipoUnidad> obtenerTiposUnidad() {
         return CatalogoImp.obtenerTiposUnidad();
+    }
+    
+    @Path("obtener-estatusEnvio")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<EstatusEnvio> obtenerEstatusEnvio() {
+        return CatalogoImp.obtenerEstatusEnvio();
     }
 }
