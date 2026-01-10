@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="historialEnvio">
+
+    <select id="consultar-por-guia" parameterType="string"
+            resultType="pojo.EntidadesPrincipales.HistorialEnvio">
+        SELECT
+        H.idHistorialEnvio,
+        H.idEnvio,
+        H.fechaHora,
+        H.idColaborador,
+        H.idEstatusEnvio,
+        EE.estatus AS estatusEnvio
+        FROM PacketWorld.historialEnvio H
+        INNER JOIN PacketWorld.envio E ON E.idEnvio = H.idEnvio
+        INNER JOIN PacketWorld.estatusEnvio EE ON EE.idEstatusEnvio = H.idEstatusEnvio
+        WHERE E.noGuia = #{value}
+        AND E.activo = 1
+        ORDER BY H.fechaHora DESC, H.idHistorialEnvio DESC
+    </select>
+
+</mapper>
+

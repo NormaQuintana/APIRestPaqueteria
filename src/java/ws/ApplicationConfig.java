@@ -13,7 +13,6 @@ public class ApplicationConfig extends Application {
         return resources;
     }
 
-
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ws.AutenticacionWS.class);
         resources.add(ws.CatalogoWS.class);
@@ -22,8 +21,10 @@ public class ApplicationConfig extends Application {
         resources.add(ws.EnvioWS.class);
         resources.add(ws.EstatusEnvioWS.class);
         resources.add(ws.GeografiaWS.class);
+        resources.add(ws.HistorialEnvioWS.class);
         resources.add(ws.PaqueteWS.class);
         resources.add(ws.SucursalWS.class);
         resources.add(ws.UnidadWS.class);
+
     }
 }
