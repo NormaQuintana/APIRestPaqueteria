@@ -71,12 +71,7 @@ public class PaqueteWS {
                 r.setMensaje("La descripción no debe exceder 200 caracteres.");
                 return r;
             }
-            if (paquete.getPeso() == null || paquete.getPeso().compareTo(BigDecimal.ZERO) <= 0) {
-                r.setError(true);
-                r.setMensaje("El peso debe ser mayor a 0.");
-                return r;
-            }
-            if (paquete.getPeso() == null || paquete.getPeso().compareTo(BigDecimal.ZERO) <= 0) {
+            if (paquete.getPeso() <= 0) {
                 r.setError(true);
                 r.setMensaje("El peso debe ser mayor a 0.");
                 return r;
@@ -118,10 +113,10 @@ public class PaqueteWS {
                 r.setMensaje("Descripción obligatoria (máx. 200).");
                 return r;
             }
-            if (paquete.getPeso() == null || paquete.getPeso().compareTo(BigDecimal.ZERO) <= 0
-                    || paquete.getAlto() == null || paquete.getAlto().compareTo(BigDecimal.ZERO) <= 0
-                    || paquete.getAncho() == null || paquete.getAncho().compareTo(BigDecimal.ZERO) <= 0
-                    || paquete.getProfundidad() == null || paquete.getProfundidad().compareTo(BigDecimal.ZERO) <= 0) {
+            if (paquete.getPeso() <= 0
+                    || paquete.getAlto() <= 0
+                    || paquete.getAncho() <= 0
+                    || paquete.getProfundidad() <= 0) {
                 r.setError(true);
                 r.setMensaje("Peso y dimensiones deben ser mayores a 0.");
                 return r;
