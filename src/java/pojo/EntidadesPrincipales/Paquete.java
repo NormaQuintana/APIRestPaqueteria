@@ -1,23 +1,22 @@
 package pojo.EntidadesPrincipales;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class Paquete implements Serializable {
 
-    private Integer idPaquete;
+    private int idPaquete;
     private String descripcion;
-    private BigDecimal peso;
-    private BigDecimal alto;
-    private BigDecimal ancho;
-    private BigDecimal profundidad;
-    private Integer idEnvio;
+    private float peso;
+    private float alto;
+    private float ancho;
+    private float profundidad;
+    private int idEnvio;
     private String noGuia;
 
     public Paquete() {
     }
 
-    public Paquete(Integer idPaquete, String descripcion, BigDecimal peso, BigDecimal alto, BigDecimal ancho, BigDecimal profundidad, Integer idEnvio) {
+    public Paquete(int idPaquete, String descripcion, float peso, float alto, float ancho, float profundidad, int idEnvio, String noGuia) {
         this.idPaquete = idPaquete;
         this.descripcion = descripcion;
         this.peso = peso;
@@ -25,13 +24,14 @@ public class Paquete implements Serializable {
         this.ancho = ancho;
         this.profundidad = profundidad;
         this.idEnvio = idEnvio;
+        this.noGuia = noGuia;
     }
 
-    public Integer getIdPaquete() {
+    public int getIdPaquete() {
         return idPaquete;
     }
 
-    public void setIdPaquete(Integer idPaquete) {
+    public void setIdPaquete(int idPaquete) {
         this.idPaquete = idPaquete;
     }
 
@@ -43,43 +43,43 @@ public class Paquete implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public BigDecimal getPeso() {
+    public float getPeso() {
         return peso;
     }
 
-    public void setPeso(BigDecimal peso) {
+    public void setPeso(float peso) {
         this.peso = peso;
     }
 
-    public BigDecimal getAlto() {
+    public float getAlto() {
         return alto;
     }
 
-    public void setAlto(BigDecimal alto) {
+    public void setAlto(float alto) {
         this.alto = alto;
     }
 
-    public BigDecimal getAncho() {
+    public float getAncho() {
         return ancho;
     }
 
-    public void setAncho(BigDecimal ancho) {
+    public void setAncho(float ancho) {
         this.ancho = ancho;
     }
 
-    public BigDecimal getProfundidad() {
+    public float getProfundidad() {
         return profundidad;
     }
 
-    public void setProfundidad(BigDecimal profundidad) {
+    public void setProfundidad(float profundidad) {
         this.profundidad = profundidad;
     }
 
-    public Integer getIdEnvio() {
+    public int getIdEnvio() {
         return idEnvio;
     }
 
-    public void setIdEnvio(Integer idEnvio) {
+    public void setIdEnvio(int idEnvio) {
         this.idEnvio = idEnvio;
     }
 
